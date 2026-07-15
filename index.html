@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dino English · Landing Page PRD (SA / KR / IN / MY)</title>
+  <meta name="description" content="Dino English 海外获客落地页交互式产品需求文档 — 沙特 / 韩国 / 印尼 / 马来" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦖</text></svg>" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <nav class="nav">
+    <div class="nav__brand">
+      <div class="nav__logo">🦖</div>
+      <div>Dino English<small>Landing Page · PRD</small></div>
+    </div>
+    <button class="nav__toggle" aria-label="menu">☰</button>
+    <div class="nav__links">
+      <a href="#overview">概览</a>
+      <a href="#owners">分工</a>
+      <a href="#prototype">交互原型</a>
+      <a href="#flow">流程</a>
+      <a href="#analytics">埋点架构</a>
+      <a href="#channels">渠道码</a>
+      <a href="#pricing">定价 & 优惠</a>
+      <a href="#refund">退款机制</a>
+    </div>
+  </nav>
+
+  <!-- ============ HERO / OVERVIEW ============ -->
+  <header class="hero" id="overview">
+    <div class="wrap hero__inner">
+      <div>
+        <div class="hero__badges">
+          <span class="pill dot">开发中 · 期望上线 2026.07.15</span>
+          <span class="pill">v1.0</span>
+          <span class="pill">交互式 PRD</span>
+        </div>
+        <h1>Dino English<br><span class="g">获客落地页</span> 产品需求</h1>
+        <p class="hero__sub">面向 沙特 / 韩国 / 印尼 / 马来 四国投放的独立落地页：手机号 & 第三方登录、按国定价套餐、优惠码、本地支付与 App 账号打通，配套 GA4 + AppsFlyer 双端归因与 28 组渠道码。</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#prototype">▶ 查看交互原型</a>
+          <a class="btn btn--ghost" href="#channels">渠道码总表</a>
+        </div>
+      </div>
+      <div class="hero__countries" id="hero-countries"></div>
+    </div>
+    <div class="wrap">
+      <div class="metrics" id="hero-metrics"></div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ============ OWNERS ============ -->
+    <section id="owners">
+      <div class="section-head reveal">
+        <span class="eyebrow">Ownership</span>
+        <h2>项目分工</h2>
+        <p>各模块负责人与关键信息一览。沙特站点 UI 需做界面反转（RTL）。</p>
+      </div>
+      <div class="owner-grid reveal" id="owner-grid"></div>
+    </section>
+
+    <!-- ============ PROTOTYPE ============ -->
+    <section id="prototype">
+      <div class="section-head reveal">
+        <span class="eyebrow">Interactive Prototype</span>
+        <h2>交互原型走查</h2>
+        <p>点击步骤或使用「上一步 / 下一步」逐屏查看每个页面的需求细节、状态与文案。点击手机截图可放大。</p>
+      </div>
+      <div class="proto reveal">
+        <div>
+          <div class="stage">
+            <img id="phone-img" data-zoom alt="screen" />
+          </div>
+          <div class="proto__nav">
+            <button class="navbtn" id="proto-prev">← 上一步</button>
+            <span class="navbtn" id="proto-counter" style="flex:0 0 auto;cursor:default;background:transparent;border:none;color:var(--txt-mute)"></span>
+            <button class="navbtn" id="proto-next">下一步 →</button>
+          </div>
+        </div>
+        <div class="proto__side">
+          <div class="proto__stepbar" id="proto-stepbar"></div>
+          <div class="proto__title" id="proto-title"></div>
+          <p class="proto__caption" id="proto-caption"></p>
+          <ul class="plist" id="proto-points"></ul>
+          <div class="states" id="proto-states"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FLOW ============ -->
+    <section id="flow">
+      <div class="section-head reveal">
+        <span class="eyebrow">User Flow</span>
+        <h2>整体流程</h2>
+        <p>从广告点击到 ROI 闭环的完整用户 & 数据流转路径。</p>
+      </div>
+      <div class="two-col">
+        <figure class="figure reveal">
+          <img src="assets/images/flow.png" data-zoom alt="flow diagram" />
+          <figcaption>广告点击 → Landing → 登录 → 会员/优惠券/支付 → App 打通 → ROI 闭环</figcaption>
+        </figure>
+        <figure class="figure reveal">
+          <img src="assets/images/prototype-all.png" data-zoom alt="all screens" />
+          <figcaption>原型全景：注册 · 套餐 · 优惠码 · 支付 · 完成</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ ANALYTICS ============ -->
+    <section id="analytics">
+      <div class="section-head reveal">
+        <span class="eyebrow">Tracking & Data</span>
+        <h2>埋点 & 数据架构</h2>
+        <p>GA4 行为漏斗 + AppsFlyer 安装归因，UID 在 Web 登录后与 App 打通。</p>
+      </div>
+      <div class="callout reveal" id="analytics-principle" style="margin-bottom:22px"></div>
+      <div class="funnel reveal" id="funnel"></div>
+    </section>
+
+    <!-- ============ CHANNELS ============ -->
+    <section id="channels">
+      <div class="section-head reveal">
+        <span class="eyebrow">Channel Codes</span>
+        <h2>渠道码总表</h2>
+        <p>4 国 × (6 广告渠道 + 1 默认) = 28 个渠道码。支持按国家筛选、搜索与一键复制 Landing 链接。</p>
+      </div>
+      <div class="callout reveal" id="channel-rule" style="margin-bottom:18px"></div>
+      <div class="toolbar reveal">
+        <div class="tabs" id="channel-tabs"></div>
+        <div class="search"><input id="channel-search" type="text" placeholder="搜索渠道 / 渠道码 …" /></div>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>国家</th><th>广告渠道</th><th>渠道码 (7位)</th><th>Landing URL</th><th>操作</th></tr></thead>
+          <tbody id="channel-body"></tbody>
+        </table>
+      </div>
+      <figure class="figure reveal" style="margin-top:22px">
+        <img src="assets/images/channel-example.png" data-zoom alt="channel example" />
+        <figcaption>渠道码与 Landing URL 示例</figcaption>
+      </figure>
+    </section>
+
+    <!-- ============ PRICING ============ -->
+    <section id="pricing">
+      <div class="section-head reveal">
+        <span class="eyebrow">Pricing & Coupons</span>
+        <h2>定价与优惠</h2>
+        <p>按国家展示不同套餐 / 币种 / 折扣，默认高亮 Best Value；所有套餐一次性购买。</p>
+      </div>
+      <div class="toolbar reveal">
+        <div class="tabs" id="pricing-tabs"></div>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>国家</th><th>套餐</th><th>原价 (划线)</th><th>折扣</th><th>折后价</th><th>标签</th></tr></thead>
+          <tbody id="pricing-body"></tbody>
+        </table>
+      </div>
+
+      <div class="two-col reveal" style="margin-top:26px">
+        <div class="card">
+          <h3 style="font-size:17px;margin-bottom:14px">优惠码配置</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>优惠码</th><th>折扣</th><th>有效期</th><th></th></tr></thead>
+              <tbody id="coupon-body"></tbody>
+            </table>
+          </div>
+          <p style="color:var(--txt-mute);font-size:12.5px;margin-top:12px">一码多人兑换 · 按码有效期不同 · 入库同时记录原价与折后价。</p>
+        </div>
+        <figure class="figure">
+          <img src="assets/images/coupon-config.png" data-zoom alt="coupon config" />
+          <figcaption>优惠码方案示例</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ REFUND ============ -->
+    <section id="refund">
+      <div class="section-head reveal">
+        <span class="eyebrow">Refund</span>
+        <h2>退款机制与流程</h2>
+        <p>退款规则通过政策链接展示，不在页面直接呈现。对外口径：14 天内到账。</p>
+      </div>
+      <div class="table-wrap reveal" style="margin-bottom:28px">
+        <table>
+          <thead><tr><th>条件</th><th>公式</th><th>示例（月包实付 99.90）</th></tr></thead>
+          <tbody id="refund-rules-body"></tbody>
+        </table>
+      </div>
+      <h3 style="font-size:17px;margin:0 0 20px" class="reveal">退款审批流程</h3>
+      <div class="refund-flow reveal" id="refund-flow"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>🦖 <b style="color:var(--txt)">Dino English</b> · Landing Page PRD · 内部文档</div>
+      <div>期望上线 2026.07.15 · support@dinoenglish.ai</div>
+    </div>
+  </footer>
+
+  <!-- lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" aria-label="close">×</button>
+    <img id="lightbox-img" alt="preview" />
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
