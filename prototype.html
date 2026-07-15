@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dino English · 可交互原型 (Landing Page)</title>
+  <meta name="description" content="Dino English 落地页可交互点击原型 — 登录 / 套餐 / 优惠码 / 支付 / 成功" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦖</text></svg>" />
+  <link rel="stylesheet" href="assets/css/prototype.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand__logo">🦖</span>
+      <span>Dino English<small>可交互原型 · Landing Page</small></span>
+    </a>
+    <div class="topbar__actions">
+      <button id="btn-hotspots" class="tbtn">○ 显示热区</button>
+      <a class="tbtn" href="index.html">← 返回 PRD</a>
+    </div>
+    <button id="side-toggle" class="side-toggle" aria-label="menu">☰</button>
+  </header>
+
+  <div class="app">
+
+    <!-- 左侧屏幕列表 -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__hd">全部页面</div>
+      <div class="scr-list" id="screen-list"></div>
+    </aside>
+
+    <!-- 中间设备 -->
+    <main class="stage-area">
+      <div class="hint">💡 点击手机里的按钮进行跳转（如 Get code / Log in / Continue / Pay now）。也可用键盘 ← → 或点右侧任意页面。</div>
+
+      <div class="device">
+        <div class="device__notch"></div>
+        <div class="viewport" id="viewport">
+          <div class="screen-wrap">
+            <img id="screen-img" alt="screen" draggable="false" />
+            <div class="hotspots" id="hotspots"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="btn-back" class="cbtn">← 上一步</button>
+        <button id="btn-restart" class="cbtn cbtn--ghost">↻ 重新开始</button>
+        <button id="btn-next" class="cbtn">下一步 →</button>
+      </div>
+      <div class="progress"><div class="progress__bar" id="progress-bar"></div></div>
+      <div class="progress__label"><span id="step-count"></span></div>
+    </main>
+
+    <!-- 右侧说明 -->
+    <aside class="infobar">
+      <div class="chip" id="scr-group"></div>
+      <h2 id="scr-title"></h2>
+      <p id="scr-note"></p>
+      <div class="legend">
+        <h4>交互说明</h4>
+        <ul>
+          <li>橙色高亮 = 可点击热区（点「显示热区」查看全部）</li>
+          <li>屏幕左上角 <b>‹</b> 返回上一页</li>
+          <li>登录页可体验：验证码已发送 / 验证码错误</li>
+          <li>优惠码页可体验：已输入 / 兑换成功 / 错误提示</li>
+          <li>支付页可切换：本地支付 / 银行卡</li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+
+  <script src="assets/js/prototype.js"></script>
+</body>
+</html>
