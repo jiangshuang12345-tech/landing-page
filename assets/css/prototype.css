@@ -96,8 +96,9 @@ img { -webkit-user-drag: none; }
 .screen--pay .body--blue { background: linear-gradient(180deg,#5170ef 0%,#8ba1f4 12%,#cdd7f8 30%,#e7edfc 55%); }
 .body--success { background: linear-gradient(180deg,#3f5fe0 0%,#7f93ec 22%,#c5d0f6 48%,#e5ebfb 100%); padding-top: 0; }
 
-.back { position: absolute; top: -150px; left: 6px; width: 34px; height: 34px; border: 0; background: transparent; color: #fff; font-size: 30px; line-height: 1; cursor: pointer; z-index: 5; text-shadow: 0 1px 4px rgba(0,0,0,.25); }
-.screen--plans .back { top: -184px; }
+/* 透明返回热区，盖在设计图自带的 ‹ 箭头上（避免出现两个返回按钮） */
+.back { position: absolute; top: 36px; left: 4px; width: 52px; height: 46px; border: 0; background: transparent; cursor: pointer; z-index: 6; border-radius: 12px; transition: background .15s; }
+.back:hover { background: rgba(255,255,255,.14); }
 
 /* generic card */
 .mcard { background: #fff; border-radius: 20px; padding: 18px 18px; box-shadow: 0 10px 26px rgba(40,50,120,.12); margin-bottom: 14px; }

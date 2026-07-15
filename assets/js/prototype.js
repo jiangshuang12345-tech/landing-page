@@ -129,8 +129,8 @@
       ];
       return `
       ${heroHTML("plans")}
+      <button class="back" data-to="login" aria-label="返回"></button>
       <div class="body body--blue">
-        <button class="back" data-to="login">‹</button>
         <div class="mcard benefits">
           ${benefits.map((b) => `<div class="ben"><span>${b[0]}</span><p>${b[1]}</p></div>`).join("")}
         </div>
@@ -154,8 +154,8 @@
       const p = currentPlan();
       return `
       ${heroHTML("coupon")}
+      <button class="back" data-to="plans" aria-label="返回"></button>
       <div class="body body--blue">
-        <button class="back" data-to="plans">‹</button>
         <div class="mcard">
           <h3 class="mtitle">Have a promo code?</h3>
           <div class="promo ${state.couponErr ? "err" : ""} ${state.couponApplied ? "ok" : ""}">
@@ -180,8 +180,8 @@
       const p = currentPlan();
       return `
       ${heroHTML("pay")}
+      <button class="back" data-to="coupon" aria-label="返回"></button>
       <div class="body body--blue">
-        <button class="back" data-to="coupon">‹</button>
         <div class="mcard summary">
           <div class="srow"><span>${p.name} plan</span><b>${money(p.price)}</b></div>
           ${state.couponApplied ? `<div class="srow"><span>Discount</span><b class="disc">-${money(state.discount)}</b></div>` : ""}
