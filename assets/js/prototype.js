@@ -99,7 +99,8 @@
     discount: 0,
     couponMsg: "",
     couponErr: false,
-    pay: "toss"
+    pay: "toss",
+    ewallet: "tng"
   };
   let countdownTimer = null;
 
@@ -211,7 +212,7 @@
           <h3 class="mtitle">Have a promo code?</h3>
           <div class="promo ${state.couponErr ? "err" : ""} ${state.couponApplied ? "ok" : ""}">
             <input id="coupon" class="inp" placeholder="6688" value="${state.coupon}" ${state.couponApplied ? "readonly" : ""} />
-            <button class="apply ${state.couponApplied ? "done" : ""}" id="apply-btn" ${state.coupon.trim() ? "" : "disabled"}>
+            <button class="apply ${state.couponApplied ? "done" : (state.coupon.length >= 4 ? "active" : "")}" id="apply-btn" ${state.coupon.length >= 4 ? "" : "disabled"}>
               ${state.couponApplied ? "✓" : "Apply"}
             </button>
           </div>
@@ -260,12 +261,31 @@
                   </div>
                 </div>
               ` : ''}
+              ${sel && m.key === 'ewallet' ? `
+                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(0,0,0,0.03);border-radius:12px;border:1px solid rgba(0,0,0,0.06);">
+                  <div style="font-size:12px;color:#7a7a8e;margin-bottom:8px">Select e-Wallet</div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap">
+                    <button class="ew-btn" data-ew="tng" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'tng' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'tng' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'tng' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><span style="background:#0055A5;color:#fff;border-radius:4px;padding:2px 4px;font-size:10px;">TNG</span> Touch 'n Go</button>
+                    <button class="ew-btn" data-ew="grab" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'grab' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'grab' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'grab' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><span style="background:#00B14F;color:#fff;border-radius:4px;padding:2px 4px;font-size:10px;">Grab</span> GrabPay</button>
+                  </div>
+                </div>
+              ` : ''}
               `;
             }).join("")}
           </div>
         </div>
         <button class="cta cta--wide" id="paynow">Pay now</button>
         <p class="foot">Cancel anytime · <a>Terms of Service</a> · <a>Privacy Policy</a></p>
+      </div>`;
+    },
+
+    processing() {
+      return `
+      <div class="body body--blue" style="min-height:720px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f5f7ff; margin-top:0; border-radius:34px;">
+        <div style="width:44px;height:44px;border:4px solid rgba(61,123,255,0.2);border-top-color:#3d7bff;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:24px;"></div>
+        <h2 style="color:#232049;font-size:22px;margin-bottom:8px;font-weight:800;">确认付款中...</h2>
+        <p style="color:#7a7a8e;font-size:14px;">Confirming your payment</p>
+        <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
       </div>`;
     },
 
@@ -318,7 +338,7 @@
   }
 
   function labelOf(id) {
-    return { login: "登录", plans: "选择套餐", coupon: "优惠码", pay: "支付方式", success: "支付成功" }[id];
+    return { login: "登录", plans: "选择套餐", coupon: "优惠码", pay: "支付方式", processing: "确认付款", success: "支付成功" }[id];
   }
 
   /* ------------------------- 事件绑定 ------------------------- */
@@ -401,15 +421,22 @@
       const cin = $("#coupon");
       cin.addEventListener("input", (e) => {
         state.coupon = e.target.value;
-        $("#apply-btn").disabled = !state.coupon.trim() || state.couponApplied;
+        const btn = $("#apply-btn");
+        btn.disabled = state.coupon.length < 4 || state.couponApplied;
+        if (state.coupon.length >= 4 && !state.couponApplied) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
       });
       $("#apply-btn").addEventListener("click", () => {
         if (state.couponApplied) return;
         const code = state.coupon.trim().toUpperCase();
-        if (COUPONS[code] != null) {
+        const isDino4 = /^DINO\d{4}$/.test(code);
+        if (COUPONS[code] != null || isDino4) {
           state.couponApplied = true;
           // 假设优惠券的折扣数值就是对应的货币数值（这里做个简单转换，或者固定减去该数值）
-          state.discount = COUPONS[code];
+          state.discount = COUPONS[code] || 40; // 默认 DINO+4位数字 减 40
           // 如果是印尼/越南等大面额货币，优惠券金额可能需要乘以一个系数，这里为了演示直接用数字
           if (["IDR", "VND", "KRW"].includes(currentCountry().cur)) {
             state.discount = COUPONS[code] * 1000;
@@ -425,11 +452,30 @@
     }
 
     if (id === "pay") {
-      $$(".method", viewport).forEach((b) => b.addEventListener("click", () => { state.pay = b.dataset.pay; show("pay"); }));
+      $$(".method", viewport).forEach((b) => b.addEventListener("click", (e) => {
+        if (e.target.closest('.sub-methods')) return;
+        state.pay = b.dataset.pay; show("pay");
+      }));
+      $$(".ew-btn", viewport).forEach((b) => b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        state.ewallet = b.dataset.ew; show("pay");
+      }));
       $("#paynow").addEventListener("click", () => {
-        toast("支付成功");
-        setTimeout(() => show("success"), 400);
+        if (state.pay === 'ewallet') {
+          toast("跳转第三方 App 支付...");
+          setTimeout(() => {
+            show("processing");
+            setTimeout(() => show("success"), 2500);
+          }, 1000);
+        } else {
+          toast("支付成功");
+          setTimeout(() => show("success"), 400);
+        }
       });
+    }
+
+    if (id === "processing") {
+      // Nothing to bind
     }
 
     if (id === "success") {
