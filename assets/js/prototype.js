@@ -10,6 +10,7 @@
 
   /* ------------------------- 数据 ------------------------- */
   const COUNTRIES = [
+    { flag: "🇻🇳", code: "+84", name: "越南" },
     { flag: "🇸🇦", code: "+966", name: "沙特" },
     { flag: "🇰🇷", code: "+82", name: "韩国" },
     { flag: "🇮🇩", code: "+62", name: "印尼" },
@@ -32,7 +33,8 @@
     { key: "samsung", name: "SamsungPay", ico: "Pay", bg: "#1428A0", small: true },
     { key: "payco", name: "PayCo", ico: "P", bg: "#EF3E42" },
     { key: "kakao", name: "Kakaopay", ico: "K", bg: "#FEE500", fg: "#3A1D1D" },
-    { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true }
+    { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true },
+    { key: "intl_card", name: "International Card (Visa/Mastercard)", ico: "🌐", bg: "transparent", emoji: true }
   ];
 
   // 每屏顶部插画（用截图顶部，CSS 裁剪），及裁剪高度(px@350宽)
@@ -61,7 +63,9 @@
 
   const money = (v) => "$" + Number(v).toFixed(2);
   const currentPlan = () => PLANS[state.plan];
-  const total = () => Math.max(0, currentPlan().price - (state.couponApplied ? state.discount : 0));
+  const isVietnam = () => COUNTRIES[state.country].code === "+84";
+  const depositAmount = () => isVietnam() ? 10 : 0; // 假定越南押金为$10
+  const total = () => Math.max(0, currentPlan().price - (state.couponApplied ? state.discount : 0)) + depositAmount();
 
   /* ------------------------- Toast ------------------------- */
   let toastT;
@@ -169,6 +173,7 @@
         <div class="mcard summary">
           <div class="srow"><span>${p.label}</span><b>${money(p.price)}</b></div>
           ${state.couponApplied ? `<div class="srow"><span>Discount</span><b class="disc">-${money(state.discount)}</b></div>` : ""}
+          ${isVietnam() ? `<div class="srow"><span>Deposit <small style="color:var(--txt-dim)">(Vietnam Only)</small></span><b>${money(depositAmount())}</b></div>` : ""}
           <div class="srow total"><span>Total</span><b>${money(total())}</b></div>
         </div>
         <button class="cta cta--wide" data-to="pay">Continue</button>
@@ -191,6 +196,7 @@
         <div class="mcard summary">
           <div class="srow"><span>${p.name} plan</span><b>${money(p.price)}</b></div>
           ${state.couponApplied ? `<div class="srow"><span>Discount</span><b class="disc">-${money(state.discount)}</b></div>` : ""}
+          ${isVietnam() ? `<div class="srow"><span>Deposit <small style="color:var(--txt-dim)">(Vietnam Only)</small></span><b>${money(depositAmount())}</b></div>` : ""}
           <div class="srow total"><span>Total</span><b>${money(total())}</b></div>
         </div>
         <div class="mcard">
@@ -242,7 +248,9 @@
           <div class="succ-hd"><span class="check-lg">✓</span><h2>Payment Complete!</h2></div>
           <p class="succ-sub">Thank you! Your subscription is now active.</p>
           <div class="succ-line"></div>
-          <div class="srow"><span>${p.name}</span><b>${money(total())}</b></div>
+          <div class="srow"><span>${p.name}</span><b>${money(p.price - (state.couponApplied ? state.discount : 0))}</b></div>
+          ${isVietnam() ? `<div class="srow"><span>Deposit</span><b>${money(depositAmount())}</b></div>` : ""}
+          <div class="srow total" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.05);"><span>Total Paid</span><b>${money(total())}</b></div>
           <div class="srow"><span>Expired Date</span><b>${expiry}</b></div>
         </div>
         <div class="mcard">

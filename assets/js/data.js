@@ -6,11 +6,12 @@
 window.PRD = {
   meta: {
     title: "Dino English · Landing Page",
-    subtitle: "海外获客落地页 · 沙特 / 韩国 / 印尼 / 马来",
+    subtitle: "海外获客落地页 · 沙特 / 韩国 / 印尼 / 马来 / 越南",
     version: "v1.0",
     status: "开发中",
     launch: "2026.07.15（沟通后实际上线日期）",
     countries: [
+      { code: "VN", flag: "🇻🇳", name: "越南", lang: "越南语", note: "支持本地支付，且含押金逻辑", cur: "VND" },
       { code: "SA", flag: "🇸🇦", name: "沙特阿拉伯", lang: "阿拉伯语", note: "UI 需做界面反转 (RTL)", cur: "SAR" },
       { code: "KR", flag: "🇰🇷", name: "韩国", lang: "韩语", note: "支持本地支付方式", cur: "KRW" },
       { code: "ID", flag: "🇮🇩", name: "印度尼西亚", lang: "印尼语", note: "银行支付", cur: "IDR" },
@@ -39,11 +40,11 @@ window.PRD = {
       caption: "增加品牌信息：13年品牌信任背书，地球与全球连线设计，突出No.1 AI英语App定位",
       points: [
         "App 名称「Dino English」+ 营销文案（需多语言）：“The No.1 AI English App for Kids — 13 Years of Trust, Smart AI Tutors” 以及 “Making English learning part of your child's daily route”",
-        "注册方式 1（首位 · 突出）：手机号 —— 支持 4 国手机号（沙特/印尼/马来/韩国），国家码下拉可选",
+        "注册方式 1（首位 · 突出）：手机号 —— 支持 5 国手机号（沙特/印尼/马来/韩国/越南），国家码下拉可选",
         "验证码逻辑与 App 内一致：点击「Get code」发送并倒计时 60s，倒计时中退出返回后继续；结束后变「Resend」",
         "验证码满 4 位后 [Login] 按钮由置灰变亮起可点击；提交正确后登录成功",
         "注册方式 2：google / apple / facebook / kakao (韩国特有) 一排小图标，一键拉起第三方登录",
-        "隐私协议 / 用户条款：4 国多语言，均可跳转链接，放置于登录按钮下方",
+        "隐私协议 / 用户条款：5 国多语言，均可跳转链接，放置于登录按钮下方",
         "默认姓名与 App 内一致（后端预置 100 个姓名随机给出）"
       ],
       states: [
@@ -101,7 +102,7 @@ window.PRD = {
       caption: "按国家展示支付渠道 · 点击 Pay now 拉起第三方支付",
       points: [
         "韩国：NaverPay、TossPay、SamsungPay、PayCo、Kakaopay、银行卡",
-        "印尼 / 马来 / 沙特：银行支付",
+        "印尼 / 马来 / 沙特 / 越南：国际化银行卡、本地支付",
         "点击「Pay now」拉起第三方支付",
         "返回按钮可回上一页重新输入优惠码",
         "除支付方式名称外，其它文案均需多语言"
@@ -167,7 +168,7 @@ window.PRD = {
   },
 
   /* ---------------------------------------------------------------------- */
-  /* 渠道码 —— 4 国 × (6 广告渠道 + 1 默认) = 28                                */
+  /* 渠道码 —— 5 国 × (6 广告渠道 + 1 默认) = 35                                */
   /* ---------------------------------------------------------------------- */
   channelRule:
     "格式：固定 7 位随机字符串，字符集 = 大小写字母 + 数字，去除易混字符 0 O o 1 l I i。运营/CMS 为「国家 × 渠道」预生成唯一码存入映射表；广告链接仅带 ?ch=xxxxxxx，Landing 反查国家与渠道。",
@@ -205,7 +206,15 @@ window.PRD = {
     { country: "SA", flag: "🇸🇦", ch: "KOL", code: "Fj9Cv2h", url: "https://sa.dinoenglish.ai/website/landingpage/login/?channel=Fj9Cv2h" },
     { country: "SA", flag: "🇸🇦", ch: "Google Play", code: "Dk4Np7w", url: "https://sa.dinoenglish.ai/website/landingpage/login/?channel=Dk4Np7w" },
     { country: "SA", flag: "🇸🇦", ch: "App Store", code: "Rv8Hs3m", url: "https://sa.dinoenglish.ai/website/landingpage/login/?channel=Rv8Hs3m" },
-    { country: "SA", flag: "🇸🇦", ch: "默认", code: "Rx5Fp2n", url: "https://sa.dinoenglish.ai/website/landingpage/login/", isDefault: true }
+    { country: "SA", flag: "🇸🇦", ch: "默认", code: "Rx5Fp2n", url: "https://sa.dinoenglish.ai/website/landingpage/login/", isDefault: true },
+    // VN
+    { country: "VN", flag: "🇻🇳", ch: "Meta Ads", code: "Vn1Aa2b", url: "https://vn.dinoenglish.ai/website/landingpage/login/?channel=Vn1Aa2b" },
+    { country: "VN", flag: "🇻🇳", ch: "Google Ads", code: "Vn2Bb3c", url: "https://vn.dinoenglish.ai/website/landingpage/login/?channel=Vn2Bb3c" },
+    { country: "VN", flag: "🇻🇳", ch: "Snapchat", code: "Vn3Cc4d", url: "https://vn.dinoenglish.ai/website/landingpage/login/?channel=Vn3Cc4d" },
+    { country: "VN", flag: "🇻🇳", ch: "KOL", code: "Vn4Dd5e", url: "https://vn.dinoenglish.ai/website/landingpage/login/?channel=Vn4Dd5e" },
+    { country: "VN", flag: "🇻🇳", ch: "Google Play", code: "Vn5Ee6f", url: "https://vn.dinoenglish.ai/website/landingpage/login/?channel=Vn5Ee6f" },
+    { country: "VN", flag: "🇻🇳", ch: "App Store", code: "Vn6Ff7g", url: "https://vn.dinoenglish.ai/website/landingpage/login/?channel=Vn6Ff7g" },
+    { country: "VN", flag: "🇻🇳", ch: "默认", code: "Vn7Gg8h", url: "https://vn.dinoenglish.ai/website/landingpage/login/", isDefault: true }
   ],
 
   /* ---------------------------------------------------------------------- */
@@ -221,7 +230,9 @@ window.PRD = {
     { country: "MY", flag: "🇲🇾", plan: "1-month", origin: "RM 166.50", off: "40%", final: "RM 99.90", best: true },
     { country: "MY", flag: "🇲🇾", plan: "1-year", origin: "RM 1,181.64", off: "45%", final: "RM 649.90", best: false },
     { country: "ID", flag: "🇮🇩", plan: "1-month", origin: "IDR 598,333", off: "40%", final: "IDR 359,000", best: true },
-    { country: "ID", flag: "🇮🇩", plan: "1-year", origin: "IDR 4,890,909", off: "45%", final: "IDR 2,690,000", best: false }
+    { country: "ID", flag: "🇮🇩", plan: "1-year", origin: "IDR 4,890,909", off: "45%", final: "IDR 2,690,000", best: false },
+    { country: "VN", flag: "🇻🇳", plan: "1-month", origin: "VND 500,000", off: "40%", final: "VND 300,000", best: true },
+    { country: "VN", flag: "🇻🇳", plan: "1-year", origin: "VND 5,000,000", off: "45%", final: "VND 2,750,000", best: false }
   ],
 
   coupons: [

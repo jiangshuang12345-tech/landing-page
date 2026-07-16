@@ -10,6 +10,7 @@ window.PRD2 = {
     status: "评审中",
     goal: "同一国家不同渠道，支持不同 SKU 组合与优惠力度",
     countries: [
+      { code: "VN", flag: "🇻🇳", name: "越南", cur: "VND" },
       { code: "SA", flag: "🇸🇦", name: "沙特", cur: "SAR" },
       { code: "KR", flag: "🇰🇷", name: "韩国", cur: "KRW" },
       { code: "MY", flag: "🇲🇾", name: "马来", cur: "RM" },
@@ -96,6 +97,12 @@ window.PRD2 = {
     ]},
     { country: "IN", id: "7836", name: "年包", price: "IDR 4,890,909", best: false, coupons: [
       { id: "6678", name: "年包折扣", type: "percent", value: "45%" }
+    ]},
+    { country: "VN", id: "7837", name: "月包", price: "VND 500,000", best: true, coupons: [
+      { id: "6679", name: "月包折扣", type: "percent", value: "40%" }
+    ]},
+    { country: "VN", id: "7838", name: "年包", price: "VND 5,000,000", best: false, coupons: [
+      { id: "6680", name: "年包折扣", type: "percent", value: "45%" }
     ]}
   ],
 
@@ -117,7 +124,9 @@ window.PRD2 = {
     { country: "IN", channel: "Meta Ads", code: "Hv9Rn2w", skus: ["7835", "7836"], note: "双 SKU" },
     { country: "IN", channel: "Google Ads", code: "Lk5Jp8c", skus: ["7835"], note: "仅月包" },
     { country: "IN", channel: "Snapchat", code: "Yd3Fq7h", skus: ["7836"], note: "仅年包" },
-    { country: "IN", channel: "默认", code: "Jw8Dq3v", skus: ["7835", "7836"], note: "国家默认" }
+    { country: "IN", channel: "默认", code: "Jw8Dq3v", skus: ["7835", "7836"], note: "国家默认" },
+    { country: "VN", channel: "Meta Ads", code: "Vn1Aa2b", skus: ["7837", "7838"], note: "完整货盘" },
+    { country: "VN", channel: "默认", code: "Vn7Gg8h", skus: ["7837", "7838"], note: "国家默认" }
   ],
 
   features: {
