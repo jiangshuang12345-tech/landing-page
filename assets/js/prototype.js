@@ -209,7 +209,7 @@
                 : `<span class="m-ico ${m.small ? "small" : ""}" style="background:${m.bg};color:${m.fg || "#fff"}">${m.ico}</span>`;
               return `<button class="method ${sel ? "sel" : ""}" data-pay="${m.key}">
                 ${icon}<span class="m-name">${m.name}</span>
-                <span class="m-rad"></span>
+                <span class="m-rad ${sel ? "on" : ""}"></span>
               </button>
               ${sel && m.key === 'fpx' ? `
                 <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);">
@@ -221,15 +221,6 @@
                 </div>
               ` : ''}
               `;
-            }).join("")}
-          </div>
-        </div>
-        <button class="cta cta--wide" data-to="success">Pay now</button>
-        <p class="foot">Cancel anytime · <a>Terms of Service</a> · <a>Privacy Policy</a></p>
-      </div>`;
-    },
-                <span class="radio ${sel ? "on" : ""}">${sel ? "✓" : ""}</span>
-              </button>`;
             }).join("")}
           </div>
         </div>
