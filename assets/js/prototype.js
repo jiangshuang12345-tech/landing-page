@@ -348,24 +348,7 @@
 
     if (id === "login") {
       const phone = $("#phone"), code = $("#code");
-      phone.addEventListener("input", (e) => { 
-        state.phone = e.target.value.replace(/[^\d]/g, ""); 
-        e.target.value = state.phone; 
-        updateGetCodeState();
-      });
-      code.addEventListener("input", (e) => {
-        state.code = e.target.value.replace(/[^\d]/g, "");
-        e.target.value = state.code;
-        $("#login-btn").disabled = state.code.length < 4;
-      });
-      // 国家码下拉
-      const ccBtn = $("#cc-btn"), ccMenu = $("#cc-menu");
-      ccBtn.addEventListener("click", (e) => { e.stopPropagation(); ccMenu.hidden = !ccMenu.hidden; });
-      $$(".cc-item", ccMenu).forEach((it) => it.addEventListener("click", () => {
-        switchCountry(+it.dataset.i);
-        state.phone = phone.value;
-        ccMenu.hidden = true;
-      }));
+      
       // 获取验证码
       const getcodeBtn = $("#getcode");
       const updateGetCodeState = () => {
