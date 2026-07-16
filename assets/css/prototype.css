@@ -93,9 +93,11 @@ img { -webkit-user-drag: none; }
  * ===================================================================== */
 .screen { min-height: 720px; position: relative; font-size: 15px; color: #232049; }
 .hero { width: 100%; background-repeat: no-repeat; background-position: top center; background-size: 100% auto; }
+.hero-long { position: absolute; inset: 0; width: 100%; height: 100%; background-repeat: no-repeat; background-position: top center; background-size: 100% auto; z-index: 0; }
 
-.body { position: relative; padding: 0 18px 26px; }
+.body { position: relative; padding: 0 18px 26px; z-index: 1; }
 .body--login { margin-top: -22px; background: linear-gradient(180deg,#efeafb 0%,#e6ecfb 45%,#dbe7fc 100%); border-radius: 26px 26px 0 0; padding-top: 4px; }
+.body--transparent { background: transparent !important; margin-top: 320px; }
 .body--blue { margin-top: -2px; padding-top: 16px; min-height: 560px; }
 .screen--plans .body--blue { background: linear-gradient(180deg,#6b83ea 0%,#93a8f1 12%,#c4d0f6 34%,#dde7fb 60%,#e9eefc 100%); }
 .screen--coupon .body--blue { background: linear-gradient(180deg,#5170ef 0%,#8ba1f4 12%,#cdd7f8 34%,#e7edfc 60%); }

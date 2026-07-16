@@ -82,6 +82,7 @@
   // 每屏顶部插画（用截图顶部，CSS 裁剪），及裁剪高度(px@350宽)
   const HERO = {
     login: { img: "assets/ui/login.png", crop: 320 },
+    login_kr: { img: "assets/ui/kr-long-bg.png", crop: 320, isLong: true },
     plans: { img: "assets/ui/plans.png", crop: 212 },
     coupon: { img: "assets/ui/coupon.png", crop: 178 },
     pay: { img: "assets/ui/pay.png", crop: 182 }
@@ -129,17 +130,27 @@
   const viewport = $("#viewport");
 
   function heroHTML(id) {
-    const h = HERO[id];
+    let h = HERO[id];
+    // 针对韩国登录页使用长图背景
+    if (id === "login" && currentCountry().key === "KR") {
+      h = HERO["login_kr"];
+    }
     if (!h) return "";
+    
+    if (h.isLong) {
+      // 韩国长图特殊处理：不裁剪，直接作为整个屏幕的背景，并让内容盖在上面
+      return `<div class="hero-long" style="background-image:url('${h.img}')"></div>`;
+    }
     return `<div class="hero" style="height:${h.crop}px;background-image:url('${h.img}')"></div>`;
   }
 
   const SCREENS = {
     login() {
       const c = currentCountry();
+      const isKr = c.key === "KR";
       return `
       ${heroHTML("login")}
-      <div class="body body--login">
+      <div class="body body--login ${isKr ? 'body--transparent' : ''}">
         <div class="mcard">
           <h1 class="dino-title">Dino English</h1>
           <p class="dino-sub">The No.1 AI English App for Kids – 13 Years of Trust, Smart AI Tutors</p>
