@@ -1,7 +1,7 @@
 /* =========================================================================
  * Dino English · Landing Page — Functional Interactive Prototype (一期)
  * 支持：手机号+验证码(任意4位通过) / 切换套餐 / 输入优惠码 / 切换支付方式
- * 逻辑参考 kr.dinoenglish.ai 一期落地页（一期真实站点不支持优惠码，此原型为演示保留）
+ * 逻辑参考真实一期落地页，支持多国切换（沙特/韩国/印尼/马来/越南）
  * ========================================================================= */
 (function () {
   "use strict";
@@ -10,32 +10,74 @@
 
   /* ------------------------- 数据 ------------------------- */
   const COUNTRIES = [
-    { flag: "🇻🇳", code: "+84", name: "越南" },
-    { flag: "🇸🇦", code: "+966", name: "沙特" },
-    { flag: "🇰🇷", code: "+82", name: "韩国" },
-    { flag: "🇮🇩", code: "+62", name: "印尼" },
-    { flag: "🇲🇾", code: "+60", name: "马来" }
+    {
+      key: "SA", flag: "🇸🇦", code: "+966", name: "沙特", cur: "SAR",
+      link: "https://sa.dinoenglish.ai/website/landingpage/login/",
+      plans: [
+        { key: "1y", name: "1 Year", label: "1 year plan", price: 879.99, per: "≈SAR 2.41/Day", was: "SAR 1,099.99", best: true, tag: "Best Value · 20% Off" },
+        { key: "1m", name: "1 Month", label: "1 month plan", price: 157.49, per: "≈SAR 5.25/Day", was: "SAR 174.99", best: false },
+        { key: "1w", name: "1 Week", label: "1 week plan", price: 46.79, per: "≈SAR 6.68/Day", was: "SAR 51.99", best: false }
+      ],
+      methods: [
+        { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true }
+      ]
+    },
+    {
+      key: "KR", flag: "🇰🇷", code: "+82", name: "韩国", cur: "KRW",
+      link: "https://kr.dinoenglish.ai/website/landingpage/login/",
+      plans: [
+        { key: "1y", name: "1 Year", label: "1 year plan", price: 344000, per: "≈KRW 942/Day", was: "KRW 430,000", best: true, tag: "Best Value · 20% Off" },
+        { key: "1m", name: "1 Month", label: "1 month plan", price: 62100, per: "≈KRW 2,070/Day", was: "KRW 69,000", best: false },
+        { key: "1w", name: "1 Week", label: "1 week plan", price: 18000, per: "≈KRW 2,571/Day", was: "KRW 20,000", best: false }
+      ],
+      methods: [
+        { key: "naver", name: "NaverPay", ico: "N", bg: "#03C75A" },
+        { key: "toss", name: "TossPay", ico: "T", bg: "#3182F6" },
+        { key: "samsung", name: "SamsungPay", ico: "Pay", bg: "#1428A0", small: true },
+        { key: "payco", name: "PayCo", ico: "P", bg: "#EF3E42" },
+        { key: "kakao", name: "Kakaopay", ico: "K", bg: "#FEE500", fg: "#3A1D1D" },
+        { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true }
+      ]
+    },
+    {
+      key: "IN", flag: "🇮🇩", code: "+62", name: "印尼", cur: "IDR",
+      link: "https://in.dinoenglish.ai/website/landingpage/login/",
+      plans: [
+        { key: "1m", name: "1 Month", label: "1 month plan", price: 359000, per: "≈IDR 11,966/Day", was: "IDR 598,333", best: true, tag: "Best Value · 40% Off" },
+        { key: "1y", name: "1 Year", label: "1 year plan", price: 2690000, per: "≈IDR 7,369/Day", was: "IDR 4,890,909", best: false }
+      ],
+      methods: [
+        { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true }
+      ]
+    },
+    {
+      key: "MY", flag: "🇲🇾", code: "+60", name: "马来", cur: "RM",
+      link: "https://ma.dinoenglish.ai/website/landingpage/login/",
+      plans: [
+        { key: "1m", name: "1 Month", label: "1 month plan", price: 99.90, per: "≈RM 3.33/Day", was: "RM 166.50", best: true, tag: "Best Value · 40% Off" },
+        { key: "1y", name: "1 Year", label: "1 year plan", price: 649.90, per: "≈RM 1.78/Day", was: "RM 1,181.64", best: false }
+      ],
+      methods: [
+        { key: "fpx", name: "FPX", ico: "F", bg: "#00529C" },
+        { key: "ewallet", name: "E-wallets", ico: "E", bg: "#FF004D" },
+        { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true }
+      ]
+    },
+    {
+      key: "VN", flag: "🇻🇳", code: "+84", name: "越南", cur: "VND",
+      link: null,
+      plans: [
+        { key: "1m", name: "1 Month", label: "1 month plan", price: 250000, per: "≈VND 8,333/Day", was: "VND 400,000", best: true, tag: "Best Value · 37% Off" },
+        { key: "1y", name: "1 Year", label: "1 year plan", price: 2000000, per: "≈VND 5,479/Day", was: "VND 3,500,000", best: false }
+      ],
+      methods: [
+        { key: "intl_card", name: "International Bank Card", ico: "🌍", bg: "transparent", emoji: true }
+      ]
+    }
   ];
 
-  const PLANS = {
-    "1y": { key: "1y", name: "1 Year", label: "1 year plan", price: 229.99, per: "≈$0.63/Day", was: "$430.00", best: true, tag: "Best Value · 45% Off" },
-    "1m": { key: "1m", name: "1 Month", label: "1 month plan", price: 62.10, per: "≈$1.27/Day", was: "$69.00", best: false },
-    "1w": { key: "1w", name: "1 Week", label: "1 week plan", price: 18.00, per: "≈$1.57/Day", was: "$20.00", best: false }
-  };
-  const PLAN_ORDER = ["1y", "1m", "1w"];
-
-  // 优惠码 → 立减金额（美元），大小写不敏感
+  // 优惠码 → 立减金额（统一按数字，展示时带货币符号），大小写不敏感
   const COUPONS = { D668INO: 40, DINO10: 10, DINO20: 20, DINO30: 30, DINO50: 50 };
-
-  const METHODS = [
-    { key: "naver", name: "NaverPay", ico: "N", bg: "#03C75A" },
-    { key: "toss", name: "TossPay", ico: "T", bg: "#3182F6" },
-    { key: "samsung", name: "SamsungPay", ico: "Pay", bg: "#1428A0", small: true },
-    { key: "payco", name: "PayCo", ico: "P", bg: "#EF3E42" },
-    { key: "kakao", name: "Kakaopay", ico: "K", bg: "#FEE500", fg: "#3A1D1D" },
-    { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true },
-    { key: "intl_card", name: "International Card (Visa/Mastercard)", ico: "🌐", bg: "transparent", emoji: true }
-  ];
 
   // 每屏顶部插画（用截图顶部，CSS 裁剪），及裁剪高度(px@350宽)
   const HERO = {
@@ -46,7 +88,7 @@
   };
 
   const state = {
-    country: 0,
+    country: 1, // 默认韩国
     phone: "",
     code: "",
     codeSent: false,
@@ -61,11 +103,16 @@
   };
   let countdownTimer = null;
 
-  const money = (v) => "$" + Number(v).toFixed(2);
-  const currentPlan = () => PLANS[state.plan];
-  const isVietnam = () => COUNTRIES[state.country].code === "+84";
-  const depositAmount = () => isVietnam() ? 10 : 0; // 假定越南押金为$10
-  const total = () => Math.max(0, currentPlan().price - (state.couponApplied ? state.discount : 0)) + depositAmount();
+  function money(v, cur) {
+    if (!cur) cur = COUNTRIES[state.country].cur;
+    const noDecimals = ["KRW", "IDR", "VND"].includes(cur);
+    const formatted = Number(v).toLocaleString('en-US', { minimumFractionDigits: noDecimals ? 0 : 2, maximumFractionDigits: noDecimals ? 0 : 2 });
+    return cur + " " + formatted;
+  }
+
+  const currentCountry = () => COUNTRIES[state.country];
+  const currentPlan = () => currentCountry().plans.find(p => p.key === state.plan) || currentCountry().plans[0];
+  const total = () => Math.max(0, currentPlan().price - (state.couponApplied ? state.discount : 0));
 
   /* ------------------------- Toast ------------------------- */
   let toastT;
@@ -88,7 +135,7 @@
 
   const SCREENS = {
     login() {
-      const c = COUNTRIES[state.country];
+      const c = currentCountry();
       return `
       ${heroHTML("login")}
       <div class="body body--login">
@@ -124,6 +171,7 @@
     },
 
     plans() {
+      const c = currentCountry();
       const benefits = [
         ["📘", "Full Access to 864 CEFR Standard Lessons"],
         ["🗺️", "Personalized learning path · 3 lessons/week"],
@@ -139,10 +187,9 @@
           ${benefits.map((b) => `<div class="ben"><span>${b[0]}</span><p>${b[1]}</p></div>`).join("")}
         </div>
         <div class="plans">
-          ${PLAN_ORDER.map((k) => {
-            const p = PLANS[k];
-            const sel = state.plan === k;
-            return `<button class="plan ${sel ? "sel" : ""}" data-plan="${k}">
+          ${c.plans.map((p) => {
+            const sel = state.plan === p.key;
+            return `<button class="plan ${sel ? "sel" : ""}" data-plan="${p.key}">
               ${p.best ? `<span class="plan-tag">${p.tag}</span>` : ""}
               <div class="plan-l"><b>${p.name}</b><small>${p.per}</small></div>
               <div class="plan-r"><b>${money(p.price)}</b><small class="was">${p.was}</small></div>
@@ -173,7 +220,6 @@
         <div class="mcard summary">
           <div class="srow"><span>${p.label}</span><b>${money(p.price)}</b></div>
           ${state.couponApplied ? `<div class="srow"><span>Discount</span><b class="disc">-${money(state.discount)}</b></div>` : ""}
-          ${isVietnam() ? `<div class="srow"><span>Deposit <small style="color:var(--txt-dim)">(Vietnam Only)</small></span><b>${money(depositAmount())}</b></div>` : ""}
           <div class="srow total"><span>Total</span><b>${money(total())}</b></div>
         </div>
         <button class="cta cta--wide" data-to="pay">Continue</button>
@@ -182,13 +228,8 @@
     },
 
     pay() {
+      const c = currentCountry();
       const p = currentPlan();
-      // 这里我们在原型上加两个“假的”马来支付方式作为演示
-      const MOCK_METHODS = [
-        ...METHODS,
-        { key: "fpx", name: "FPX (Online Banking)", ico: "🏦", emoji: true },
-        { key: "tng", name: "Touch 'n Go eWallet", ico: "TNG", bg: "#0055A5" }
-      ];
       return `
       ${heroHTML("pay")}
       <button class="back" data-to="coupon" aria-label="返回"></button>
@@ -196,13 +237,12 @@
         <div class="mcard summary">
           <div class="srow"><span>${p.name} plan</span><b>${money(p.price)}</b></div>
           ${state.couponApplied ? `<div class="srow"><span>Discount</span><b class="disc">-${money(state.discount)}</b></div>` : ""}
-          ${isVietnam() ? `<div class="srow"><span>Deposit <small style="color:var(--txt-dim)">(Vietnam Only)</small></span><b>${money(depositAmount())}</b></div>` : ""}
           <div class="srow total"><span>Total</span><b>${money(total())}</b></div>
         </div>
         <div class="mcard">
           <h3 class="mtitle">Choose Payment Method</h3>
           <div class="methods">
-            ${MOCK_METHODS.map((m) => {
+            ${c.methods.map((m) => {
               const sel = state.pay === m.key;
               const icon = m.emoji
                 ? `<span class="m-ico emoji">${m.ico}</span>`
@@ -212,11 +252,11 @@
                 <span class="m-rad ${sel ? "on" : ""}"></span>
               </button>
               ${sel && m.key === 'fpx' ? `
-                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);">
-                  <div style="font-size:12px;color:var(--txt-dim);margin-bottom:8px">Select Bank</div>
+                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(0,0,0,0.03);border-radius:12px;border:1px solid rgba(0,0,0,0.06);">
+                  <div style="font-size:12px;color:#7a7a8e;margin-bottom:8px">Select Bank</div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap">
-                    <button class="tab active" style="flex:1">Maybank2U</button>
-                    <button class="tab" style="flex:1">CIMB Clicks</button>
+                    <button style="flex:1;padding:8px;border-radius:8px;border:1px solid #3d7bff;background:#f0f5ff;color:#3d7bff;font-weight:600;font-size:13px;cursor:pointer">Maybank2U</button>
+                    <button style="flex:1;padding:8px;border-radius:8px;border:1px solid #d3d3e0;background:#fff;color:#232049;font-weight:600;font-size:13px;cursor:pointer">CIMB Clicks</button>
                   </div>
                 </div>
               ` : ''}
@@ -231,7 +271,7 @@
 
     success() {
       const p = currentPlan();
-      const expiry = { "1y": "2027.05.18", "1m": "2026.08.15", "1w": "2026.07.22" }[state.plan];
+      const expiry = { "1y": "2027.05.18", "1m": "2026.08.15", "1w": "2026.07.22" }[state.plan] || "2027.01.01";
       return `
       <div class="body body--success">
         <div class="succ-illus"></div>
@@ -240,7 +280,6 @@
           <p class="succ-sub">Thank you! Your subscription is now active.</p>
           <div class="succ-line"></div>
           <div class="srow"><span>${p.name}</span><b>${money(p.price - (state.couponApplied ? state.discount : 0))}</b></div>
-          ${isVietnam() ? `<div class="srow"><span>Deposit</span><b>${money(depositAmount())}</b></div>` : ""}
           <div class="srow total" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.05);"><span>Total Paid</span><b>${money(total())}</b></div>
           <div class="srow"><span>Expired Date</span><b>${expiry}</b></div>
         </div>
@@ -299,7 +338,9 @@
       const ccBtn = $("#cc-btn"), ccMenu = $("#cc-menu");
       ccBtn.addEventListener("click", (e) => { e.stopPropagation(); ccMenu.hidden = !ccMenu.hidden; });
       $$(".cc-item", ccMenu).forEach((it) => it.addEventListener("click", () => {
-        state.country = +it.dataset.i; state.phone = phone.value; ccMenu.hidden = true; show("login");
+        switchCountry(+it.dataset.i);
+        state.phone = phone.value;
+        ccMenu.hidden = true;
       }));
       // 获取验证码
       $("#getcode").addEventListener("click", () => {
@@ -329,7 +370,14 @@
         if (state.couponApplied) return;
         const code = state.coupon.trim().toUpperCase();
         if (COUPONS[code] != null) {
-          state.couponApplied = true; state.discount = COUPONS[code]; state.couponErr = false;
+          state.couponApplied = true;
+          // 假设优惠券的折扣数值就是对应的货币数值（这里做个简单转换，或者固定减去该数值）
+          state.discount = COUPONS[code];
+          // 如果是印尼/越南等大面额货币，优惠券金额可能需要乘以一个系数，这里为了演示直接用数字
+          if (["IDR", "VND", "KRW"].includes(currentCountry().cur)) {
+            state.discount = COUPONS[code] * 1000;
+          }
+          state.couponErr = false;
           state.couponMsg = "You saved " + money(state.discount);
         } else {
           state.couponApplied = false; state.discount = 0; state.couponErr = true;
@@ -371,19 +419,60 @@
 
   function resetAll() {
     clearInterval(countdownTimer);
-    Object.assign(state, { country: 0, phone: "", code: "", codeSent: false, countdown: 0, plan: "1y", coupon: "", couponApplied: false, discount: 0, couponMsg: "", couponErr: false, pay: "toss" });
+    Object.assign(state, { phone: "", code: "", codeSent: false, countdown: 0, coupon: "", couponApplied: false, discount: 0, couponMsg: "", couponErr: false });
+    // 重置套餐和支付方式为当前国家的默认值
+    state.plan = currentCountry().plans[0].key;
+    state.pay = currentCountry().methods[0].key;
     show("login");
+  }
+
+  function switchCountry(index) {
+    state.country = index;
+    const c = COUNTRIES[index];
+    state.plan = c.plans[0].key;
+    state.pay = c.methods[0].key;
+    state.couponApplied = false;
+    state.discount = 0;
+    state.coupon = "";
+    state.couponMsg = "";
+    state.couponErr = false;
+    renderCountryTabs();
+    show(current);
+  }
+
+  /* ------------------------- 顶部国家切换栏 ------------------------- */
+  function renderCountryTabs() {
+    const tabs = $("#country-tabs");
+    if (!tabs) return;
+    tabs.innerHTML = COUNTRIES.map((c, i) => `
+      <button class="ctab ${state.country === i ? "active" : ""}" data-i="${i}">
+        ${c.flag} ${c.name}
+      </button>
+    `).join("");
+    $$(".ctab", tabs).forEach(b => b.addEventListener("click", () => switchCountry(+b.dataset.i)));
+
+    const liveBtn = $("#btn-live");
+    if (liveBtn) {
+      const link = currentCountry().link;
+      if (link) {
+        liveBtn.style.display = "inline-block";
+        liveBtn.href = link;
+        liveBtn.textContent = `🔗 查看线上版 (${currentCountry().name})`;
+      } else {
+        liveBtn.style.display = "none";
+      }
+    }
   }
 
   /* ------------------------- 右侧实时状态 ------------------------- */
   function updateInfo() {
-    const c = COUNTRIES[state.country], p = currentPlan();
+    const c = currentCountry(), p = currentPlan();
     $("#info-country").textContent = `${c.flag} ${c.code}`;
     $("#info-phone").textContent = state.phone ? `${c.code} ${state.phone}` : "—";
     $("#info-plan").textContent = `${p.name} · ${money(p.price)}`;
     $("#info-coupon").textContent = state.couponApplied ? `${state.coupon.toUpperCase()} (-${money(state.discount)})` : (state.coupon || "—");
     $("#info-total").textContent = money(total());
-    $("#info-pay").textContent = (METHODS.find((m) => m.key === state.pay) || {}).name || "—";
+    $("#info-pay").textContent = (c.methods.find((m) => m.key === state.pay) || {}).name || "—";
   }
 
   /* ------------------------- 侧边栏 ------------------------- */
@@ -409,6 +498,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    renderCountryTabs();
     buildList();
     bind();
     show("login");
