@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dino English · Landing Page 二期 PRD</title>
+  <meta name="description" content="Landing Page 二期：渠道级 SKU / 优惠券 / 优惠码配置化 PRD" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦖</text></svg>" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/phase2.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__brand">
+      <div class="nav__logo">🦖</div>
+      <div>Dino English<small>Landing Page · 二期 PRD</small></div>
+    </div>
+    <button class="nav__toggle" aria-label="menu">☰</button>
+    <div class="nav__links">
+      <a href="#overview">目标</a>
+      <a href="#model">配置模型</a>
+      <a href="#scenarios">场景</a>
+      <a href="#sku">SKU & 券</a>
+      <a href="#bind">渠道绑定</a>
+      <a href="#features">功能</a>
+      <a href="#accept">验收</a>
+      <a href="index.html">← 一期 PRD</a>
+      <a href="docs/Landing-Page-二期-PRD.md">完整文档</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="overview">
+    <div class="wrap hero__inner">
+      <div>
+        <div class="hero__badges">
+          <span class="pill dot">评审中</span>
+          <span class="pill">二期 v1.0</span>
+          <span class="pill">配置化</span>
+        </div>
+        <h1>Landing Page<br><span class="g">二期 · 渠道级配置化</span></h1>
+        <p class="hero__sub">在一期获客链路不变的前提下，让<strong>同一国家的不同渠道</strong>可以绑定不同的 SKU 与优惠力度：Landing Page → SKU → 优惠券 → 优惠码，全部可配置。</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#model">看配置模型</a>
+          <a class="btn btn--ghost" href="docs/Landing-Page-二期-PRD.md">打开完整 PRD</a>
+          <a class="btn btn--ghost" href="index.html">一期 PRD</a>
+        </div>
+      </div>
+      <div class="hero__countries" id="hero-countries"></div>
+    </div>
+  </header>
+
+  <section class="section" id="vs">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>一期 → 二期 差分</h2>
+        <p>C 端主流程不变；变化在「谁决定货盘与优惠」。</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>维度</th><th>一期</th><th>二期</th></tr></thead>
+          <tbody id="vs-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="model">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>配置层级</h2>
+        <p>每个 Landing Page（渠道码）独立货盘；优惠力度挂在 SKU 上，码挂在券上。</p>
+      </div>
+      <div class="hierarchy" id="hierarchy"></div>
+      <div class="rules-grid" id="rules" style="margin-top:28px"></div>
+    </div>
+  </section>
+
+  <section class="section" id="scenarios">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>必须支持的三类场景</h2>
+        <p>来自二期示意表的核心业务模式。</p>
+      </div>
+      <div class="scenarios" id="scenarios"></div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="sku">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>SKU × 优惠券（示意数据）</h2>
+        <p>百分比与立减互斥；每张券可生成多个 <code>DINO****</code> 优惠码。</p>
+      </div>
+      <div class="tabs" id="sku-tabs"></div>
+      <div class="sku-grid" id="sku-list"></div>
+    </div>
+  </section>
+
+  <section class="section" id="bind">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>渠道 → SKU 绑定</h2>
+        <p>切换上方国家 Tab 后，此处同步展示该国渠道货盘（示意）。点击渠道码可复制。</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>广告渠道</th><th>渠道码</th><th>绑定 SKU</th><th>说明</th></tr></thead>
+          <tbody id="bind-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>功能范围</h2>
+        <p>管台配置是二期主交付；C 端只做差分。</p>
+      </div>
+      <h3 class="subhead">管台 / CMS</h3>
+      <div class="feat-grid" id="cms-features"></div>
+      <h3 class="subhead" style="margin-top:28px">C 端差分</h3>
+      <div class="cend-list" id="cend-features"></div>
+    </div>
+  </section>
+
+  <section class="section" id="accept">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>验收标准</h2>
+        <p>评审通过后按此清单验收。</p>
+      </div>
+      <ol class="accept-list" id="acceptance"></ol>
+      <h3 class="subhead" style="margin-top:32px">待拍板问题</h3>
+      <div class="opens-grid" id="opens"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div>🦖 <b style="color:var(--txt)">Dino English</b> · Landing Page 二期 PRD</div>
+      <div>
+        <a href="docs/Landing-Page-二期-PRD.md">完整 Markdown</a> ·
+        <a href="index.html">一期 PRD</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/phase2-data.js"></script>
+  <script src="assets/js/phase2-main.js"></script>
+</body>
+</html>

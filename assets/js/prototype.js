@@ -178,6 +178,12 @@
 
     pay() {
       const p = currentPlan();
+      // 这里我们在原型上加两个“假的”马来支付方式作为演示
+      const MOCK_METHODS = [
+        ...METHODS,
+        { key: "fpx", name: "FPX (Online Banking)", ico: "🏦", emoji: true },
+        { key: "tng", name: "Touch 'n Go eWallet", ico: "TNG", bg: "#0055A5" }
+      ];
       return `
       ${heroHTML("pay")}
       <button class="back" data-to="coupon" aria-label="返回"></button>
@@ -190,13 +196,32 @@
         <div class="mcard">
           <h3 class="mtitle">Choose Payment Method</h3>
           <div class="methods">
-            ${METHODS.map((m) => {
+            ${MOCK_METHODS.map((m) => {
               const sel = state.pay === m.key;
               const icon = m.emoji
                 ? `<span class="m-ico emoji">${m.ico}</span>`
                 : `<span class="m-ico ${m.small ? "small" : ""}" style="background:${m.bg};color:${m.fg || "#fff"}">${m.ico}</span>`;
               return `<button class="method ${sel ? "sel" : ""}" data-pay="${m.key}">
                 ${icon}<span class="m-name">${m.name}</span>
+                <span class="m-rad"></span>
+              </button>
+              ${sel && m.key === 'fpx' ? `
+                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);">
+                  <div style="font-size:12px;color:var(--txt-dim);margin-bottom:8px">Select Bank</div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap">
+                    <button class="tab active" style="flex:1">Maybank2U</button>
+                    <button class="tab" style="flex:1">CIMB Clicks</button>
+                  </div>
+                </div>
+              ` : ''}
+              `;
+            }).join("")}
+          </div>
+        </div>
+        <button class="cta cta--wide" data-to="success">Pay now</button>
+        <p class="foot">Cancel anytime · <a>Terms of Service</a> · <a>Privacy Policy</a></p>
+      </div>`;
+    },
                 <span class="radio ${sel ? "on" : ""}">${sel ? "✓" : ""}</span>
               </button>`;
             }).join("")}
