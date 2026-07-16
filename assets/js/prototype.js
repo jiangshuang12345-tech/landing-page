@@ -328,7 +328,11 @@
 
     if (id === "login") {
       const phone = $("#phone"), code = $("#code");
-      phone.addEventListener("input", (e) => { state.phone = e.target.value.replace(/[^\d]/g, ""); e.target.value = state.phone; });
+      phone.addEventListener("input", (e) => { 
+        state.phone = e.target.value.replace(/[^\d]/g, ""); 
+        e.target.value = state.phone; 
+        updateGetCodeState();
+      });
       code.addEventListener("input", (e) => {
         state.code = e.target.value.replace(/[^\d]/g, "");
         e.target.value = state.code;
@@ -343,11 +347,44 @@
         ccMenu.hidden = true;
       }));
       // 获取验证码
-      $("#getcode").addEventListener("click", () => {
+      const getcodeBtn = $("#getcode");
+      const updateGetCodeState = () => {
+        if (state.countdown > 0) return; // 倒计时中保持不可点状态
+        if (state.phone.length > 0) {
+          getcodeBtn.classList.add("active");
+        } else {
+          getcodeBtn.classList.remove("active");
+        }
+      };
+      
+      phone.addEventListener("input", (e) => { 
+        state.phone = e.target.value.replace(/[^\d]/g, ""); 
+        e.target.value = state.phone; 
+        updateGetCodeState();
+      });
+      
+      code.addEventListener("input", (e) => {
+        state.code = e.target.value.replace(/[^\d]/g, "");
+        e.target.value = state.code;
+        $("#login-btn").disabled = state.code.length < 4;
+      });
+      // 国家码下拉
+      const ccBtn = $("#cc-btn"), ccMenu = $("#cc-menu");
+      ccBtn.addEventListener("click", (e) => { e.stopPropagation(); ccMenu.hidden = !ccMenu.hidden; });
+      $$(".cc-item", ccMenu).forEach((it) => it.addEventListener("click", () => {
+        switchCountry(+it.dataset.i);
+        state.phone = phone.value;
+        ccMenu.hidden = true;
+      }));
+      // 获取验证码点击
+      getcodeBtn.addEventListener("click", () => {
         if (!state.phone) { toast("Please input the valid phone number"); return; }
         startCountdown();
         toast("Verification code sent");
       });
+      
+      // 初始化状态
+      updateGetCodeState();
       // 登录（任意 4 位验证码通过）
       $("#login-btn").addEventListener("click", () => {
         if (state.code.length < 4) return;
@@ -405,14 +442,22 @@
   function startCountdown() {
     state.codeSent = true; state.countdown = 60;
     const btn = $("#getcode");
-    if (btn) { btn.disabled = true; btn.textContent = "60s"; }
+    if (btn) { 
+      btn.disabled = true; 
+      btn.textContent = "60s"; 
+      btn.classList.remove("active");
+    }
     clearInterval(countdownTimer);
     countdownTimer = setInterval(() => {
       state.countdown--;
       const b = $("#getcode");
       if (state.countdown <= 0) {
         clearInterval(countdownTimer); state.countdown = 0;
-        if (b) { b.disabled = false; b.textContent = "Resend"; }
+        if (b) { 
+          b.disabled = false; 
+          b.textContent = "Resend"; 
+          if (state.phone.length > 0) b.classList.add("active");
+        }
       } else if (b) { b.textContent = state.countdown + "s"; }
     }, 1000);
   }
