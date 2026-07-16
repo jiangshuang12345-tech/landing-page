@@ -82,7 +82,7 @@
   // 每屏顶部插画（用截图顶部，CSS 裁剪），及裁剪高度(px@350宽)
   const HERO = {
     login: { img: "assets/ui/login.png", crop: 320 },
-    login_kr: { img: "assets/ui/kr-long-bg.png", crop: 320, isLong: true },
+    login_kr: { img: "assets/ui/kr_long_bg.png", crop: 450, isLong: true },
     plans: { img: "assets/ui/plans.png", crop: 212 },
     coupon: { img: "assets/ui/coupon.png", crop: 178 },
     pay: { img: "assets/ui/pay.png", crop: 182 }
@@ -150,8 +150,8 @@
       const isKr = c.key === "KR";
       return `
       ${heroHTML("login")}
-      <div class="body body--login ${isKr ? 'body--transparent' : ''}">
-        <div class="mcard">
+      <div class="body body--login ${isKr ? 'body--transparent' : ''}" ${isKr ? 'style="margin-top:-1680px;position:relative;z-index:10;background:transparent;box-shadow:none"' : ''}>
+        <div class="mcard" ${isKr ? 'style="margin-top:400px"' : ''}>
           <h1 class="dino-title">Dino English</h1>
           <p class="dino-sub">The No.1 AI English App for Kids – 13 Years of Trust, Smart AI Tutors</p>
 
