@@ -71,6 +71,7 @@
         { key: "1y", name: "1 Year", label: "1 year plan", price: 2000000, per: "≈VND 5,479/Day", was: "VND 3,500,000", best: false }
       ],
       methods: [
+        { key: "bank_transfer", name: "Local Bank Transfer", ico: "🏦", bg: "transparent", emoji: true },
         { key: "intl_card", name: "International Bank Card", ico: "🌍", bg: "transparent", emoji: true }
       ]
     }
@@ -293,6 +294,45 @@
       </div>`;
     },
 
+    transfer_instructions() {
+      const p = currentPlan();
+      return `
+      <div class="body body--blue" style="min-height:720px; display:flex; flex-direction:column; background:#f5f7ff; margin-top:0; border-radius:34px; padding: 24px;">
+        <h2 style="color:#232049;font-size:22px;margin-bottom:8px;font-weight:800;text-align:center;">Transfer Instructions</h2>
+        <p style="color:#7a7a8e;font-size:14px;text-align:center;margin-bottom:24px;">Please transfer the exact amount to the bank account below.</p>
+        
+        <div style="background:#fff; border-radius:16px; padding:20px; width:100%; box-shadow:0 4px 12px rgba(0,0,0,0.05); margin-bottom: 24px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+            <span style="color:#7a7a8e;font-size:13px;">Transfer Amount</span>
+            <b style="color:#ef5350;font-size:16px;">${money(total())}</b>
+          </div>
+          <div style="height:1px; background:rgba(0,0,0,0.05); margin-bottom:12px;"></div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+            <span style="color:#7a7a8e;font-size:13px;">Bank Name</span>
+            <b style="color:#232049;font-size:14px;text-align:right;">Vietcombank (NAPAS)</b>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+            <span style="color:#7a7a8e;font-size:13px;">Account Name</span>
+            <b style="color:#232049;font-size:14px;text-align:right;">DINO ENGLISH PTE LTD</b>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+            <span style="color:#7a7a8e;font-size:13px;">Account Number</span>
+            <b style="color:#232049;font-size:14px;text-align:right;">1029384756</b>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+            <span style="color:#7a7a8e;font-size:13px;">Reference Code</span>
+            <b style="color:#232049;font-size:14px;text-align:right;">DINO-${Math.floor(100000 + Math.random()*900000)}</b>
+          </div>
+          <div style="font-size:12px;color:#ef5350;background:rgba(239,83,80,0.1);padding:10px;border-radius:8px;margin-top:16px;">
+            ⚠️ Notice: Include the Reference Code in your transfer note to avoid delay.
+          </div>
+        </div>
+
+        <button class="cta cta--wide" id="simulate-transfer-btn">I have transferred</button>
+        <p class="foot" style="text-align:center;margin-top:16px;">Your subscription will be active automatically once we receive the payment.</p>
+      </div>`;
+    },
+
     processing() {
       return `
       <div class="body body--blue" style="min-height:720px; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f5f7ff; margin-top:0; border-radius:34px;">
@@ -356,7 +396,7 @@
   }
 
   function labelOf(id) {
-    return { login: "登录", plans: "选择套餐", coupon: "优惠码", pay: "支付方式", processing: "确认付款", success: "支付成功" }[id];
+    return { login: "登录", plans: "选择套餐", coupon: "优惠码", pay: "支付方式", transfer_instructions: "转账指引", processing: "确认付款", success: "支付成功" }[id];
   }
 
   /* ------------------------- 事件绑定 ------------------------- */
@@ -480,7 +520,9 @@
         state.ewallet = b.dataset.ew; show("pay");
       }));
       $("#paynow").addEventListener("click", () => {
-        if (state.pay === 'ewallet') {
+        if (state.pay === 'bank_transfer') {
+          show("transfer_instructions");
+        } else if (state.pay === 'ewallet') {
           toast("跳转第三方 App 支付...");
           setTimeout(() => {
             show("processing");
@@ -490,6 +532,16 @@
           toast("支付成功");
           setTimeout(() => show("success"), 400);
         }
+      });
+    }
+
+    if (id === "transfer_instructions") {
+      $("#simulate-transfer-btn").addEventListener("click", () => {
+        toast("Mocking webhook received...");
+        setTimeout(() => {
+          show("processing");
+          setTimeout(() => show("success"), 2500);
+        }, 500);
       });
     }
 
