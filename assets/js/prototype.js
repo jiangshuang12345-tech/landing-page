@@ -71,7 +71,9 @@
         { key: "1y", name: "1 Year", label: "1 year plan", price: 2000000, per: "≈VND 5,479/Day", was: "VND 3,500,000", best: false }
       ],
       methods: [
-        { key: "bank_transfer", name: "Local Bank Transfer", ico: "🏦", bg: "transparent", emoji: true },
+        { key: "bank_transfer", name: "Bank Transfer", ico: "🏦", bg: "transparent", emoji: true },
+        { key: "installment", name: "Installment", sub: "Split into 3 payments", ico: "⏱️", bg: "transparent", emoji: true },
+        { key: "deposit", name: "Deposit", sub: "Secure promotion with VND 50k", ico: "💰", bg: "transparent", emoji: true },
         { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
         { key: "mastercard", name: "Mastercard", ico: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", bg: "transparent", isImg: true }
       ]
@@ -265,34 +267,6 @@
           ${state.couponApplied ? `<div class="srow"><span>Discount</span><b class="disc">-${money(state.discount)}</b></div>` : ""}
           <div class="srow total"><span>Due Today</span><b>${money(payToday())}</b></div>
         </div>
-        ${c.key === 'VN' ? `
-        <div class="mcard">
-          <h3 class="mtitle">Payment Plan (VN Special)</h3>
-          <div class="pay-modes" style="display:flex; flex-direction:column; gap:8px;">
-            <label style="display:flex; align-items:center; padding:12px; border:1px solid ${state.paymentMode === 'full' ? '#3d7bff' : 'rgba(0,0,0,0.08)'}; border-radius:12px; background:${state.paymentMode === 'full' ? '#f0f5ff' : '#fff'}; cursor:pointer;">
-              <input type="radio" name="paymode" value="full" style="margin-right:12px; accent-color:#3d7bff;" ${state.paymentMode === 'full' ? 'checked' : ''}>
-              <div style="flex:1;">
-                <div style="font-weight:600; color:#232049; font-size:14px;">Full Payment</div>
-                <div style="font-size:12px; color:#7a7a8e;">Pay the total amount today</div>
-              </div>
-            </label>
-            <label style="display:flex; align-items:center; padding:12px; border:1px solid ${state.paymentMode === 'installment' ? '#3d7bff' : 'rgba(0,0,0,0.08)'}; border-radius:12px; background:${state.paymentMode === 'installment' ? '#f0f5ff' : '#fff'}; cursor:pointer;">
-              <input type="radio" name="paymode" value="installment" style="margin-right:12px; accent-color:#3d7bff;" ${state.paymentMode === 'installment' ? 'checked' : ''}>
-              <div style="flex:1;">
-                <div style="font-weight:600; color:#232049; font-size:14px;">3-Month Installment</div>
-                <div style="font-size:12px; color:#7a7a8e;">Split into 3 payments. Pay ${money(Math.round(total()/3))} today</div>
-              </div>
-            </label>
-            <label style="display:flex; align-items:center; padding:12px; border:1px solid ${state.paymentMode === 'deposit' ? '#3d7bff' : 'rgba(0,0,0,0.08)'}; border-radius:12px; background:${state.paymentMode === 'deposit' ? '#f0f5ff' : '#fff'}; cursor:pointer;">
-              <input type="radio" name="paymode" value="deposit" style="margin-right:12px; accent-color:#3d7bff;" ${state.paymentMode === 'deposit' ? 'checked' : ''}>
-              <div style="flex:1;">
-                <div style="font-weight:600; color:#232049; font-size:14px;">Pay Deposit</div>
-                <div style="font-size:12px; color:#7a7a8e;">Secure promotion with a ${money(50000)} deposit</div>
-              </div>
-            </label>
-          </div>
-        </div>
-        ` : ''}
         <div class="mcard">
           <h3 class="mtitle">Choose Payment Method</h3>
           <div class="methods">
@@ -336,7 +310,7 @@
             }).join("")}
           </div>
         </div>
-        ${(state.pay === 'visa' || state.pay === 'mastercard') && state.paymentMode !== 'full' ? `
+        ${c.key === 'VN' && (state.pay === 'installment' || state.pay === 'deposit') ? `
         <div style="margin-bottom:16px; padding:12px; background:rgba(61,123,255,0.05); border:1px solid rgba(61,123,255,0.2); border-radius:12px; display:flex; align-items:flex-start; gap:10px;">
           <input type="checkbox" id="auto-deduct" checked style="margin-top:2px; accent-color:#3d7bff; width:16px; height:16px; cursor:pointer;" />
           <label for="auto-deduct" style="font-size:12px; color:#232049; line-height:1.4; cursor:pointer;">
@@ -580,12 +554,6 @@
     }
 
     if (id === "pay") {
-      $$("input[name='paymode']", viewport).forEach(radio => {
-        radio.addEventListener("change", (e) => {
-          state.paymentMode = e.target.value;
-          show("pay");
-        });
-      });
       $$(".method", viewport).forEach((b) => b.addEventListener("click", (e) => {
         if (e.target.closest('.sub-methods')) return;
         state.pay = b.dataset.pay; show("pay");
