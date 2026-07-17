@@ -93,8 +93,6 @@ img { -webkit-user-drag: none; }
  * ===================================================================== */
 .screen { min-height: 720px; position: relative; font-size: 15px; color: #232049; }
 .hero { width: 100%; background-repeat: no-repeat; background-position: top center; background-size: 100% auto; }
-.hero-long { width: 100%; height: 2000px; background-repeat: no-repeat; background-position: top center; background-size: 100% auto; }
-.hero-long { position: absolute; inset: 0; width: 100%; height: 100%; background-repeat: no-repeat; background-position: top center; background-size: 100% auto; z-index: 0; }
 
 .body { position: relative; padding: 0 18px 26px; z-index: 1; }
 .body--login { margin-top: -22px; background: linear-gradient(180deg,#efeafb 0%,#e6ecfb 45%,#dbe7fc 100%); border-radius: 26px 26px 0 0; padding-top: 4px; }

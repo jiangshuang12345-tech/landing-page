@@ -131,15 +131,13 @@
 
   function heroHTML(id) {
     let h = HERO[id];
-    // 针对韩国登录页使用长图背景
     if (id === "login" && currentCountry().key === "KR") {
       h = HERO["login_kr"];
     }
     if (!h) return "";
     
     if (h.isLong) {
-      // 韩国长图特殊处理：不裁剪，直接作为整个屏幕的背景，并让内容盖在上面
-      return `<div class="hero-long" style="background-image:url('${h.img}')"></div>`;
+      return `<img src="${h.img}" style="width: 100%; display: block;" />`;
     }
     return `<div class="hero" style="height:${h.crop}px;background-image:url('${h.img}')"></div>`;
   }
@@ -149,9 +147,10 @@
       const c = currentCountry();
       const isKr = c.key === "KR";
       return `
-      ${heroHTML("login")}
-      <div class="body body--login ${isKr ? 'body--transparent' : ''}" ${isKr ? 'style="margin-top:-1680px;position:relative;z-index:10;background:transparent;box-shadow:none"' : ''}>
-        <div class="mcard" ${isKr ? 'style="margin-top:400px"' : ''}>
+      <div style="position: relative;">
+        ${heroHTML("login")}
+        <div class="body body--login ${isKr ? 'body--transparent' : ''}" ${isKr ? 'style="position:absolute; top:298px; left:0; width:100%; margin-top:0; background:transparent; box-shadow:none; z-index:10;"' : ''}>
+          <div class="mcard" ${isKr ? 'style="margin-top:0"' : ''}>
           <h1 class="dino-title">Dino English</h1>
           <p class="dino-sub">The No.1 AI English App for Kids – 13 Years of Trust, Smart AI Tutors</p>
 
@@ -179,6 +178,7 @@
           <span class="soc" style="color:#1877F2">f</span>
           <span class="soc" style="background:#FEE500;color:#3A1D1D">K</span>
         </div>
+      </div>
       </div>`;
     },
 
