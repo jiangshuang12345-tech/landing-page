@@ -102,7 +102,8 @@
     couponMsg: "",
     couponErr: false,
     pay: "toss",
-    ewallet: "tng"
+    ewallet: "tng",
+    paymentMode: "full"
   };
   let countdownTimer = null;
 
@@ -116,6 +117,14 @@
   const currentCountry = () => COUNTRIES[state.country];
   const currentPlan = () => currentCountry().plans.find(p => p.key === state.plan) || currentCountry().plans[0];
   const total = () => Math.max(0, currentPlan().price - (state.couponApplied ? state.discount : 0));
+  const payToday = () => {
+    let t = total();
+    if (currentCountry().key === "VN") {
+      if (state.paymentMode === "installment") return Math.round(t / 3);
+      if (state.paymentMode === "deposit") return 50000;
+    }
+    return t;
+  };
 
   /* ------------------------- Toast ------------------------- */
   let toastT;
@@ -253,8 +262,36 @@
         <div class="mcard summary">
           <div class="srow"><span>${p.name} plan</span><b>${money(p.price)}</b></div>
           ${state.couponApplied ? `<div class="srow"><span>Discount</span><b class="disc">-${money(state.discount)}</b></div>` : ""}
-          <div class="srow total"><span>Total</span><b>${money(total())}</b></div>
+          <div class="srow total"><span>Due Today</span><b>${money(payToday())}</b></div>
         </div>
+        ${c.key === 'VN' ? `
+        <div class="mcard">
+          <h3 class="mtitle">Payment Plan (VN Special)</h3>
+          <div class="pay-modes" style="display:flex; flex-direction:column; gap:8px;">
+            <label style="display:flex; align-items:center; padding:12px; border:1px solid ${state.paymentMode === 'full' ? '#3d7bff' : 'rgba(0,0,0,0.08)'}; border-radius:12px; background:${state.paymentMode === 'full' ? '#f0f5ff' : '#fff'}; cursor:pointer;">
+              <input type="radio" name="paymode" value="full" style="margin-right:12px; accent-color:#3d7bff;" ${state.paymentMode === 'full' ? 'checked' : ''}>
+              <div style="flex:1;">
+                <div style="font-weight:600; color:#232049; font-size:14px;">Full Payment</div>
+                <div style="font-size:12px; color:#7a7a8e;">Pay the total amount today</div>
+              </div>
+            </label>
+            <label style="display:flex; align-items:center; padding:12px; border:1px solid ${state.paymentMode === 'installment' ? '#3d7bff' : 'rgba(0,0,0,0.08)'}; border-radius:12px; background:${state.paymentMode === 'installment' ? '#f0f5ff' : '#fff'}; cursor:pointer;">
+              <input type="radio" name="paymode" value="installment" style="margin-right:12px; accent-color:#3d7bff;" ${state.paymentMode === 'installment' ? 'checked' : ''}>
+              <div style="flex:1;">
+                <div style="font-weight:600; color:#232049; font-size:14px;">3-Month Installment</div>
+                <div style="font-size:12px; color:#7a7a8e;">Split into 3 payments. Pay ${money(Math.round(total()/3))} today</div>
+              </div>
+            </label>
+            <label style="display:flex; align-items:center; padding:12px; border:1px solid ${state.paymentMode === 'deposit' ? '#3d7bff' : 'rgba(0,0,0,0.08)'}; border-radius:12px; background:${state.paymentMode === 'deposit' ? '#f0f5ff' : '#fff'}; cursor:pointer;">
+              <input type="radio" name="paymode" value="deposit" style="margin-right:12px; accent-color:#3d7bff;" ${state.paymentMode === 'deposit' ? 'checked' : ''}>
+              <div style="flex:1;">
+                <div style="font-weight:600; color:#232049; font-size:14px;">Pay Deposit</div>
+                <div style="font-size:12px; color:#7a7a8e;">Secure promotion with a ${money(50000)} deposit</div>
+              </div>
+            </label>
+          </div>
+        </div>
+        ` : ''}
         <div class="mcard">
           <h3 class="mtitle">Choose Payment Method</h3>
           <div class="methods">
@@ -506,10 +543,12 @@
         if (COUPONS[code] != null || isDino4) {
           state.couponApplied = true;
           // 假设优惠券的折扣数值就是对应的货币数值（这里做个简单转换，或者固定减去该数值）
-          state.discount = COUPONS[code] || 40; // 默认 DINO+4位数字 减 40
-          // 如果是印尼/越南等大面额货币，优惠券金额可能需要乘以一个系数，这里为了演示直接用数字
+          let baseDiscount = COUPONS[code] || 40; // 默认 DINO+4位数字 减 40
+          // 如果是印尼/越南/韩国等大面额货币，优惠券金额可能需要乘以一个系数
           if (["IDR", "VND", "KRW"].includes(currentCountry().cur)) {
-            state.discount = COUPONS[code] * 1000;
+            state.discount = baseDiscount * 1000;
+          } else {
+            state.discount = baseDiscount;
           }
           state.couponErr = false;
           state.couponMsg = "You saved " + money(state.discount);
@@ -522,6 +561,12 @@
     }
 
     if (id === "pay") {
+      $$("input[name='paymode']", viewport).forEach(radio => {
+        radio.addEventListener("change", (e) => {
+          state.paymentMode = e.target.value;
+          show("pay");
+        });
+      });
       $$(".method", viewport).forEach((b) => b.addEventListener("click", (e) => {
         if (e.target.closest('.sub-methods')) return;
         state.pay = b.dataset.pay; show("pay");
@@ -592,7 +637,7 @@
 
   function resetAll() {
     clearInterval(countdownTimer);
-    Object.assign(state, { phone: "", code: "", codeSent: false, countdown: 0, coupon: "", couponApplied: false, discount: 0, couponMsg: "", couponErr: false });
+    Object.assign(state, { phone: "", code: "", codeSent: false, countdown: 0, coupon: "", couponApplied: false, discount: 0, couponMsg: "", couponErr: false, paymentMode: "full" });
     // 重置套餐和支付方式为当前国家的默认值
     state.plan = currentCountry().plans[0].key;
     state.pay = currentCountry().methods[0].key;
@@ -609,6 +654,7 @@
     state.coupon = "";
     state.couponMsg = "";
     state.couponErr = false;
+    state.paymentMode = "full";
     renderCountryTabs();
     show(current);
   }
@@ -644,7 +690,7 @@
     $("#info-phone").textContent = state.phone ? `${c.code} ${state.phone}` : "—";
     $("#info-plan").textContent = `${p.name} · ${money(p.price)}`;
     $("#info-coupon").textContent = state.couponApplied ? `${state.coupon.toUpperCase()} (-${money(state.discount)})` : (state.coupon || "—");
-    $("#info-total").textContent = money(total());
+    $("#info-total").textContent = currentCountry().key === 'VN' && state.paymentMode !== 'full' ? `${money(payToday())} (Due Today)` : money(total());
     $("#info-pay").textContent = (c.methods.find((m) => m.key === state.pay) || {}).name || "—";
   }
 
