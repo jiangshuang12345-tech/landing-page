@@ -450,8 +450,11 @@ input code → normalize(upper)
 | 马来月包 + 40% | RM 166.50 | percent 40 | RM 99.90 |
 | 印尼年包 + 45% | IDR 4,890,909 | percent 45 | IDR 2,690,000 |
 
-## 附录 B · 参考来源
+## 附录 B · 核心参考来源与对接文档
 
 - 一期 PRD：`后期规划文档 / Dino English - Landing page (sa_kr_in_my)`
 - 二期配置草稿：`后期规划文档 / Landing Page-二期.md`
-- 一期交互式 PRD：仓库 `index.html`
+- 越南/马来本地支付需求源：`后期规划文档 / DinoAI_Malaysia_Local_Payments_PRD_v1.0.md`
+- 一期交互式 PRD：仓库 `prototype.html`
+- **Airwallex 官方开发文档：** 
+  - [Accept bank transfer payments - Airwallex Docs](https://www.airwallex.com/docs/payments/payment-methods/global/bank-transfer/accept-bank-transfer-payments) （用于指导后端对接越南 NAPAS 银行转账及 Webhook 回调处理）
