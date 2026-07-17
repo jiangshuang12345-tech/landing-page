@@ -71,8 +71,9 @@
         { key: "1y", name: "1 Year", label: "1 year plan", price: 2000000, per: "≈VND 5,479/Day", was: "VND 3,500,000", best: false }
       ],
       methods: [
-        { key: "bank_transfer", name: "Local Bank Transfer", ico: "🏦", bg: "transparent", emoji: true },
-        { key: "intl_card", name: "International Bank Card", ico: "🌍", bg: "transparent", emoji: true }
+        { key: "bank_transfer", name: "Bank Transfer", ico: "🏦", bg: "transparent", emoji: true },
+        { key: "installment", name: "Installment", sub: "Split into 3 payments", ico: "⏱️", bg: "transparent", emoji: true },
+        { key: "deposit", name: "Deposit", sub: "Secure promotion with VND 50k", ico: "💰", bg: "transparent", emoji: true }
       ]
     }
   ];
@@ -120,8 +121,8 @@
   const payToday = () => {
     let t = total();
     if (currentCountry().key === "VN") {
-      if (state.paymentMode === "installment") return Math.round(t / 3);
-      if (state.paymentMode === "deposit") return 50000;
+      if (state.pay === "installment") return Math.round(t / 3);
+      if (state.pay === "deposit") return 50000;
     }
     return t;
   };
@@ -264,44 +265,25 @@
           ${state.couponApplied ? `<div class="srow"><span>Discount</span><b class="disc">-${money(state.discount)}</b></div>` : ""}
           <div class="srow total"><span>Due Today</span><b>${money(payToday())}</b></div>
         </div>
-        ${c.key === 'VN' ? `
-        <div class="mcard">
-          <h3 class="mtitle">Payment Plan (VN Special)</h3>
-          <div class="pay-modes" style="display:flex; flex-direction:column; gap:8px;">
-            <label style="display:flex; align-items:center; padding:12px; border:1px solid ${state.paymentMode === 'full' ? '#3d7bff' : 'rgba(0,0,0,0.08)'}; border-radius:12px; background:${state.paymentMode === 'full' ? '#f0f5ff' : '#fff'}; cursor:pointer;">
-              <input type="radio" name="paymode" value="full" style="margin-right:12px; accent-color:#3d7bff;" ${state.paymentMode === 'full' ? 'checked' : ''}>
-              <div style="flex:1;">
-                <div style="font-weight:600; color:#232049; font-size:14px;">Full Payment</div>
-                <div style="font-size:12px; color:#7a7a8e;">Pay the total amount today</div>
-              </div>
-            </label>
-            <label style="display:flex; align-items:center; padding:12px; border:1px solid ${state.paymentMode === 'installment' ? '#3d7bff' : 'rgba(0,0,0,0.08)'}; border-radius:12px; background:${state.paymentMode === 'installment' ? '#f0f5ff' : '#fff'}; cursor:pointer;">
-              <input type="radio" name="paymode" value="installment" style="margin-right:12px; accent-color:#3d7bff;" ${state.paymentMode === 'installment' ? 'checked' : ''}>
-              <div style="flex:1;">
-                <div style="font-weight:600; color:#232049; font-size:14px;">3-Month Installment</div>
-                <div style="font-size:12px; color:#7a7a8e;">Split into 3 payments. Pay ${money(Math.round(total()/3))} today</div>
-              </div>
-            </label>
-            <label style="display:flex; align-items:center; padding:12px; border:1px solid ${state.paymentMode === 'deposit' ? '#3d7bff' : 'rgba(0,0,0,0.08)'}; border-radius:12px; background:${state.paymentMode === 'deposit' ? '#f0f5ff' : '#fff'}; cursor:pointer;">
-              <input type="radio" name="paymode" value="deposit" style="margin-right:12px; accent-color:#3d7bff;" ${state.paymentMode === 'deposit' ? 'checked' : ''}>
-              <div style="flex:1;">
-                <div style="font-weight:600; color:#232049; font-size:14px;">Pay Deposit</div>
-                <div style="font-size:12px; color:#7a7a8e;">Secure promotion with a ${money(50000)} deposit</div>
-              </div>
-            </label>
-          </div>
-        </div>
-        ` : ''}
         <div class="mcard">
           <h3 class="mtitle">Choose Payment Method</h3>
           <div class="methods">
             ${c.methods.map((m) => {
               const sel = state.pay === m.key;
-              const icon = m.emoji
-                ? `<span class="m-ico emoji">${m.ico}</span>`
-                : `<span class="m-ico ${m.small ? "small" : ""}" style="background:${m.bg};color:${m.fg || "#fff"}">${m.ico}</span>`;
+              let icon = '';
+              if (m.isImg) {
+                icon = `<img src="${m.ico}" alt="${m.name}" style="height:24px; object-fit:contain;" />`;
+              } else {
+                icon = m.emoji
+                  ? `<span class="m-ico emoji">${m.ico}</span>`
+                  : `<span class="m-ico ${m.small ? "small" : ""}" style="background:${m.bg};color:${m.fg || "#fff"}">${m.ico}</span>`;
+              }
               return `<button class="method ${sel ? "sel" : ""}" data-pay="${m.key}">
-                ${icon}<span class="m-name">${m.name}</span>
+                ${icon}
+                <div style="flex:1; text-align:left; margin-left:${m.isImg ? '12px' : '0'};">
+                  <div class="m-name" style="margin:0;">${m.name}</div>
+                  ${m.sub ? `<div style="font-size:12px;color:#7a7a8e;margin-top:2px;font-weight:400;line-height:1.2;">${m.sub}</div>` : ''}
+                </div>
                 <span class="m-rad ${sel ? "on" : ""}"></span>
               </button>
               ${sel && m.key === 'fpx' ? `
@@ -341,7 +323,7 @@
         <div style="background:#fff; border-radius:16px; padding:20px; width:100%; box-shadow:0 4px 12px rgba(0,0,0,0.05); margin-bottom: 24px;">
           <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
             <span style="color:#7a7a8e;font-size:13px;">Transfer Amount</span>
-            <b style="color:#ef5350;font-size:16px;">${money(total())}</b>
+            <b style="color:#ef5350;font-size:16px;">${money(payToday())}</b>
           </div>
           <div style="height:1px; background:rgba(0,0,0,0.05); margin-bottom:12px;"></div>
           <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
@@ -561,12 +543,6 @@
     }
 
     if (id === "pay") {
-      $$("input[name='paymode']", viewport).forEach(radio => {
-        radio.addEventListener("change", (e) => {
-          state.paymentMode = e.target.value;
-          show("pay");
-        });
-      });
       $$(".method", viewport).forEach((b) => b.addEventListener("click", (e) => {
         if (e.target.closest('.sub-methods')) return;
         state.pay = b.dataset.pay; show("pay");
@@ -576,7 +552,7 @@
         state.ewallet = b.dataset.ew; show("pay");
       }));
       $("#paynow").addEventListener("click", () => {
-        if (state.pay === 'bank_transfer') {
+        if (state.pay === 'bank_transfer' || state.pay === 'installment' || state.pay === 'deposit') {
           show("transfer_instructions");
         } else if (state.pay === 'ewallet') {
           toast("跳转第三方 App 支付...");
@@ -637,7 +613,7 @@
 
   function resetAll() {
     clearInterval(countdownTimer);
-    Object.assign(state, { phone: "", code: "", codeSent: false, countdown: 0, coupon: "", couponApplied: false, discount: 0, couponMsg: "", couponErr: false, paymentMode: "full" });
+    Object.assign(state, { phone: "", code: "", codeSent: false, countdown: 0, coupon: "", couponApplied: false, discount: 0, couponMsg: "", couponErr: false });
     // 重置套餐和支付方式为当前国家的默认值
     state.plan = currentCountry().plans[0].key;
     state.pay = currentCountry().methods[0].key;
@@ -654,7 +630,6 @@
     state.coupon = "";
     state.couponMsg = "";
     state.couponErr = false;
-    state.paymentMode = "full";
     renderCountryTabs();
     show(current);
   }
@@ -690,7 +665,7 @@
     $("#info-phone").textContent = state.phone ? `${c.code} ${state.phone}` : "—";
     $("#info-plan").textContent = `${p.name} · ${money(p.price)}`;
     $("#info-coupon").textContent = state.couponApplied ? `${state.coupon.toUpperCase()} (-${money(state.discount)})` : (state.coupon || "—");
-    $("#info-total").textContent = currentCountry().key === 'VN' && state.paymentMode !== 'full' ? `${money(payToday())} (Due Today)` : money(total());
+    $("#info-total").textContent = currentCountry().key === 'VN' && (state.pay === 'installment' || state.pay === 'deposit') ? `${money(payToday())} (Due Today)` : money(total());
     $("#info-pay").textContent = (c.methods.find((m) => m.key === state.pay) || {}).name || "—";
   }
 
