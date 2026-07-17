@@ -60,7 +60,8 @@
       methods: [
         { key: "fpx", name: "FPX", ico: "F", bg: "#00529C" },
         { key: "ewallet", name: "E-wallets", ico: "E", bg: "#FF004D" },
-        { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true, extra: '<div style="display:flex;gap:8px;margin-right:12px;align-items:center;"><span style="color:#1a1f71;font-weight:800;font-size:14px;font-style:italic;">Visa</span><div style="display:flex;align-items:center;gap:4px;"><div style="display:flex;align-items:center;position:relative;width:22px;height:14px;"><div style="position:absolute;left:0;width:14px;height:14px;border-radius:50%;background:#eb001b;opacity:0.9;"></div><div style="position:absolute;right:0;width:14px;height:14px;border-radius:50%;background:#f79e1b;opacity:0.9;"></div></div><span style="color:#232049;font-weight:600;font-size:12px;">Mastercard</span></div></div>' }
+        { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
+        { key: "mastercard", name: "Mastercard", ico: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", bg: "transparent", isImg: true }
       ]
     },
     {
