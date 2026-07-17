@@ -172,12 +172,14 @@
           <p class="terms">You agree to our <a>Terms of Use</a> and <a>Privacy Policy</a></p>
         </div>
 
+        ${c.key === "VN" ? "" : `
         <div class="socials">
           <span class="soc" style="color:#EA4335">G</span>
           <span class="soc" style="color:#111"></span>
           <span class="soc" style="color:#1877F2">f</span>
           <span class="soc" style="background:#FEE500;color:#3A1D1D">K</span>
         </div>
+        `}
       </div>
       </div>`;
     },
