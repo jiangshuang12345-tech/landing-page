@@ -181,6 +181,7 @@
         </div>
         `}
       </div>
+      ${isKr ? `<div class="sticky-btn-wrap" id="kr-sticky-btn" hidden><button class="sticky-btn">지금 Dino English 시작하기</button></div>` : ''}
       </div>`;
     },
 
@@ -339,6 +340,10 @@
 
   function show(id) {
     current = id;
+    if (viewport._scrollHandler) {
+      viewport.removeEventListener("scroll", viewport._scrollHandler);
+      viewport._scrollHandler = null;
+    }
     viewport.innerHTML = `<div class="screen screen--${id}">${SCREENS[id]()}</div>`;
     viewport.scrollTop = 0;
     bindScreen(id);
@@ -361,6 +366,24 @@
 
     if (id === "login") {
       const phone = $("#phone"), code = $("#code");
+      
+      // 韩国吸底按钮逻辑
+      const stickyBtnWrap = $("#kr-sticky-btn");
+      if (stickyBtnWrap) {
+        const handleScroll = () => {
+          if (viewport.scrollTop > 500) {
+            stickyBtnWrap.hidden = false;
+          } else {
+            stickyBtnWrap.hidden = true;
+          }
+        };
+        viewport._scrollHandler = handleScroll;
+        viewport.addEventListener("scroll", handleScroll);
+        
+        stickyBtnWrap.querySelector("button").addEventListener("click", () => {
+          viewport.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
       
       // 获取验证码
       const getcodeBtn = $("#getcode");
