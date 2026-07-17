@@ -74,8 +74,8 @@
         { key: "bank_transfer", name: "Bank Transfer", ico: "🏦", bg: "transparent", emoji: true },
         { key: "installment", name: "Installment", sub: "Split into 3 payments", ico: "⏱️", bg: "transparent", emoji: true },
         { key: "deposit", name: "Deposit", sub: "Secure promotion with VND 50k", ico: "💰", bg: "transparent", emoji: true },
-        { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
-        { key: "mastercard", name: "Mastercard", ico: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", bg: "transparent", isImg: true }
+        { key: "visa", name: "Visa", ico: "Visa", bg: "transparent", isCssLogo: true, cssLogo: '<span style="color:#1a1f71;font-weight:800;font-size:20px;font-style:italic;letter-spacing:-1px;">Visa</span>' },
+        { key: "mastercard", name: "Mastercard", ico: "Mastercard", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;position:relative;width:32px;height:22px;"><div style="position:absolute;left:0;width:22px;height:22px;border-radius:50%;background:#eb001b;opacity:0.8;"></div><div style="position:absolute;right:0;width:22px;height:22px;border-radius:50%;background:#f79e1b;opacity:0.8;"></div></div>' }
       ]
     }
   ];
@@ -275,7 +275,9 @@
               const sel = state.pay === m.key;
               let icon = '';
               if (m.isImg) {
-                icon = `<img src="${m.ico}" alt="${m.name}" style="height:24px; object-fit:contain;" />`;
+                icon = `<div class="m-ico" style="background:transparent;"><img src="${m.ico}" alt="${m.name}" style="height:24px; object-fit:contain;" /></div>`;
+              } else if (m.isCssLogo) {
+                icon = `<div class="m-ico" style="background:transparent;">${m.cssLogo}</div>`;
               } else {
                 icon = m.emoji
                   ? `<span class="m-ico emoji">${m.ico}</span>`
@@ -283,7 +285,7 @@
               }
               return `<button class="method ${sel ? "sel" : ""}" data-pay="${m.key}">
                 ${icon}
-                <div style="flex:1; text-align:left; margin-left:${m.isImg ? '12px' : '0'};">
+                <div style="flex:1; text-align:left;">
                   <div class="m-name" style="margin:0;">${m.name}</div>
                   ${m.sub ? `<div style="font-size:12px;color:#7a7a8e;margin-top:2px;font-weight:400;line-height:1.2;">${m.sub}</div>` : ''}
                 </div>
