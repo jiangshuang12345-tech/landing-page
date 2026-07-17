@@ -384,6 +384,10 @@
       viewport.removeEventListener("scroll", viewport._scrollHandler);
       viewport._scrollHandler = null;
     }
+    if (viewport._loginObserver) {
+      viewport._loginObserver.disconnect();
+      viewport._loginObserver = null;
+    }
     viewport.innerHTML = `<div class="screen screen--${id}">${SCREENS[id]()}</div>`;
     viewport.scrollTop = 0;
     bindScreen(id);
@@ -410,15 +414,22 @@
       // 韩国吸底按钮逻辑
       const stickyBtnWrap = $("#kr-sticky-btn");
       if (stickyBtnWrap) {
-        const handleScroll = () => {
-          if (viewport.scrollTop > 500) {
-            stickyBtnWrap.hidden = false;
-          } else {
-            stickyBtnWrap.hidden = true;
-          }
-        };
-        viewport._scrollHandler = handleScroll;
-        viewport.addEventListener("scroll", handleScroll);
+        const loginCard = $(".body--login .mcard");
+        if (loginCard) {
+          const observer = new IntersectionObserver((entries) => {
+            // 当登录卡片完全离开视口时，显示吸底按钮
+            if (entries[0].intersectionRatio === 0) {
+              stickyBtnWrap.hidden = false;
+            } else {
+              stickyBtnWrap.hidden = true;
+            }
+          }, { root: viewport, threshold: 0 });
+          
+          observer.observe(loginCard);
+          
+          if (viewport._loginObserver) viewport._loginObserver.disconnect();
+          viewport._loginObserver = observer;
+        }
         
         stickyBtnWrap.querySelector("button").addEventListener("click", () => {
           viewport.scrollTo({ top: 0, behavior: 'smooth' });
