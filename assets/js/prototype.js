@@ -60,7 +60,7 @@
       methods: [
         { key: "fpx", name: "FPX", ico: "F", bg: "#00529C" },
         { key: "ewallet", name: "E-wallets", ico: "E", bg: "#FF004D" },
-        { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true }
+        { key: "card", name: "Bank Card", ico: "💳", bg: "transparent", emoji: true, extra: '<div style="display:flex;gap:6px;margin-right:12px;align-items:center;"><span style="color:#1a1f71;font-weight:800;font-size:14px;font-style:italic;">Visa</span><div style="display:flex;align-items:center;position:relative;width:24px;height:16px;"><div style="position:absolute;left:0;width:16px;height:16px;border-radius:50%;background:#eb001b;opacity:0.8;"></div><div style="position:absolute;right:0;width:16px;height:16px;border-radius:50%;background:#f79e1b;opacity:0.8;"></div></div></div>' }
       ]
     },
     {
@@ -106,6 +106,7 @@
     couponErr: false,
     pay: "toss",
     ewallet: "tng",
+    fpxBank: "maybank",
     paymentMode: "full"
   };
   let countdownTimer = null;
@@ -286,14 +287,15 @@
                   <div class="m-name" style="margin:0;">${m.name}</div>
                   ${m.sub ? `<div style="font-size:12px;color:#7a7a8e;margin-top:2px;font-weight:400;line-height:1.2;">${m.sub}</div>` : ''}
                 </div>
+                ${m.extra || ''}
                 <span class="m-rad ${sel ? "on" : ""}"></span>
               </button>
               ${sel && m.key === 'fpx' ? `
                 <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(0,0,0,0.03);border-radius:12px;border:1px solid rgba(0,0,0,0.06);">
                   <div style="font-size:12px;color:#7a7a8e;margin-bottom:8px">Select Bank</div>
                   <div style="display:flex;gap:6px;flex-wrap:wrap">
-                    <button style="flex:1;padding:8px;border-radius:8px;border:1px solid #3d7bff;background:#f0f5ff;color:#3d7bff;font-weight:600;font-size:13px;cursor:pointer">Maybank2U</button>
-                    <button style="flex:1;padding:8px;border-radius:8px;border:1px solid #d3d3e0;background:#fff;color:#232049;font-weight:600;font-size:13px;cursor:pointer">CIMB Clicks</button>
+                    <button class="fpx-btn" data-bank="maybank" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.fpxBank === 'maybank' ? '#3d7bff' : '#d3d3e0'};background:${state.fpxBank === 'maybank' ? '#f0f5ff' : '#fff'};color:${state.fpxBank === 'maybank' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer">Maybank2U</button>
+                    <button class="fpx-btn" data-bank="cimb" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.fpxBank === 'cimb' ? '#3d7bff' : '#d3d3e0'};background:${state.fpxBank === 'cimb' ? '#f0f5ff' : '#fff'};color:${state.fpxBank === 'cimb' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer">CIMB Clicks</button>
                   </div>
                 </div>
               ` : ''}
@@ -558,6 +560,10 @@
         if (e.target.closest('.sub-methods')) return;
         state.pay = b.dataset.pay; show("pay");
       }));
+      $$(".fpx-btn", viewport).forEach((b) => b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        state.fpxBank = b.dataset.bank; show("pay");
+      }));
       $$(".ew-btn", viewport).forEach((b) => b.addEventListener("click", (e) => {
         e.stopPropagation();
         state.ewallet = b.dataset.ew; show("pay");
@@ -639,6 +645,8 @@
     const c = COUNTRIES[index];
     state.plan = c.plans[0].key;
     state.pay = c.methods[0].key;
+    state.fpxBank = "maybank";
+    state.ewallet = "tng";
     state.couponApplied = false;
     state.discount = 0;
     state.coupon = "";
