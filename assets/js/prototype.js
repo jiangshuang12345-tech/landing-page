@@ -59,7 +59,7 @@
       ],
       methods: [
         { key: "atome", name: "Atome", ico: "assets/ui/pay-atome.png", bg: "transparent", isImg: true },
-        { key: "fpx", name: "FPX", ico: "F", bg: "#00529C" },
+        { key: "fpx", name: "Online Banking (FPX)", ico: "F", bg: "#00529C" },
         { key: "ewallet", name: "E-Wallet", ico: "E", bg: "#FF004D" },
         { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
         { key: "mastercard", name: "Mastercard", ico: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", bg: "transparent", isImg: true }
@@ -107,8 +107,8 @@
     couponMsg: "",
     couponErr: false,
     pay: "atome",
-    ewallet: "tng",
-    fpxBank: "maybank",
+    ewallet: "grab",
+    fpxBank: "maybank2u",
     paymentMode: "full"
   };
   let countdownTimer = null;
@@ -285,14 +285,19 @@
                   ? `<span class="m-ico emoji">${m.ico}</span>`
                   : `<span class="m-ico ${m.small ? "small" : ""}" style="background:${m.bg};color:${m.fg || "#fff"}">${m.ico}</span>`;
               }
-              return `<button class="method ${sel ? "sel" : ""}" data-pay="${m.key}">
+              let subText = m.sub || '';
+              if (sel && m.key === 'fpx') {
+                subText = {maybank2u:'Maybank2u', cimb:'CIMB Clicks', public:'Public Bank', rhb:'RHB Now', ambank:'Ambank', mybsn:'MyBSN', rakyat:'Bank Rakyat', uob:'UOB', affin:'Affin Bank'}[state.fpxBank] || '';
+              } else if (sel && m.key === 'ewallet') {
+                subText = {grab:"Grab", tng:"Touch 'n Go e-Wallet", boost:"Boost"}[state.ewallet] || '';
+              }
+              return `<button class="method ${sel ? "sel" : ""}" data-pay="${m.key}" style="align-items:center; ${sel && (m.key === 'fpx' || m.key === 'ewallet') ? 'border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom-color:transparent; margin-bottom:0;' : ''}">
                 ${icon}
                 <div style="flex:1; text-align:left; margin-left:${m.isImg ? '12px' : '0'};">
                   <div class="m-name" style="margin:0;">${m.name}</div>
-                  ${m.sub ? `<div style="font-size:12px;color:#7a7a8e;margin-top:2px;font-weight:400;line-height:1.2;">${m.sub}</div>` : ''}
+                  ${subText ? `<div style="font-size:12px;color:#7a7a8e;margin-top:2px;font-weight:400;line-height:1.2;">${subText}</div>` : ''}
                 </div>
-                ${m.extra || ''}
-                <span class="m-rad ${sel ? "on" : ""}"></span>
+                ${sel && (m.key === 'fpx' || m.key === 'ewallet') ? `<span style="color:#ef5350;font-size:18px;font-weight:bold;margin-right:10px;">✓</span><span style="color:#ccc;transform:rotate(-90deg);display:inline-block;font-size:16px;">›</span>` : `<span class="m-rad ${sel ? "on" : ""}"></span>`}
               </button>
               ${sel && m.key === 'atome' ? `
                 <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:16px;background:rgba(255,248,154,0.1);border-radius:12px;border:1px solid rgba(255,248,154,0.6);text-align:center;">
@@ -302,13 +307,40 @@
                 </div>
               ` : ''}
               ${sel && m.key === 'ewallet' ? `
-                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(0,0,0,0.03);border-radius:12px;border:1px solid rgba(0,0,0,0.06);">
-                  <div style="font-size:12px;color:#7a7a8e;margin-bottom:8px">Select e-Wallet</div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap">
-                    <button class="ew-btn" data-ew="tng" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'tng' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'tng' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'tng' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><img src="assets/ui/pay-tng.png" style="height:16px;border-radius:4px;" /> Touch 'n Go</button>
-                    <button class="ew-btn" data-ew="grab" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'grab' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'grab' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'grab' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><img src="assets/ui/pay-grab.png" style="height:16px;border-radius:4px;" /> GrabPay</button>
-                    <button class="ew-btn" data-ew="boost" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'boost' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'boost' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'boost' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><img src="assets/ui/pay-boost.png" style="height:14px;display:none" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'"/><span style="background:#EE2B2E;color:#fff;border-radius:4px;padding:2px 4px;font-size:10px;">Boost</span> Boost</button>
-                  </div>
+                <div class="sub-methods" style="margin-top:0;margin-bottom:12px;padding:0 16px;background:#fff;border-radius:12px;border-top-left-radius:0;border-top-right-radius:0;border:1px solid #3d7bff;border-top:none;">
+                  ${[
+                    {k:'grab', n:"Grab", img:'assets/ui/pay-grab.png'},
+                    {k:'tng', n:"Touch 'n Go e-Wallet", img:'assets/ui/pay-tng.png'},
+                    {k:'boost', n:"Boost", img:'assets/ui/pay-boost.png'}
+                  ].map((b, i, arr) => `
+                    <div class="ew-btn" data-ew="${b.k}" style="padding:14px 0; border-bottom:${i === arr.length - 1 ? 'none' : '1px solid #f2f2f2'}; display:flex; align-items:center; cursor:pointer;">
+                      <img src="${b.img}" style="width:28px;border-radius:6px;margin-right:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                      <div style="width:28px;height:28px;border-radius:6px;background:#eee;color:#333;display:none;align-items:center;justify-content:center;font-size:12px;font-weight:bold;margin-right:12px;flex-shrink:0;">${b.n[0]}</div>
+                      <span style="flex:1;text-align:left;font-size:15px;color:#232049;font-weight:${state.ewallet === b.k ? '600' : '500'};">${b.n}</span>
+                      <span style="color:#232049;font-size:18px;font-weight:bold;opacity:0.3;">›</span>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+              ${sel && m.key === 'fpx' ? `
+                <div class="sub-methods" style="margin-top:0;margin-bottom:12px;padding:0 16px;background:#fff;border-radius:12px;border-top-left-radius:0;border-top-right-radius:0;border:1px solid #3d7bff;border-top:none;">
+                  ${[
+                    {k:'maybank2u', n:'Maybank2u', c:'#FFC836', f:'#000'},
+                    {k:'cimb', n:'CIMB Clicks', c:'#E1132B', f:'#fff'},
+                    {k:'public', n:'Public Bank', c:'#EA1C24', f:'#fff'},
+                    {k:'rhb', n:'RHB Now', c:'#0067B1', f:'#fff'},
+                    {k:'ambank', n:'Ambank', c:'#ED1A3B', f:'#fff'},
+                    {k:'mybsn', n:'MyBSN', c:'#00A4A6', f:'#fff'},
+                    {k:'rakyat', n:'Bank Rakyat', c:'#21409A', f:'#fff'},
+                    {k:'uob', n:'UOB', c:'#00377B', f:'#fff'},
+                    {k:'affin', n:'Affin Bank', c:'#0050A0', f:'#fff'}
+                  ].map((b, i, arr) => `
+                    <div class="fpx-btn" data-bank="${b.k}" style="padding:14px 0; border-bottom:${i === arr.length - 1 ? 'none' : '1px solid #f2f2f2'}; display:flex; align-items:center; cursor:pointer;">
+                      <div style="width:24px;height:24px;border-radius:50%;background:${b.c};color:${b.f};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;margin-right:12px;flex-shrink:0;">${b.n[0]}</div>
+                      <span style="flex:1;text-align:left;font-size:14px;color:#232049;font-weight:${state.fpxBank === b.k ? '600' : '400'};">${b.n}</span>
+                      ${state.fpxBank === b.k ? `<span style="color:#ef5350;font-size:16px;font-weight:bold;">✓</span>` : ''}
+                    </div>
+                  `).join('')}
                 </div>
               ` : ''}
               `;
@@ -567,6 +599,10 @@
         e.stopPropagation();
         state.ewallet = b.dataset.ew; show("pay");
       }));
+      $$(".fpx-btn", viewport).forEach((b) => b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        state.fpxBank = b.dataset.bank; show("pay");
+      }));
       $("#paynow").addEventListener("click", () => {
         if (state.pay === 'bank_transfer') {
           show("transfer_instructions");
@@ -577,7 +613,8 @@
             setTimeout(() => show("success"), 2500);
           }, 1000);
         } else if (state.pay === 'fpx') {
-          toast("跳转 FPX 后台...");
+          const bName = {maybank2u:'Maybank2u', cimb:'CIMB Clicks', public:'Public Bank', rhb:'RHB Now', ambank:'Ambank', mybsn:'MyBSN', rakyat:'Bank Rakyat', uob:'UOB', affin:'Affin Bank'}[state.fpxBank] || 'FPX';
+          toast(`跳转 ${bName} 网银后台...`);
           setTimeout(() => {
             show("processing");
             setTimeout(() => show("success"), 2500);
@@ -656,8 +693,8 @@
     const c = COUNTRIES[index];
     state.plan = c.plans[0].key;
     state.pay = c.methods[0].key;
-    state.fpxBank = "maybank";
-    state.ewallet = "tng";
+    state.fpxBank = "maybank2u";
+    state.ewallet = "grab";
     state.couponApplied = false;
     state.discount = 0;
     state.coupon = "";
