@@ -58,11 +58,11 @@
         { key: "1m", name: "1 Month", label: "1 month plan", price: 99.90, per: "≈RM 3.33/Day", was: "RM 166.50", best: false }
       ],
       methods: [
-        { key: "atome", name: "Atome", sub: "Buy now, pay later", ico: "assets/ui/pay-atome.png", bg: "transparent", isImg: true },
+        { key: "atome", name: "Atome", ico: "assets/ui/pay-atome.png", bg: "transparent", isImg: true },
         { key: "fpx", name: "FPX", ico: "F", bg: "#00529C" },
-        { key: "tng", name: "Touch 'n Go", sub: "eWallet", ico: "assets/ui/pay-tng.png", bg: "transparent", isImg: true },
-        { key: "grabpay", name: "GrabPay", sub: "eWallet", ico: "assets/ui/pay-grab.png", bg: "transparent", isImg: true },
-        { key: "boost", name: "Boost", sub: "eWallet", ico: "assets/ui/pay-boost.png", bg: "transparent", isImg: true },
+        { key: "tng", name: "Touch 'n Go", ico: "assets/ui/pay-tng.png", bg: "transparent", isImg: true },
+        { key: "grabpay", name: "GrabPay", ico: "assets/ui/pay-grab.png", bg: "transparent", isImg: true },
+        { key: "boost", name: "Boost", ico: "assets/ui/pay-boost.png", bg: "transparent", isImg: true },
         { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
         { key: "mastercard", name: "Mastercard", ico: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", bg: "transparent", isImg: true }
       ]
