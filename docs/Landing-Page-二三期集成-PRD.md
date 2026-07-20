@@ -60,7 +60,7 @@ Landing Page（≈ 渠道码）
 1. **渠道级货盘配置**：每个 Landing Page（由渠道码唯一标识）可独立绑定 SKU 列表。
 2. **SKU 级优惠配置**：每个 SKU 可绑定多张优惠券；折扣力度按券配置（百分比 / 立减二选一）。
 3. **券码批量生成**：每张优惠券可生成多个优惠码（规则：`DINO` + 四位随机数）。
-4. **运营可配置**：后台可完成 SKU / 券 / 码 / 绑定关系的增删改查，无需发版。
+4. **数据模型支撑**：建立底层数据模型支持灵活配置（本期暂不开发管台 UI，由研发通过数据库/脚本完成 SKU / 券 / 码 / 绑定关系的增删改查）。
 5. **兼容一期体验**：C 端主流程不变；仅「展示哪些货、可用哪些券」按配置动态下发。
 6. **【三期新增】越南市场与支付拓维**：支持越南 (VN) 的落地页，并新增接入 **本地银行转账 (Bank Transfer)**，同时探索 Deposit（定金）与 Installment（分期）的支付模式。
 7. **【三期新增】马来支付拓维**：新增 FPX 网银及本地电子钱包（Touch 'n Go 等）。
@@ -224,39 +224,7 @@ Coupon 1 ─── N PromoCode         （对外发放的码）
 
 ## 6. 功能需求
 
-### 6.1 管台 / CMS（配置端）— 核心交付
-
-#### F1. SKU 管理
-
-- 新建 / 编辑 / 上下架 SKU
-- 字段见 §4.2.1；`sku_id` 系统生成（四位随机，可手工覆盖但需唯一）
-- 列表支持按国家、状态筛选
-
-#### F2. 优惠券管理
-
-- 在指定 SKU 下新建优惠券
-- 选择折扣类型（百分比 / 立减），互斥校验
-- 上下架；过期自动不可用
-
-#### F3. 优惠码生成与管理
-
-- 在指定优惠券下「生成优惠码」：输入数量 → 批量生成 `DINO` + 四位随机数
-- 列表展示：码、所属券、兑换次数、状态
-- 支持单个禁用；支持导出 CSV（供投放 / KOL 分发）
-
-#### F4. Landing Page 绑定
-
-- 选择国家 + 渠道（或已有渠道码）→ 勾选可售 SKU（有序）
-- 预览：该 LP 前端将展示的套餐列表 + 默认 Best Value
-- 保存后立即生效（或按「定时生效」字段，二期可选）
-
-#### F5. 配置校验与防呆
-
-- LP 未绑定任何 SKU → 禁止上架，C 端走国家默认货盘或报错页（产品需二选一，**建议：回落国家默认 LP**）
-- 优惠码校验失败原因可在管台日志查看
-- 删除 SKU 前检查是否仍被 LP 引用；有引用则禁止硬删，仅允许下架
-
-### 6.2 C 端 Landing Page（消费端）— 变更点
+### 6.1 C 端 Landing Page（消费端）— 变更点
 
 一期流程不变，以下为差分：
 
@@ -286,18 +254,18 @@ input code → normalize(upper)
 
 行为同一期：只展示套餐名 + 原价合计。
 
-### 6.3 越南本地银行转账 (Bank Transfer) 核心流程设计
+### 6.2 越南本地银行转账 (Bank Transfer) 核心流程设计
 
 基于 Airwallex 的底层能力，我们在收银台需新增以下交互与系统逻辑以支持越南（以及未来的其他国家）本地银行转账：
 
-#### 6.3.1 支付方式与计价选择 (C端)
+#### 6.2.1 支付方式与计价选择 (C端)
 越南市场的 `Payment Method` 列表将细分为以下选项：
 - **Bank Transfer (全款银行转账)**：用户支付订单全额。
 - **Installment (分期银行转账)**：系统自动将订单金额除以期数（如3期），今日应付金额 (`Due Today`) 更新为首期金额。
 - **Deposit (定金锁定)**：系统将今日应付金额强制定为 `VND 50,000`。
 - **Visa / Mastercard**：传统的国际信用卡代扣。
 
-#### 6.3.2 生成转账指引页 (C端 & 后端)
+#### 6.2.2 生成转账指引页 (C端 & 后端)
 当用户选择上述前三种（基于银行转账的模式）并点击 Pay Now 时：
 1. **创建 Payment Intent**：后端向 Airwallex 发起 `bank_transfer` 类型的 Payment Intent（如果是 Installment 或 Deposit，金额按首付/定金传给 Airwallex）。
 2. **展示 Transfer Instructions 页面**：页面不跳出系统，而是展示 Airwallex 返回的收款信息，包括：
@@ -308,7 +276,7 @@ input code → normalize(upper)
    - **Reference Code (自定义的对账参考码，如 DINO-XXXXX)**，并强提示用户在打款备注中填写。
 3. 用户去自己的手机银行完成打款，并点击“I have transferred”进入等待/成功页。
 
-#### 6.3.3 Webhook 异步对账与发货 (后端)
+#### 6.2.3 Webhook 异步对账与发货 (后端)
 银行转账是强异步流程，系统必须通过监听 Airwallex 的 Webhook 来判断是否发货：
 - **精确匹配 (`succeeded`)**：用户转了精确的金额。系统根据订单中的模式发货：
   - 如果是全款/首期分期：立刻发放约定时间的 VIP。
@@ -317,12 +285,12 @@ input code → normalize(upper)
   - 用户多转了钱：依然视为 `succeeded`，后台可记录退款差价工单。
   - 用户少转了钱：触发 `requires_payment_method`，订单判定为未结清（失败/异常），前端或通过邮件提醒用户继续补差价，不发放会员。
 
-### 6.4 数据与 CRM
+### 6.3 数据与 CRM
 
 - 订单入库字段在一期基础上增加：`sku_id`、`coupon_id`、`promo_code`、`discount_type`、`discount_value`、`origin_price`、`final_price`、`channel_code`、`lp_id`
-- 用户表继续记录渠道码；管台可按渠道 / SKU / 券码维度筛订单
+- 用户表继续记录渠道码；研发可按渠道 / SKU / 券码维度导出订单数据
 
-### 6.5 埋点差分
+### 6.4 埋点差分
 
 在一期漏斗上补充参数（不改事件名）：
 
@@ -334,17 +302,17 @@ input code → normalize(upper)
 | `apply_promo` | `promo_code`, `coupon_id`, `result` |
 | `purchase` | `sku_id`, `coupon_id`, `promo_code`, `origin_price`, `final_price`, `channel_code` |
 
-### 6.6 媒体 Pixel 与 AppsFlyer 归因打点 (三期新增)
+### 6.5 媒体 Pixel 与 AppsFlyer 归因打点 (三期新增)
 
 为支持前端精准买量与跨端归因，需在 Landing Page 接入 **AppsFlyer Web SDK** 以及 **Facebook / TikTok Base Pixel**。
 
-#### 6.6.1 AppsFlyer Web SDK (Smart Script / PBA)
+#### 6.5.1 AppsFlyer Web SDK (Smart Script / PBA)
 **核心目的**：将用户在 Web 端点击的广告渠道（UTM、Channel Code）通过 AppsFlyer OneLink 动态传递给 App 端，实现 Web-to-App 归因闭环。
 * **SDK 初始化**：用户进入 Landing Page 时，触发 AF Web SDK 初始化，解析并缓存 URL 上的归因参数。
 * **OneLink 动态生成**：支付成功页 (Success Page) 上的「Start Learning / 下载 App」按钮链接，不能写死，**必须通过 AF Web SDK 提供的 API 实时生成带参数的 OneLink**，确保用户的安装行为能被精准归因到当次投放渠道。
 * **Web 事件追踪**：同步通过 `AF('pba', 'event', ...)` 上报注册与购买等事件。
 
-#### 6.6.2 核心转化事件 (Standard Events)
+#### 6.5.2 核心转化事件 (Standard Events)
 
 | 业务动作 | 触发时机 & 判定条件 | AppsFlyer (Web) | Facebook Pixel | TikTok Pixel |
 |---|---|---|---|---|
@@ -354,18 +322,18 @@ input code → normalize(upper)
 > **开发注（购买事件 Payload 规范）**：
 > 触发购买事件时，必须上报：**实付最终金额 (Value)**、**结算币种 (Currency)**、**购买的 SKU ID (Content_IDs)**，以供投流模型优化 ROAS。如果有条件，传递 Hash 后的手机号做高级匹配 (Advanced Matching)。
 
-### 6.7 马来西亚支付拓维 (FPX / E-wallets / BNPL) 核心流程设计
+### 6.6 马来西亚支付拓维 (FPX / E-wallets / BNPL) 核心流程设计
 
 基于最新的交互原型，马来西亚（MYR）市场的收银台支付方式进行以下调整与扩充，以更贴合当地支付习惯。
 
-#### 6.7.1 支付方式列表 (C端展示)
+#### 6.6.1 支付方式列表 (C端展示)
 马来西亚落地页的 `Payment Method` 列表将包含：
 1. **Atome (BNPL)**：先买后付方式。
 2. **Online Banking (FPX)**：马来西亚本地实时网银支付。
 3. **E-Wallet (电子钱包)**：本地主流电子钱包。
 4. **Visa / Mastercard**：传统的国际信用卡代扣。
 
-#### 6.7.2 动态子列表交互设计 (FPX 与 E-Wallet)
+#### 6.6.2 动态子列表交互设计 (FPX 与 E-Wallet)
 为了提升用户体验，针对 FPX 和 E-Wallet 采用**二级展开式（Accordion）交互**：
 *   **触发展开**：当用户点击 `Online Banking (FPX)` 或 `E-Wallet` 主选项时，该选项呈现选中状态（右侧展示 ✓ 标记），并**向下平滑展开对应的子支付渠道列表**。
 *   **子渠道选择**：
@@ -373,13 +341,13 @@ input code → normalize(upper)
     *   **E-Wallet 包含**：`Grab`, `Touch 'n Go e-Wallet`, `Boost`。
 *   **单选逻辑**：用户必须在展开的子列表中选择具体的一家银行或钱包。选中后，该子项右侧展示 ✓ 标记。
 
-#### 6.7.3 唤起支付与跳转
+#### 6.6.3 唤起支付与跳转
 用户点击 `Pay Now` 按钮后：
 *   **Atome / E-Wallet**：系统创建 Payment Intent 后，页面重定向至 Atome 或对应电子钱包（Grab/TNG/Boost）的在线收银台/授权唤醒链接。对于移动端用户，通常会通过 App-switch 协议直接唤起对应 App。
 *   **FPX 网银**：系统根据用户选中的具体银行 `bank_code` 发起支付请求，并将用户重定向至对应银行的网银登录界面。
 *   **跳回与校验**：用户在第三方完成支付或取消后，重定向回 DinoAI 落地页，页面展示 "Processing..."，并通过轮询或监听 Webhook 等待后端最终的付款成功状态，随后渲染支付成功页并发放 VIP。
 
-### 6.8 韩国 KOL 渠道定制化交互
+### 6.7 韩国 KOL 渠道定制化交互
 
 针对韩国特定的 KOL 投放渠道，为了最大化视觉冲击力与转化率，进行页面结构的特殊定制：
 
@@ -408,11 +376,12 @@ input code → normalize(upper)
 
 ## 8. 权限与发布
 
+由于本期暂不开发后台 UI（管台 CMS），配置变更统一由研发通过数据库完成：
+
 | 角色 | 权限 |
 |---|---|
-| 运营 / 业务 | SKU / 券 / 码 / LP 绑定的读写 |
-| 管台研发 | 全量 + 渠道码生成 |
-| 只读分析 | 配置与订单只读 |
+| 运营 / 业务 | 提出 SKU / 券 / 码 / LP 绑定需求，接收导出的券码 |
+| 研发 | 负责底层数据配置、券码生成与导出、数据只读拉取 |
 
 发布策略建议：
 
@@ -424,13 +393,12 @@ input code → normalize(upper)
 
 ## 9. 验收标准（Acceptance Criteria）
 
-### 9.1 配置端
+### 9.1 数据配置端 (DB/脚本层)
 
-- [ ] 可为任意国家创建 SKU，并设置原价、有效期、Best Value
-- [ ] 可在 SKU 下创建优惠券，百分比 / 立减互斥生效
-- [ ] 可为一张券批量生成 ≥ 2 个 `DINO****` 优惠码，码全局唯一
+- [ ] 可为任意国家通过 DB 创建 SKU，并设置原价、有效期、Best Value
+- [ ] 可在 DB 中为 SKU 创建优惠券，百分比 / 立减互斥生效
+- [ ] 可通过脚本为一张券批量生成 ≥ 2 个 `DINO****` 优惠码，码全局唯一，并支持导出 CSV
 - [ ] 可为渠道码绑定不同 SKU 列表；支持「同 SKU 不同渠道」「不同 SKU 不同渠道」两种配置
-- [ ] 导出优惠码 CSV 可用
 
 ### 9.2 C 端
 
@@ -458,7 +426,7 @@ input code → normalize(upper)
 | 渠道码生成规则 | ✅ | 复用；增加 SKU 绑定 |
 | 套餐定价 | 按国静态表 | **改为 LP 动态货盘** |
 | 优惠码 | 全局码表示意 | **券 → 多码，且绑定 SKU** |
-| 管台配置 | 弱 / 偏导出 | **SKU / 券 / 码 / LP 绑定为正式能力** |
+| 管台配置 | 弱 / 偏导出 | **本期暂无UI，底层数据支持关联与发码** |
 
 ---
 
@@ -476,7 +444,7 @@ input code → normalize(upper)
 
 | 阶段 | 内容 | 产出 |
 |---|---|---|
-| M1 | 数据模型 + 管台 CRUD（SKU / 券 / 码） | 可配置、可导出 |
+| M1 | 数据模型开发 + DB 配置初始化（SKU/券/码） | 可配置、可导码（无 UI） |
 | M2 | LP ↔ SKU 绑定 + C 端动态货盘 | 渠道差异化卖货可用 |
 | M3 | 优惠码按 SKU 校验 + 订单字段补齐 + 埋点 | 完整优惠闭环 |
 | M4 | 四国全量迁移 + 一期静态表下线 | 二期正式接量 |

@@ -58,8 +58,8 @@
         { key: "1m", name: "1 Month", label: "1 month plan", price: 99.90, per: "≈RM 3.33/Day", was: "RM 166.50", best: false }
       ],
       methods: [
-        { key: "atome", name: "Atome", ico: "Atome", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;"><div style="background:#ccff00;width:14px;height:14px;border-radius:4px;transform:rotate(45deg);margin-right:6px;display:flex;align-items:center;justify-content:center;"><div style="background:#fff;width:6px;height:6px;border-radius:2px;"></div></div><span style="font-weight:900;font-size:16px;color:#000;letter-spacing:-0.5px;">atome</span></div>' },
         { key: "fpx", name: "Online Banking (FPX)", ico: "F", bg: "#00529C" },
+        { key: "atome", name: "Atome", ico: "Atome", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;"><div style="background:#ccff00;width:14px;height:14px;border-radius:4px;transform:rotate(45deg);margin-right:6px;display:flex;align-items:center;justify-content:center;"><div style="background:#fff;width:6px;height:6px;border-radius:2px;"></div></div><span style="font-weight:900;font-size:16px;color:#000;letter-spacing:-0.5px;">atome</span></div>' },
         { key: "ewallet", name: "E-Wallet", ico: "E", bg: "#FF004D" },
         { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
         { key: "mastercard", name: "Mastercard", ico: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", bg: "transparent", isImg: true }
@@ -106,7 +106,7 @@
     discount: 0,
     couponMsg: "",
     couponErr: false,
-    pay: "atome",
+    pay: "fpx",
     ewallet: "grab",
     fpxBank: "maybank2u",
     paymentMode: "full"
