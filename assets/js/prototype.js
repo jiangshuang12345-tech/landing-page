@@ -59,10 +59,10 @@
       ],
       methods: [
         { key: "fpx", name: "Online Banking (FPX)", ico: "F", bg: "#00529C" },
-        { key: "atome", name: "Atome", ico: "Atome", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;"><div style="background:#ccff00;width:14px;height:14px;border-radius:4px;transform:rotate(45deg);margin-right:6px;display:flex;align-items:center;justify-content:center;"><div style="background:#fff;width:6px;height:6px;border-radius:2px;"></div></div><span style="font-weight:900;font-size:16px;color:#000;letter-spacing:-0.5px;">atome</span></div>' },
+        { key: "atome", name: "Atome", ico: "Atome", bg: "transparent", isCssLogo: true, cssLogo: '<div style="background:#ccff00;width:18px;height:18px;border-radius:4px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;margin:0 4px;"><div style="background:#fff;width:8px;height:8px;border-radius:2px;"></div></div>' },
         { key: "ewallet", name: "E-Wallet", ico: "E", bg: "#FF004D" },
-        { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
-        { key: "mastercard", name: "Mastercard", ico: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", bg: "transparent", isImg: true }
+        { key: "visa", name: "Visa", ico: "Visa", bg: "transparent", isCssLogo: true, cssLogo: '<span style="color:#1a1f71;font-weight:800;font-size:20px;font-style:italic;letter-spacing:-1px;">Visa</span>' },
+        { key: "mastercard", name: "Mastercard", ico: "Mastercard", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;position:relative;width:32px;height:22px;"><div style="position:absolute;left:0;width:22px;height:22px;border-radius:50%;background:#eb001b;opacity:0.8;"></div><div style="position:absolute;right:0;width:22px;height:22px;border-radius:50%;background:#f79e1b;opacity:0.8;"></div></div>' }
       ]
     },
     {
@@ -295,7 +295,7 @@
               }
               return `<button class="method ${sel ? "sel" : ""}" data-pay="${m.key}" style="align-items:center; ${sel && (m.key === 'fpx' || m.key === 'ewallet') ? 'border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom-color:transparent; margin-bottom:0;' : ''}">
                 ${icon}
-                <div style="flex:1; text-align:left; margin-left:${m.isImg ? '12px' : '0'};">
+                <div style="flex:1; text-align:left; margin-left:${(m.isImg || m.isCssLogo) ? '12px' : '0'};">
                   <div class="m-name" style="margin:0;">${m.name}</div>
                   ${subText ? `<div style="font-size:12px;color:#7a7a8e;margin-top:2px;font-weight:400;line-height:1.2;">${subText}</div>` : ''}
                 </div>

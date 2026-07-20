@@ -258,25 +258,15 @@ input code → normalize(upper)
 
 基于 Airwallex 的底层能力，我们在收银台需新增以下交互与系统逻辑以支持越南（以及未来的其他国家）本地银行转账：
 
-#### 6.2.1 支付方式与计价选择 (C端)
-越南市场的 `Payment Method` 列表将细分为以下选项：
-- **Bank Transfer (全款银行转账)**：用户支付订单全额。
-- **Installment (分期银行转账)**：系统自动将订单金额除以期数（如3期），今日应付金额 (`Due Today`) 更新为首期金额。
-- **Deposit (定金锁定)**：系统将今日应付金额强制定为 `VND 50,000`。
-- **Visa / Mastercard**：传统的国际信用卡代扣。
+#### 6.2.1 越南支付方式逻辑总览
 
-#### 6.2.2 生成转账指引页 (C端 & 后端)
-当用户选择上述前三种（基于银行转账的模式）并点击 Pay Now 时：
-1. **创建 Payment Intent**：后端向 Airwallex 发起 `bank_transfer` 类型的 Payment Intent（如果是 Installment 或 Deposit，金额按首付/定金传给 Airwallex）。
-2. **展示 Transfer Instructions 页面**：页面不跳出系统，而是展示 Airwallex 返回的收款信息，包括：
-   - Transfer Amount (转账金额，必须精确)
-   - Bank Name (如 Vietcombank)
-   - Account Name (如 DINO ENGLISH PTE LTD)
-   - Account Number (唯一虚拟账号)
-   - **Reference Code (自定义的对账参考码，如 DINO-XXXXX)**，并强提示用户在打款备注中填写。
-3. 用户去自己的手机银行完成打款，并点击“I have transferred”进入等待/成功页。
+| 支付方式 | 用户体验 (UX) | 特别注意 (开发必看) |
+|---|---|---|
+| **Bank Transfer**<br>(全款银行转账) | 1. **选择方式**：选中 Bank Transfer 后点击 Pay Now。<br>2. **获取指引**：原页面不跳出，直接展示专属收款账号（Account Number）、收款人名称、金额与 **Reference Code（参考码）**。<br>3. **线下打款**：用户打开个人网银 App 完成转账，**必须在备注填写参考码**。<br>4. **我已打款**：点击“I have transferred”进入等待/成功页。 | 强异步流程！系统不可同步依赖前端回调发货，必须依赖监听 Airwallex 的 Webhook `succeeded` 通知后方可发放 VIP。遇到金额多转/少转触发异常流处理。 |
+| **Deposit / Installment**<br>(定金/分期转账) | 1. **选择模式**：选中定金或分期模式，页面刷新今日应付金额 (`Due Today`)。<br>2. **授权确认**：勾选同意后续尾款自动扣款协议（前端提示）。<br>3. **获取指引**：与全款转账流程相同，展示针对首付款金额的转账指引。 | 定金模式下单传给网关的 Amount 固定为首期/定金金额（如 50k VND）。当前后端仅做首付收银，尾款催收与代扣逻辑留待业务最终确认。 |
+| **Visa / Mastercard** | 1. **选中并支付**：选择信用卡支付。<br>2. **输入卡号**：调用卡片支付组件完成扣款。 | 沿用一期现有的国际标准信用卡支付流程。 |
 
-#### 6.2.3 Webhook 异步对账与发货 (后端)
+#### 6.2.2 Webhook 异步对账与发货 (后端补充说明)
 银行转账是强异步流程，系统必须通过监听 Airwallex 的 Webhook 来判断是否发货：
 - **精确匹配 (`succeeded`)**：用户转了精确的金额。系统根据订单中的模式发货：
   - 如果是全款/首期分期：立刻发放约定时间的 VIP。
@@ -326,26 +316,14 @@ input code → normalize(upper)
 
 基于最新的交互原型，马来西亚（MYR）市场的收银台支付方式进行以下调整与扩充，以更贴合当地支付习惯。
 
-#### 6.6.1 支付方式列表 (C端展示)
-马来西亚落地页的 `Payment Method` 列表将包含：
-1. **Atome (BNPL)**：先买后付方式。
-2. **Online Banking (FPX)**：马来西亚本地实时网银支付。
-3. **E-Wallet (电子钱包)**：本地主流电子钱包。
-4. **Visa / Mastercard**：传统的国际信用卡代扣。
+#### 6.6.1 马来西亚支付方式逻辑总览
 
-#### 6.6.2 动态子列表交互设计 (FPX 与 E-Wallet)
-为了提升用户体验，针对 FPX 和 E-Wallet 采用**二级展开式（Accordion）交互**：
-*   **触发展开**：当用户点击 `Online Banking (FPX)` 或 `E-Wallet` 主选项时，该选项呈现选中状态（右侧展示 ✓ 标记），并**向下平滑展开对应的子支付渠道列表**。
-*   **子渠道选择**：
-    *   **FPX 包含**：`Maybank2u`, `CIMB Clicks`, `Public Bank`, `RHB Now`, `Ambank`, `MyBSN`, `Bank Rakyat`, `UOB`, `Affin Bank` 等（具体列表需通过 Airwallex `Get Available Methods` 接口**动态获取**以保证可用性）。
-    *   **E-Wallet 包含**：`Grab`, `Touch 'n Go e-Wallet`, `Boost`。
-*   **单选逻辑**：用户必须在展开的子列表中选择具体的一家银行或钱包。选中后，该子项右侧展示 ✓ 标记。
-
-#### 6.6.3 唤起支付与跳转
-用户点击 `Pay Now` 按钮后：
-*   **Atome / E-Wallet**：系统创建 Payment Intent 后，页面重定向至 Atome 或对应电子钱包（Grab/TNG/Boost）的在线收银台/授权唤醒链接。对于移动端用户，通常会通过 App-switch 协议直接唤起对应 App。
-*   **FPX 网银**：系统根据用户选中的具体银行 `bank_code` 发起支付请求，并将用户重定向至对应银行的网银登录界面。
-*   **跳回与校验**：用户在第三方完成支付或取消后，重定向回 DinoAI 落地页，页面展示 "Processing..."，并通过轮询或监听 Webhook 等待后端最终的付款成功状态，随后渲染支付成功页并发放 VIP。
+| 支付方式 | 用户体验 (UX) | 特别注意 (开发必看) |
+|---|---|---|
+| **Online Banking (FPX)** | 1. **展开银行列表**：选中 FPX 后，下方内联展开支持的具体银行列表。<br>2. **选中并支付**：选中如 Maybank2U 后点 Pay Now。<br>3. **网银验证**：重定向至网银认证页面完成打款。<br>4. **回跳**：返回 DinoAI 落地页展示 “Processing...”。 | 前端不可写死银行列表与图标。必须调用 Airwallex `Get Available Methods` 接口动态获取可用 `bank_list` 和 `logo_url`。若某银行深夜维护，网关不返回，前端就不展示。 |
+| **E-wallets**<br>(TNG, Boost, GrabPay) | 1. **选择钱包**：选中 E-wallet 后展开并点击对应钱包。<br>2. **直接唤起 App**：点击 Pay Now 后，通过底层重定向 (Redirect) 或 App-switch (跳转)，直接拉起用户手机里的电子钱包 App。<br>3. **回跳**：支付完毕自动切回浏览器页面确认状态。 | 本期业务无 PC 端扫码场景，仅支持纯移动端环境的唤起/跳转。 |
+| **Atome (BNPL)** | 1. **选择分期**：选中 Atome 选项。<br>2. **唤起收银台**：点击 Pay Now 后，重定向至 Atome 平台进行分期授权。<br>3. **确认分期**：用户在 Atome 端确认分期账单。<br>4. **回跳**：授权完毕自动切回落地页。 | 需提前与网关侧及业务侧确认主体资质是否支持跨国 BNPL，回跳逻辑与电子钱包类似。 |
+| **Visa / Mastercard** | 1. **选中并支付**：选择信用卡支付。<br>2. **输入卡号**：调用卡片支付组件完成扣款。 | 沿用一期现有的国际标准信用卡支付流程。 |
 
 ### 6.7 韩国 KOL 渠道定制化交互
 
