@@ -58,7 +58,7 @@
         { key: "1m", name: "1 Month", label: "1 month plan", price: 99.90, per: "≈RM 3.33/Day", was: "RM 166.50", best: false }
       ],
       methods: [
-        { key: "atome", name: "Atome", ico: "assets/ui/pay-atome.png", bg: "transparent", isImg: true },
+        { key: "atome", name: "Atome", ico: "https://dinoenglish.s3.ap-southeast-1.amazonaws.com/web/atome.svg", bg: "transparent", isImg: true },
         { key: "fpx", name: "Online Banking (FPX)", ico: "F", bg: "#00529C" },
         { key: "ewallet", name: "E-Wallet", ico: "E", bg: "#FF004D" },
         { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
@@ -277,7 +277,7 @@
               const sel = state.pay === m.key;
               let icon = '';
               if (m.isImg) {
-                icon = `<div class="m-ico" style="background:transparent;"><img src="${m.ico}" alt="${m.name}" style="height:24px; object-fit:contain;" /></div>`;
+                icon = `<div class="m-ico" style="background:transparent;"><img src="${m.ico}" alt="${m.name}" style="height:${m.key==='atome'?'16px':'24px'}; object-fit:contain;" /></div>`;
               } else if (m.isCssLogo) {
                 icon = `<div class="m-ico" style="background:transparent;">${m.cssLogo}</div>`;
               } else {
