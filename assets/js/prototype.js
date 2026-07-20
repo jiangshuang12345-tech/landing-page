@@ -58,9 +58,11 @@
         { key: "1m", name: "1 Month", label: "1 month plan", price: 99.90, per: "≈RM 3.33/Day", was: "RM 166.50", best: false }
       ],
       methods: [
-        { key: "atome", name: "Atome (BNPL)", sub: "3 months, 0% interest", ico: "assets/ui/pay-atome.png", bg: "transparent", isImg: true },
+        { key: "atome", name: "Atome", sub: "Buy now, pay later", ico: "assets/ui/pay-atome.png", bg: "transparent", isImg: true },
         { key: "fpx", name: "FPX", ico: "F", bg: "#00529C" },
-        { key: "ewallet", name: "E-wallets", ico: "E", bg: "#FF004D" },
+        { key: "tng", name: "Touch 'n Go", sub: "eWallet", ico: "assets/ui/pay-tng.png", bg: "transparent", isImg: true },
+        { key: "grabpay", name: "GrabPay", sub: "eWallet", ico: "assets/ui/pay-grab.png", bg: "transparent", isImg: true },
+        { key: "boost", name: "Boost", sub: "eWallet", ico: "assets/ui/pay-boost.png", bg: "transparent", isImg: true },
         { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
         { key: "mastercard", name: "Mastercard", ico: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", bg: "transparent", isImg: true }
       ]
@@ -294,31 +296,6 @@
                 ${m.extra || ''}
                 <span class="m-rad ${sel ? "on" : ""}"></span>
               </button>
-              ${sel && m.key === 'atome' ? `
-                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:16px;background:rgba(255,248,154,0.1);border-radius:12px;border:1px solid rgba(255,248,154,0.6);text-align:center;">
-                  <div style="font-size:13px;color:#232049;font-weight:600;margin-bottom:8px;">You will pay today:</div>
-                  <div style="font-size:24px;color:#1A1A1A;font-weight:800;margin-bottom:8px;">${money(Math.round(total()/3))}</div>
-                  <div style="font-size:12px;color:#7a7a8e;">Then ${money(Math.round(total()/3))}/mo for the next 2 months.</div>
-                </div>
-              ` : ''}
-              ${sel && m.key === 'fpx' ? `
-                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(0,0,0,0.03);border-radius:12px;border:1px solid rgba(0,0,0,0.06);">
-                  <div style="font-size:12px;color:#7a7a8e;margin-bottom:8px">Select Bank</div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap">
-                    <button class="fpx-btn" data-bank="maybank" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.fpxBank === 'maybank' ? '#3d7bff' : '#d3d3e0'};background:${state.fpxBank === 'maybank' ? '#f0f5ff' : '#fff'};color:${state.fpxBank === 'maybank' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer">Maybank2U</button>
-                    <button class="fpx-btn" data-bank="cimb" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.fpxBank === 'cimb' ? '#3d7bff' : '#d3d3e0'};background:${state.fpxBank === 'cimb' ? '#f0f5ff' : '#fff'};color:${state.fpxBank === 'cimb' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer">CIMB Clicks</button>
-                  </div>
-                </div>
-              ` : ''}
-              ${sel && m.key === 'ewallet' ? `
-                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(0,0,0,0.03);border-radius:12px;border:1px solid rgba(0,0,0,0.06);">
-                  <div style="font-size:12px;color:#7a7a8e;margin-bottom:8px">Select e-Wallet</div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap">
-                    <button class="ew-btn" data-ew="tng" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'tng' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'tng' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'tng' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><span style="background:#0055A5;color:#fff;border-radius:4px;padding:2px 4px;font-size:10px;">TNG</span> Touch 'n Go</button>
-                    <button class="ew-btn" data-ew="grab" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'grab' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'grab' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'grab' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><span style="background:#00B14F;color:#fff;border-radius:4px;padding:2px 4px;font-size:10px;">Grab</span> GrabPay</button>
-                  </div>
-                </div>
-              ` : ''}
               `;
             }).join("")}
           </div>
@@ -568,28 +545,25 @@
 
     if (id === "pay") {
       $$(".method", viewport).forEach((b) => b.addEventListener("click", (e) => {
-        if (e.target.closest('.sub-methods')) return;
         state.pay = b.dataset.pay; show("pay");
-      }));
-      $$(".fpx-btn", viewport).forEach((b) => b.addEventListener("click", (e) => {
-        e.stopPropagation();
-        state.fpxBank = b.dataset.bank; show("pay");
-      }));
-      $$(".ew-btn", viewport).forEach((b) => b.addEventListener("click", (e) => {
-        e.stopPropagation();
-        state.ewallet = b.dataset.ew; show("pay");
       }));
       $("#paynow").addEventListener("click", () => {
         if (state.pay === 'bank_transfer') {
           show("transfer_instructions");
         } else if (state.pay === 'atome') {
-          toast("跳转 Atome 授权页...");
+          toast("跳转 Atome 三方收银台...");
           setTimeout(() => {
             show("processing");
             setTimeout(() => show("success"), 2500);
           }, 1000);
-        } else if (state.pay === 'ewallet') {
-          toast("跳转第三方 App 支付...");
+        } else if (state.pay === 'fpx') {
+          toast("跳转 FPX 后台...");
+          setTimeout(() => {
+            show("processing");
+            setTimeout(() => show("success"), 2500);
+          }, 1000);
+        } else if (state.pay === 'tng' || state.pay === 'grabpay' || state.pay === 'boost') {
+          toast(`跳转 ${state.pay} 在线钱包...`);
           setTimeout(() => {
             show("processing");
             setTimeout(() => show("success"), 2500);
