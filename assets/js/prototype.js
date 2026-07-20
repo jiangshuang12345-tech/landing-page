@@ -287,9 +287,11 @@
               }
               let subText = m.sub || '';
               if (sel && m.key === 'fpx') {
-                subText = {maybank2u:'Maybank2u', cimb:'CIMB Clicks', public:'Public Bank', rhb:'RHB Now', ambank:'Ambank', mybsn:'MyBSN', rakyat:'Bank Rakyat', uob:'UOB', affin:'Affin Bank'}[state.fpxBank] || '';
+                // Remove the dynamic subtext so it doesn't show under the main title when selected
+                subText = '';
               } else if (sel && m.key === 'ewallet') {
-                subText = {grab:"Grab", tng:"Touch 'n Go e-Wallet", boost:"Boost"}[state.ewallet] || '';
+                // Same for ewallet, remove dynamic subtext to keep UI clean
+                subText = '';
               }
               return `<button class="method ${sel ? "sel" : ""}" data-pay="${m.key}" style="align-items:center; ${sel && (m.key === 'fpx' || m.key === 'ewallet') ? 'border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom-color:transparent; margin-bottom:0;' : ''}">
                 ${icon}
@@ -299,13 +301,6 @@
                 </div>
                 ${sel && (m.key === 'fpx' || m.key === 'ewallet') ? `<span style="color:#ef5350;font-size:18px;font-weight:bold;margin-right:10px;">✓</span><span style="color:#ccc;transform:rotate(-90deg);display:inline-block;font-size:16px;">›</span>` : `<span class="m-rad ${sel ? "on" : ""}"></span>`}
               </button>
-              ${sel && m.key === 'atome' ? `
-                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:16px;background:rgba(255,248,154,0.1);border-radius:12px;border:1px solid rgba(255,248,154,0.6);text-align:center;">
-                  <div style="font-size:13px;color:#232049;font-weight:600;margin-bottom:8px;">You will pay today:</div>
-                  <div style="font-size:24px;color:#1A1A1A;font-weight:800;margin-bottom:8px;">${money(Math.round(total()/3))}</div>
-                  <div style="font-size:12px;color:#7a7a8e;">Then ${money(Math.round(total()/3))}/mo for the next 2 months.</div>
-                </div>
-              ` : ''}
               ${sel && m.key === 'ewallet' ? `
                 <div class="sub-methods" style="margin-top:0;margin-bottom:12px;padding:0 16px;background:#fff;border-radius:12px;border-top-left-radius:0;border-top-right-radius:0;border:1px solid #3d7bff;border-top:none;">
                   ${[
