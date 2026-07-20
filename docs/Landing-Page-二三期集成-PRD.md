@@ -354,6 +354,43 @@ input code → normalize(upper)
 > **开发注（购买事件 Payload 规范）**：
 > 触发购买事件时，必须上报：**实付最终金额 (Value)**、**结算币种 (Currency)**、**购买的 SKU ID (Content_IDs)**，以供投流模型优化 ROAS。如果有条件，传递 Hash 后的手机号做高级匹配 (Advanced Matching)。
 
+### 6.7 马来西亚支付拓维 (FPX / E-wallets / BNPL) 核心流程设计
+
+基于最新的交互原型，马来西亚（MYR）市场的收银台支付方式进行以下调整与扩充，以更贴合当地支付习惯。
+
+#### 6.7.1 支付方式列表 (C端展示)
+马来西亚落地页的 `Payment Method` 列表将包含：
+1. **Atome (BNPL)**：先买后付方式。
+2. **Online Banking (FPX)**：马来西亚本地实时网银支付。
+3. **E-Wallet (电子钱包)**：本地主流电子钱包。
+4. **Visa / Mastercard**：传统的国际信用卡代扣。
+
+#### 6.7.2 动态子列表交互设计 (FPX 与 E-Wallet)
+为了提升用户体验，针对 FPX 和 E-Wallet 采用**二级展开式（Accordion）交互**：
+*   **触发展开**：当用户点击 `Online Banking (FPX)` 或 `E-Wallet` 主选项时，该选项呈现选中状态（右侧展示 ✓ 标记），并**向下平滑展开对应的子支付渠道列表**。
+*   **子渠道选择**：
+    *   **FPX 包含**：`Maybank2u`, `CIMB Clicks`, `Public Bank`, `RHB Now`, `Ambank`, `MyBSN`, `Bank Rakyat`, `UOB`, `Affin Bank` 等（具体列表需通过 Airwallex `Get Available Methods` 接口**动态获取**以保证可用性）。
+    *   **E-Wallet 包含**：`Grab`, `Touch 'n Go e-Wallet`, `Boost`。
+*   **单选逻辑**：用户必须在展开的子列表中选择具体的一家银行或钱包。选中后，该子项右侧展示 ✓ 标记。
+
+#### 6.7.3 唤起支付与跳转
+用户点击 `Pay Now` 按钮后：
+*   **Atome / E-Wallet**：系统创建 Payment Intent 后，页面重定向至 Atome 或对应电子钱包（Grab/TNG/Boost）的在线收银台/授权唤醒链接。对于移动端用户，通常会通过 App-switch 协议直接唤起对应 App。
+*   **FPX 网银**：系统根据用户选中的具体银行 `bank_code` 发起支付请求，并将用户重定向至对应银行的网银登录界面。
+*   **跳回与校验**：用户在第三方完成支付或取消后，重定向回 DinoAI 落地页，页面展示 "Processing..."，并通过轮询或监听 Webhook 等待后端最终的付款成功状态，随后渲染支付成功页并发放 VIP。
+
+### 6.8 韩国 KOL 渠道定制化交互
+
+针对韩国特定的 KOL 投放渠道，为了最大化视觉冲击力与转化率，进行页面结构的特殊定制：
+
+1. **视觉融合 (Long Image Background)**：
+   - 取消常规的顶部短插画。
+   - 将首页的「顶部 Hero 图片」、「品牌介绍/营销文案」以及「注册/登录表单」**结合成一张超长背景长图**（如 `kr_long_bg.png`）。
+   - 整个首屏内容向下延伸，营造沉浸式营销氛围。
+2. **吸底注册悬浮按钮 (Sticky CTA)**：
+   - 鉴于背景图较长，当用户向下滚动，导致顶部的注册登录表单移出可视区域 (Viewport) 时，页面底部必须自动弹出一个悬浮的吸底按钮（例如 "Sign up now" 或 "Start Learning"）。
+   - 点击该吸底按钮，页面平滑滚动 (Smooth Scroll) 回到顶部的登录表单区域，引导用户完成转化。
+
 ---
 
 ## 7. 异常与边界
