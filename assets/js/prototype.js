@@ -54,10 +54,11 @@
       key: "MY", flag: "🇲🇾", code: "+60", name: "马来", cur: "RM",
       link: "https://ma.dinoenglish.ai/website/landingpage/login/",
       plans: [
-        { key: "1m", name: "1 Month", label: "1 month plan", price: 99.90, per: "≈RM 3.33/Day", was: "RM 166.50", best: true, tag: "Best Value · 40% Off" },
-        { key: "1y", name: "1 Year", label: "1 year plan", price: 649.90, per: "≈RM 1.78/Day", was: "RM 1,181.64", best: false }
+        { key: "1y", name: "1 Year", label: "1 year plan", price: 649.90, per: "≈RM 1.78/Day", was: "RM 1,181.64", best: true, tag: "Best Value · 45% Off" },
+        { key: "1m", name: "1 Month", label: "1 month plan", price: 99.90, per: "≈RM 3.33/Day", was: "RM 166.50", best: false }
       ],
       methods: [
+        { key: "atome", name: "Atome (BNPL)", sub: "3 months, 0% interest", ico: "assets/ui/pay-atome.png", bg: "transparent", isImg: true },
         { key: "fpx", name: "FPX", ico: "F", bg: "#00529C" },
         { key: "ewallet", name: "E-wallets", ico: "E", bg: "#FF004D" },
         { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
@@ -286,13 +287,20 @@
               }
               return `<button class="method ${sel ? "sel" : ""}" data-pay="${m.key}">
                 ${icon}
-                <div style="flex:1; text-align:left;">
+                <div style="flex:1; text-align:left; margin-left:${m.isImg ? '12px' : '0'};">
                   <div class="m-name" style="margin:0;">${m.name}</div>
                   ${m.sub ? `<div style="font-size:12px;color:#7a7a8e;margin-top:2px;font-weight:400;line-height:1.2;">${m.sub}</div>` : ''}
                 </div>
                 ${m.extra || ''}
                 <span class="m-rad ${sel ? "on" : ""}"></span>
               </button>
+              ${sel && m.key === 'atome' ? `
+                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:16px;background:rgba(255,248,154,0.1);border-radius:12px;border:1px solid rgba(255,248,154,0.6);text-align:center;">
+                  <div style="font-size:13px;color:#232049;font-weight:600;margin-bottom:8px;">You will pay today:</div>
+                  <div style="font-size:24px;color:#1A1A1A;font-weight:800;margin-bottom:8px;">${money(Math.round(total()/3))}</div>
+                  <div style="font-size:12px;color:#7a7a8e;">Then ${money(Math.round(total()/3))}/mo for the next 2 months.</div>
+                </div>
+              ` : ''}
               ${sel && m.key === 'fpx' ? `
                 <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(0,0,0,0.03);border-radius:12px;border:1px solid rgba(0,0,0,0.06);">
                   <div style="font-size:12px;color:#7a7a8e;margin-bottom:8px">Select Bank</div>
@@ -574,6 +582,12 @@
       $("#paynow").addEventListener("click", () => {
         if (state.pay === 'bank_transfer') {
           show("transfer_instructions");
+        } else if (state.pay === 'atome') {
+          toast("跳转 Atome 授权页...");
+          setTimeout(() => {
+            show("processing");
+            setTimeout(() => show("success"), 2500);
+          }, 1000);
         } else if (state.pay === 'ewallet') {
           toast("跳转第三方 App 支付...");
           setTimeout(() => {

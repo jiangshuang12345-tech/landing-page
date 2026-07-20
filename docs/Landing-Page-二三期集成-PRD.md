@@ -322,7 +322,7 @@ input code → normalize(upper)
 - 订单入库字段在一期基础上增加：`sku_id`、`coupon_id`、`promo_code`、`discount_type`、`discount_value`、`origin_price`、`final_price`、`channel_code`、`lp_id`
 - 用户表继续记录渠道码；管台可按渠道 / SKU / 券码维度筛订单
 
-### 6.4 埋点差分
+### 6.5 埋点差分
 
 在一期漏斗上补充参数（不改事件名）：
 
@@ -333,6 +333,26 @@ input code → normalize(upper)
 | `select_item` | `sku_id` |
 | `apply_promo` | `promo_code`, `coupon_id`, `result` |
 | `purchase` | `sku_id`, `coupon_id`, `promo_code`, `origin_price`, `final_price`, `channel_code` |
+
+### 6.6 媒体 Pixel 与 AppsFlyer 归因打点 (三期新增)
+
+为支持前端精准买量与跨端归因，需在 Landing Page 接入 **AppsFlyer Web SDK** 以及 **Facebook / TikTok Base Pixel**。
+
+#### 6.6.1 AppsFlyer Web SDK (Smart Script / PBA)
+**核心目的**：将用户在 Web 端点击的广告渠道（UTM、Channel Code）通过 AppsFlyer OneLink 动态传递给 App 端，实现 Web-to-App 归因闭环。
+* **SDK 初始化**：用户进入 Landing Page 时，触发 AF Web SDK 初始化，解析并缓存 URL 上的归因参数。
+* **OneLink 动态生成**：支付成功页 (Success Page) 上的「Start Learning / 下载 App」按钮链接，不能写死，**必须通过 AF Web SDK 提供的 API 实时生成带参数的 OneLink**，确保用户的安装行为能被精准归因到当次投放渠道。
+* **Web 事件追踪**：同步通过 `AF('pba', 'event', ...)` 上报注册与购买等事件。
+
+#### 6.6.2 核心转化事件 (Standard Events)
+
+| 业务动作 | 触发时机 & 判定条件 | AppsFlyer (Web) | Facebook Pixel | TikTok Pixel |
+|---|---|---|---|---|
+| **注册成功** | 用户点击 Login，且**接口返回注册/登录成功**时。 | `af_complete_registration` | `CompleteRegistration` | `CompleteRegistration` |
+| **购买成功** | 从第三方支付跳回落地页，**前端轮询确认订单为 PAID**，渲染 Success 页时。 | `af_purchase` | `Purchase` | `CompletePayment` |
+
+> **开发注（购买事件 Payload 规范）**：
+> 触发购买事件时，必须上报：**实付最终金额 (Value)**、**结算币种 (Currency)**、**购买的 SKU ID (Content_IDs)**，以供投流模型优化 ROAS。如果有条件，传递 Hash 后的手机号做高级匹配 (Advanced Matching)。
 
 ---
 
