@@ -60,9 +60,7 @@
       methods: [
         { key: "atome", name: "Atome", ico: "assets/ui/pay-atome.png", bg: "transparent", isImg: true },
         { key: "fpx", name: "FPX", ico: "F", bg: "#00529C" },
-        { key: "tng", name: "Touch 'n Go", ico: "assets/ui/pay-tng.png", bg: "transparent", isImg: true },
-        { key: "grabpay", name: "GrabPay", ico: "assets/ui/pay-grab.png", bg: "transparent", isImg: true },
-        { key: "boost", name: "Boost", ico: "assets/ui/pay-boost.png", bg: "transparent", isImg: true },
+        { key: "ewallet", name: "E-Wallet", ico: "E", bg: "#FF004D" },
         { key: "visa", name: "Visa", ico: "https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png", bg: "transparent", isImg: true },
         { key: "mastercard", name: "Mastercard", ico: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg", bg: "transparent", isImg: true }
       ]
@@ -96,8 +94,8 @@
     pay: { img: "assets/ui/pay.png", crop: 182 }
   };
 
-  const state = {
-    country: 1, // 默认韩国
+  let state = {
+    country: 3, // 默认马来
     phone: "",
     code: "",
     codeSent: false,
@@ -108,7 +106,7 @@
     discount: 0,
     couponMsg: "",
     couponErr: false,
-    pay: "toss",
+    pay: "atome",
     ewallet: "tng",
     fpxBank: "maybank",
     paymentMode: "full"
@@ -296,6 +294,23 @@
                 ${m.extra || ''}
                 <span class="m-rad ${sel ? "on" : ""}"></span>
               </button>
+              ${sel && m.key === 'atome' ? `
+                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:16px;background:rgba(255,248,154,0.1);border-radius:12px;border:1px solid rgba(255,248,154,0.6);text-align:center;">
+                  <div style="font-size:13px;color:#232049;font-weight:600;margin-bottom:8px;">You will pay today:</div>
+                  <div style="font-size:24px;color:#1A1A1A;font-weight:800;margin-bottom:8px;">${money(Math.round(total()/3))}</div>
+                  <div style="font-size:12px;color:#7a7a8e;">Then ${money(Math.round(total()/3))}/mo for the next 2 months.</div>
+                </div>
+              ` : ''}
+              ${sel && m.key === 'ewallet' ? `
+                <div class="sub-methods" style="margin-top:-6px;margin-bottom:12px;padding:12px;background:rgba(0,0,0,0.03);border-radius:12px;border:1px solid rgba(0,0,0,0.06);">
+                  <div style="font-size:12px;color:#7a7a8e;margin-bottom:8px">Select e-Wallet</div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap">
+                    <button class="ew-btn" data-ew="tng" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'tng' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'tng' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'tng' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><img src="assets/ui/pay-tng.png" style="height:16px;border-radius:4px;" /> Touch 'n Go</button>
+                    <button class="ew-btn" data-ew="grab" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'grab' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'grab' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'grab' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><img src="assets/ui/pay-grab.png" style="height:16px;border-radius:4px;" /> GrabPay</button>
+                    <button class="ew-btn" data-ew="boost" style="flex:1;padding:8px;border-radius:8px;border:1px solid ${state.ewallet === 'boost' ? '#3d7bff' : '#d3d3e0'};background:${state.ewallet === 'boost' ? '#f0f5ff' : '#fff'};color:${state.ewallet === 'boost' ? '#3d7bff' : '#232049'};font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><img src="assets/ui/pay-boost.png" style="height:14px;display:none" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'"/><span style="background:#EE2B2E;color:#fff;border-radius:4px;padding:2px 4px;font-size:10px;">Boost</span> Boost</button>
+                  </div>
+                </div>
+              ` : ''}
               `;
             }).join("")}
           </div>
@@ -545,7 +560,12 @@
 
     if (id === "pay") {
       $$(".method", viewport).forEach((b) => b.addEventListener("click", (e) => {
+        if (e.target.closest('.sub-methods')) return;
         state.pay = b.dataset.pay; show("pay");
+      }));
+      $$(".ew-btn", viewport).forEach((b) => b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        state.ewallet = b.dataset.ew; show("pay");
       }));
       $("#paynow").addEventListener("click", () => {
         if (state.pay === 'bank_transfer') {
@@ -562,8 +582,8 @@
             show("processing");
             setTimeout(() => show("success"), 2500);
           }, 1000);
-        } else if (state.pay === 'tng' || state.pay === 'grabpay' || state.pay === 'boost') {
-          toast(`跳转 ${state.pay} 在线钱包...`);
+        } else if (state.pay === 'ewallet') {
+          toast(`跳转 ${state.ewallet} 在线钱包...`);
           setTimeout(() => {
             show("processing");
             setTimeout(() => show("success"), 2500);
