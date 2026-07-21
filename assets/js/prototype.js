@@ -186,7 +186,7 @@
           <p class="terms">You agree to our <a>Terms of Use</a> and <a>Privacy Policy</a></p>
         </div>
 
-        ${c.key === "VN" || c.key === "MY" ? "" : `
+        ${c.key === "MY" ? "" : `
         <div class="socials">
           <span class="soc" style="color:#EA4335">G</span>
           <span class="soc" style="color:#111"></span>
