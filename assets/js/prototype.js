@@ -59,9 +59,9 @@
       ],
       methods: [
         { key: "fpx", name: "Online Banking (FPX)", ico: "F", bg: "#00529C" },
-        { key: "atome", name: "Atome", ico: "Atome", bg: "transparent", isCssLogo: true, cssLogo: '<div style="background:#ccff00;width:18px;height:18px;border-radius:4px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;margin:0 4px;"><div style="background:#fff;width:8px;height:8px;border-radius:2px;"></div></div>' },
-        { key: "ewallet", name: "E-Wallet", ico: "E", bg: "#FF004D" },
-        { key: "card", name: "Credit/Debit Card", ico: "Card", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;gap:4px;"><span style="color:#1a1f71;font-weight:800;font-size:16px;font-style:italic;letter-spacing:-1px;">Visa</span><div style="display:flex;align-items:center;position:relative;width:24px;height:16px;margin-left:4px;"><div style="position:absolute;left:0;width:16px;height:16px;border-radius:50%;background:#eb001b;opacity:0.8;"></div><div style="position:absolute;right:0;width:16px;height:16px;border-radius:50%;background:#f79e1b;opacity:0.8;"></div></div></div>' }
+        { key: "card", name: "Credit/Debit Card", ico: "Card", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;gap:4px;"><span style="color:#1a1f71;font-weight:800;font-size:16px;font-style:italic;letter-spacing:-1px;">Visa</span><div style="display:flex;align-items:center;position:relative;width:24px;height:16px;margin-left:4px;"><div style="position:absolute;left:0;width:16px;height:16px;border-radius:50%;background:#eb001b;opacity:0.8;"></div><div style="position:absolute;right:0;width:16px;height:16px;border-radius:50%;background:#f79e1b;opacity:0.8;"></div></div></div>' },
+        { key: "atome", name: "Atome", sub: "3 easy payments, 0% interest", ico: "Atome", bg: "transparent", isCssLogo: true, cssLogo: '<div style="background:#ccff00;width:18px;height:18px;border-radius:4px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;margin:0 4px;"><div style="background:#fff;width:8px;height:8px;border-radius:2px;"></div></div>' },
+        { key: "ewallet", name: "E-Wallet", ico: "E", bg: "#FF004D" }
       ]
     },
     {
