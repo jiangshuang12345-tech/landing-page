@@ -61,8 +61,7 @@
         { key: "fpx", name: "Online Banking (FPX)", ico: "F", bg: "#00529C" },
         { key: "atome", name: "Atome", ico: "Atome", bg: "transparent", isCssLogo: true, cssLogo: '<div style="background:#ccff00;width:18px;height:18px;border-radius:4px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;margin:0 4px;"><div style="background:#fff;width:8px;height:8px;border-radius:2px;"></div></div>' },
         { key: "ewallet", name: "E-Wallet", ico: "E", bg: "#FF004D" },
-        { key: "visa", name: "Visa", ico: "Visa", bg: "transparent", isCssLogo: true, cssLogo: '<span style="color:#1a1f71;font-weight:800;font-size:20px;font-style:italic;letter-spacing:-1px;">Visa</span>' },
-        { key: "mastercard", name: "Mastercard", ico: "Mastercard", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;position:relative;width:32px;height:22px;"><div style="position:absolute;left:0;width:22px;height:22px;border-radius:50%;background:#eb001b;opacity:0.8;"></div><div style="position:absolute;right:0;width:22px;height:22px;border-radius:50%;background:#f79e1b;opacity:0.8;"></div></div>' }
+        { key: "card", name: "Credit/Debit Card", ico: "Card", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;gap:4px;"><span style="color:#1a1f71;font-weight:800;font-size:16px;font-style:italic;letter-spacing:-1px;">Visa</span><div style="display:flex;align-items:center;position:relative;width:24px;height:16px;margin-left:4px;"><div style="position:absolute;left:0;width:16px;height:16px;border-radius:50%;background:#eb001b;opacity:0.8;"></div><div style="position:absolute;right:0;width:16px;height:16px;border-radius:50%;background:#f79e1b;opacity:0.8;"></div></div></div>' }
       ]
     },
     {
@@ -76,8 +75,7 @@
         { key: "bank_transfer", name: "Bank Transfer", ico: "🏦", bg: "transparent", emoji: true },
         { key: "installment", name: "Installment", sub: "Split into 3 payments", ico: "⏱️", bg: "transparent", emoji: true },
         { key: "deposit", name: "Deposit", sub: "Secure promotion with VND 50k", ico: "💰", bg: "transparent", emoji: true },
-        { key: "visa", name: "Visa", ico: "Visa", bg: "transparent", isCssLogo: true, cssLogo: '<span style="color:#1a1f71;font-weight:800;font-size:20px;font-style:italic;letter-spacing:-1px;">Visa</span>' },
-        { key: "mastercard", name: "Mastercard", ico: "Mastercard", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;position:relative;width:32px;height:22px;"><div style="position:absolute;left:0;width:22px;height:22px;border-radius:50%;background:#eb001b;opacity:0.8;"></div><div style="position:absolute;right:0;width:22px;height:22px;border-radius:50%;background:#f79e1b;opacity:0.8;"></div></div>' }
+        { key: "card", name: "Credit/Debit Card", ico: "Card", bg: "transparent", isCssLogo: true, cssLogo: '<div style="display:flex;align-items:center;gap:4px;"><span style="color:#1a1f71;font-weight:800;font-size:16px;font-style:italic;letter-spacing:-1px;">Visa</span><div style="display:flex;align-items:center;position:relative;width:24px;height:16px;margin-left:4px;"><div style="position:absolute;left:0;width:16px;height:16px;border-radius:50%;background:#eb001b;opacity:0.8;"></div><div style="position:absolute;right:0;width:16px;height:16px;border-radius:50%;background:#f79e1b;opacity:0.8;"></div></div></div>' }
       ]
     }
   ];
