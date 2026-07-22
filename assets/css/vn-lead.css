@@ -265,6 +265,19 @@ body {
   font-size: 20px;
 }
 
+/* Module Image */
+.module-image {
+  margin-top: 24px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(40,50,120,0.08);
+}
+.module-image img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
 /* Table */
 .table-wrapper {
   overflow-x: auto;
