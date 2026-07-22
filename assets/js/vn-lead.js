@@ -43,4 +43,24 @@ document.addEventListener("DOMContentLoaded", () => {
       modalOverlay.classList.remove("show");
     }
   });
+
+  // Language Switcher
+  const langBtns = document.querySelectorAll(".lang-btn");
+  const htmlEl = document.documentElement;
+  
+  langBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      langBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      
+      const lang = btn.getAttribute("data-lang");
+      htmlEl.setAttribute("data-active-lang", lang);
+      
+      if (lang === "cn") {
+        phoneInput.placeholder = "请输入您的手机号";
+      } else {
+        phoneInput.placeholder = "Nhập số điện thoại của bạn";
+      }
+    });
+  });
 });

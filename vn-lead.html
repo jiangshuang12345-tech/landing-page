@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-active-lang="vn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -11,10 +11,14 @@
 <body>
 
   <!-- Top Navigation / Logo -->
-  <nav class="navbar">
+    <nav class="navbar">
     <div class="logo">
       <span class="logo-icon">🦖</span>
       <span class="logo-text">Dino English</span>
+    </div>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="vn">VN</button>
+      <button class="lang-btn" data-lang="cn">CN</button>
     </div>
   </nav>
 
@@ -23,16 +27,22 @@
     <!-- Module 1: Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <div class="tag">🏆 Vipkid tự kinh doanh, 13 năm 1,80 triệu gia đình</div>
-        <h1 class="title">Bài học tiếng Anh cho bé theo dõi</h1>
-        <h2 class="cn-title">让孩子追着学的英语课</h2>
+        <div class="tag lang-vn">🏆 Vipkid tự kinh doanh, 13 năm 1,80 triệu gia đình</div>
+        <div class="tag lang-cn">🏆 Vipkid自营，13年180万家庭</div>
+        <h1 class="title lang-vn">Bài học tiếng Anh cho bé theo dõi</h1>
+        <h1 class="title lang-cn">让孩子追着学的英语课</h1>
         
         <ul class="hero-features">
-          <li><span class="check">✓</span> Bé thích học, tự tin nói, phản hồi tức thì</li>
-          <li><span class="check">✓</span> Câu chuyện, game hóa, IP đồng hành, tương tác cao</li>
-          <li><span class="check">✓</span> 13 năm nghiên cứu, lộ trình riêng, tiến bộ rõ ràng</li>
-          <li><span class="check">✓</span> Chất lượng giáo viên Bắc Mỹ, chỉ 1/10 giá</li>
-          <li><span class="check">✓</span> Học mọi lúc, mọi nơi tại nhà</li>
+          <li class="lang-vn"><span class="check">✓</span> Bé thích học, tự tin nói, phản hồi tức thì</li>
+          <li class="lang-cn"><span class="check">✓</span> 孩子喜欢学，自信开口，即时反馈</li>
+          <li class="lang-vn"><span class="check">✓</span> Câu chuyện, game hóa, IP đồng hành, tương tác cao</li>
+          <li class="lang-cn"><span class="check">✓</span> 故事化、游戏化、IP陪伴，高频互动</li>
+          <li class="lang-vn"><span class="check">✓</span> 13 năm nghiên cứu, lộ trình riêng, tiến bộ rõ ràng</li>
+          <li class="lang-cn"><span class="check">✓</span> 13年教研沉淀，个性化路径，效果外化</li>
+          <li class="lang-vn"><span class="check">✓</span> Chất lượng giáo viên Bắc Mỹ, chỉ 1/10 giá</li>
+          <li class="lang-cn"><span class="check">✓</span> 北美外教品质，1/10价格</li>
+          <li class="lang-vn"><span class="check">✓</span> Học mọi lúc, mọi nơi tại nhà</li>
+          <li class="lang-cn"><span class="check">✓</span> 在家随时随地，高频开口</li>
         </ul>
       </div>
       <div class="hero-bg"></div>
@@ -41,39 +51,47 @@
     <!-- Floating Form Section -->
     <section class="form-section" id="lead-form">
       <div class="form-card">
-        <h3>Nhận một lớp học dùng thử miễn phí<br><small>领取免费体验课</small></h3>
+        <h3 class="lang-vn">Nhận một lớp học dùng thử miễn phí</h3>
+        <h3 class="lang-cn">领取免费体验课</h3>
         <div class="input-group">
           <div class="prefix">
             <span class="flag">🇻🇳</span> +84
           </div>
           <input type="tel" id="phone" placeholder="Nhập số điện thoại của bạn" maxlength="12" inputmode="numeric">
         </div>
-        <button class="btn-submit shaking" id="submit-btn" disabled>Nhận ngay (Lấy mã)</button>
+        <button class="btn-submit shaking" id="submit-btn" disabled>
+          <span class="lang-vn">Nhận ngay (Lấy mã)</span>
+          <span class="lang-cn">立即领取</span>
+        </button>
       </div>
     </section>
 
     <!-- Module 2: Active Learning -->
     <section class="module">
       <div class="module-header">
-        <h2>Hãy để bé chủ động học hỏi và lên tiếng</h2>
-        <p class="cn-sub">让孩子主动学，开口说</p>
+        <h2 class="lang-vn">Hãy để bé chủ động học hỏi và lên tiếng</h2>
+        <h2 class="lang-cn">让孩子主动学，开口说</h2>
       </div>
       <div class="feature-grid">
         <div class="feat-item">
           <div class="feat-icon">🎮</div>
-          <p>Cốt truyện và động lực gamified, học không nhàm chán</p>
+          <p class="lang-vn">Cốt truyện và động lực gamified, học không nhàm chán</p>
+          <p class="lang-cn">游戏化剧情与激励，学习不枯燥</p>
         </div>
         <div class="feat-item">
           <div class="feat-icon">🤖</div>
-          <p>Ba nhân cách giáo viên AI, bé lựa chọn độc lập</p>
+          <p class="lang-vn">Ba nhân cách giáo viên AI, bé lựa chọn độc lập</p>
+          <p class="lang-cn">三种AI老师人设，孩子自主选择</p>
         </div>
         <div class="feat-item">
           <div class="feat-icon">🗣️</div>
-          <p>Tương tác tần số cao, mở áp suất 0, xây dựng sự tự tin</p>
+          <p class="lang-vn">Tương tác tần số cao, mở áp suất 0, xây dựng sự tự tin</p>
+          <p class="lang-cn">高频互动，0压力开口，建立自信</p>
         </div>
         <div class="feat-item">
           <div class="feat-icon">🦕</div>
-          <p>Vai trò IP đồng hành cùng sự phát triển và khiến bé sẵn sàng kiên trì</p>
+          <p class="lang-vn">Vai trò IP đồng hành cùng sự phát triển và khiến bé sẵn sàng kiên trì</p>
+          <p class="lang-cn">IP角色陪伴成长，让孩子愿意坚持</p>
         </div>
       </div>
     </section>
@@ -81,14 +99,18 @@
     <!-- Module 3: System -->
     <section class="module bg-light">
       <div class="module-header">
-        <h2>Hệ thống giáo viên nước ngoài ở Bắc Mỹ bảo vệ hiệu ứng</h2>
-        <p class="cn-sub">北美外教课程体系，为效果保驾护航</p>
+        <h2 class="lang-vn">Hệ thống giáo viên nước ngoài ở Bắc Mỹ bảo vệ hiệu ứng</h2>
+        <h2 class="lang-cn">北美外教课程体系，为效果保驾护航</h2>
       </div>
       <ul class="list-features">
-        <li><span>🌟</span> Khung CEFR chuẩn quốc tế</li>
-        <li><span>📈</span> Lộ trình riêng, tiến bộ rõ ràng</li>
-        <li><span>👨‍🏫</span> Học tại nhà, chuẩn giáo viên Bắc Mỹ</li>
-        <li><span>❤️</span> Khóa học được 1,8 triệu gia đình tin chọn suốt 13 năm</li>
+        <li class="lang-vn"><span>🌟</span> Khung CEFR chuẩn quốc tế</li>
+        <li class="lang-cn"><span>🌟</span> 国际标准CEFR框架</li>
+        <li class="lang-vn"><span>📈</span> Lộ trình riêng, tiến bộ rõ ràng</li>
+        <li class="lang-cn"><span>📈</span> 个性化路径，进步清晰可见</li>
+        <li class="lang-vn"><span>👨‍🏫</span> Học tại nhà, chuẩn giáo viên Bắc Mỹ</li>
+        <li class="lang-cn"><span>👨‍🏫</span> 在家学，纯正北美外教标准</li>
+        <li class="lang-vn"><span>❤️</span> Khóa học được 1,8 triệu gia đình tin chọn suốt 13 năm</li>
+        <li class="lang-cn"><span>❤️</span> 13年沉淀，180万家庭信赖之选</li>
       </ul>
       <div class="module-image">
         <img src="assets/ui/vn-system.png" alt="Hệ thống giáo viên">
@@ -98,8 +120,8 @@
     <!-- Module 4: Comparison -->
     <section class="module">
       <div class="module-header">
-        <h2>Sản phẩm AI tiếng Anh đầu tiên thực sự giảng dạy</h2>
-        <p class="cn-sub">第一款真正教学的 AI 英语产品， 1/10 的价格享受北美外教质量</p>
+        <h2 class="lang-vn">Sản phẩm AI tiếng Anh đầu tiên thực sự giảng dạy</h2>
+        <h2 class="lang-cn">第一款真正教学的 AI 英语产品， 1/10 的价格享受北美外教质量</h2>
       </div>
       
       <div class="table-wrapper">
@@ -107,35 +129,35 @@
           <thead>
             <tr>
               <th></th>
-              <th>Giáo viên bản ngữ 1:1</th>
-              <th>AI thông thường</th>
+              <th><span class="lang-vn">Giáo viên bản ngữ 1:1</span><span class="lang-cn">1对1外教</span></th>
+              <th><span class="lang-vn">AI thông thường</span><span class="lang-cn">普通AI</span></th>
               <th class="highlight">Dino English</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="row-title">Hiệu ứng</td>
-              <td>Khó tìm giáo viên giỏi</td>
-              <td>Nội dung rời rạc</td>
-              <td class="highlight">CEFR, tiến bộ rõ ràng</td>
+              <td class="row-title"><span class="lang-vn">Hiệu ứng</span><span class="lang-cn">效果</span></td>
+              <td><span class="lang-vn">Khó tìm giáo viên giỏi</span><span class="lang-cn">好外教难寻</span></td>
+              <td><span class="lang-vn">Nội dung rời rạc</span><span class="lang-cn">内容零散</span></td>
+              <td class="highlight"><span class="lang-vn">CEFR, tiến bộ rõ ràng</span><span class="lang-cn">CEFR，进步明显</span></td>
             </tr>
             <tr>
-              <td class="row-title">Tương tác</td>
-              <td>Cần đặt lịch</td>
-              <td>Hỏi đáp đơn giản</td>
-              <td class="highlight">Tương tác mọi lúc</td>
+              <td class="row-title"><span class="lang-vn">Tương tác</span><span class="lang-cn">互动</span></td>
+              <td><span class="lang-vn">Cần đặt lịch</span><span class="lang-cn">需要预约</span></td>
+              <td><span class="lang-vn">Hỏi đáp đơn giản</span><span class="lang-cn">简单问答</span></td>
+              <td class="highlight"><span class="lang-vn">Tương tác mọi lúc</span><span class="lang-cn">随时互动</span></td>
             </tr>
             <tr>
-              <td class="row-title">Nhấn</td>
-              <td>Cần cha mẹ nhắc nhở</td>
-              <td>Thiếu động lực</td>
-              <td class="highlight">Game hóa khích lệ</td>
+              <td class="row-title"><span class="lang-vn">Động lực</span><span class="lang-cn">动力</span></td>
+              <td><span class="lang-vn">Cần cha mẹ nhắc nhở</span><span class="lang-cn">需家长督促</span></td>
+              <td><span class="lang-vn">Thiếu động lực</span><span class="lang-cn">缺乏动力</span></td>
+              <td class="highlight"><span class="lang-vn">Game hóa khích lệ</span><span class="lang-cn">游戏化激励</span></td>
             </tr>
             <tr>
-              <td class="row-title">Giá cả</td>
-              <td>Cao</td>
-              <td>Lộn xộn</td>
-              <td class="highlight">Chỉ 1/10 giá</td>
+              <td class="row-title"><span class="lang-vn">Giá cả</span><span class="lang-cn">价格</span></td>
+              <td><span class="lang-vn">Cao</span><span class="lang-cn">昂贵</span></td>
+              <td><span class="lang-vn">Lộn xộn</span><span class="lang-cn">混乱</span></td>
+              <td class="highlight"><span class="lang-vn">Chỉ 1/10 giá</span><span class="lang-cn">仅1/10价格</span></td>
             </tr>
           </tbody>
         </table>
@@ -145,13 +167,15 @@
     <!-- Module 5: Brand -->
     <section class="module bg-light" style="padding-bottom: 60px;">
       <div class="module-header">
-        <h2>Dino English, sản phẩm học tiếng Anh cho trẻ em từ VIPKID</h2>
-        <p class="cn-sub">Dino English，来自 VIPKID 的儿童英语学习产品</p>
+        <h2 class="lang-vn">Dino English, sản phẩm học tiếng Anh cho trẻ em từ VIPKID</h2>
+        <h2 class="lang-cn">Dino English，来自 VIPKID 的儿童英语学习产品</h2>
       </div>
       <div class="brand-card">
-        <p>Dino English là sản phẩm học tiếng Anh bằng AI của VIPKID, kết hợp chương trình chuẩn Bắc Mỹ, AI và trải nghiệm tương tác phù hợp với trẻ, giúp bé hứng thú học và tự tin giao tiếp.</p>
+        <p class="lang-vn">Dino English là sản phẩm học tiếng Anh bằng AI của VIPKID, kết hợp chương trình chuẩn Bắc Mỹ, AI và trải nghiệm tương tác phù hợp với trẻ, giúp bé hứng thú học và tự tin giao tiếp.</p>
+        <p class="lang-cn">Dino English 是 VIPKID 旗下的 AI 英语学习产品，结合北美外教标准体系、AI技术与适合儿童的互动体验，帮助孩子激发学习兴趣，自信开口表达。</p>
         <div class="divider"></div>
-        <p>VIPKID có 13 năm kinh nghiệm, mạng lưới 200.000 giáo viên Bắc Mỹ và được hơn 1,8 triệu gia đình lựa chọn.</p>
+        <p class="lang-vn">VIPKID có 13 năm kinh nghiệm, mạng lưới 200.000 giáo viên Bắc Mỹ và được hơn 1,8 triệu gia đình lựa chọn.</p>
+        <p class="lang-cn">VIPKID 拥有13年经验，20万北美外教网络，是超过180万家庭的共同选择。</p>
       </div>
     </section>
     
@@ -165,10 +189,14 @@
   <div class="modal-overlay" id="success-modal">
     <div class="modal-content">
       <div class="modal-icon">🎁</div>
-      <h3 class="modal-title">Đăng ký thành công!</h3>
-      <p class="modal-cn">🎉 免费体验课领取成功！专属学习顾问将很快与您联系。<br><br>👉 强烈建议您<b>现在下载 App</b>，立即为孩子解锁 AI 互动外教课与海量免费资源，提前开启英语之旅！</p>
-      <p class="modal-vn">🎉 Đăng ký học thử thành công! Cố vấn học tập sẽ sớm liên hệ với bạn.<br><br>👉 Hãy <b>tải App ngay bây giờ</b> để mở khóa các bài học AI tương tác và kho tài nguyên miễn phí cho bé!</p>
-      <button class="btn-download" id="btn-download">Tải App ngay (Download Now)</button>
+      <h3 class="modal-title lang-vn">Đăng ký thành công!</h3>
+      <h3 class="modal-title lang-cn">报名成功！</h3>
+      <p class="modal-cn lang-cn">🎉 免费体验课领取成功！专属学习顾问将很快与您联系。<br><br>👉 强烈建议您<b>现在下载 App</b>，立即为孩子解锁 AI 互动外教课与海量免费资源，提前开启英语之旅！</p>
+      <p class="modal-vn lang-vn">🎉 Đăng ký học thử thành công! Cố vấn học tập sẽ sớm liên hệ với bạn.<br><br>👉 Hãy <b>tải App ngay bây giờ</b> để mở khóa các bài học AI tương tác và kho tài nguyên miễn phí cho bé!</p>
+      <button class="btn-download" id="btn-download">
+        <span class="lang-vn">Tải App ngay (Download Now)</span>
+        <span class="lang-cn">立即下载 App</span>
+      </button>
     </div>
   </div>
 
