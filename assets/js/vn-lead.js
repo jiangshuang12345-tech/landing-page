@@ -6,12 +6,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.getElementById("submit-btn");
   const modalOverlay = document.getElementById("success-modal");
   const btnDownload = document.getElementById("btn-download");
+  const inputGroup = document.querySelector(".input-group");
+
+  // Initial state: needs input
+  if (phoneInput.value.length === 0) {
+    inputGroup.classList.add("needs-input");
+  }
 
   // Phone input validation (enable button if length >= 8)
   phoneInput.addEventListener("input", (e) => {
     // allow only numbers
     let val = e.target.value.replace(/[^\d]/g, "");
     e.target.value = val;
+    
+    if (val.length > 0) {
+      inputGroup.classList.remove("needs-input");
+    } else {
+      inputGroup.classList.add("needs-input");
+    }
     
     if (val.length >= 8) {
       submitBtn.disabled = false;
@@ -35,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modalOverlay.classList.remove("show");
     phoneInput.value = "";
     submitBtn.disabled = true;
+    inputGroup.classList.add("needs-input");
   });
 
   // Optional: close modal when clicking outside
