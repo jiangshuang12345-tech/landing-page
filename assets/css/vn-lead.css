@@ -185,15 +185,14 @@ body {
   transform: scale(0.96);
 }
 
-/* Shaking Animation for CTA */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-  20%, 40%, 60%, 80% { transform: translateX(4px); }
+/* Breathing Animation for CTA */
+@keyframes breathe {
+  0% { transform: scale(1); box-shadow: 0 10px 20px rgba(255,138,30,0.3); }
+  50% { transform: scale(1.05); box-shadow: 0 15px 25px rgba(255,138,30,0.5); }
+  100% { transform: scale(1); box-shadow: 0 10px 20px rgba(255,138,30,0.3); }
 }
 .shaking:not(:disabled) {
-  animation: shake 3s infinite ease-in-out;
-  animation-delay: 2s;
+  animation: breathe 2s infinite ease-in-out;
 }
 
 /* Modules */
