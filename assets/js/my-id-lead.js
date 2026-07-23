@@ -6,14 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.getElementById("submit-btn");
   const modalOverlay = document.getElementById("success-modal");
   const btnDownload = document.getElementById("btn-download");
-  const inputGroup = document.querySelector(".field--phone");
 
-  // Initial state: needs input
-  if (phoneInput.value.length === 0) {
-    inputGroup.classList.add("needs-input");
-  }
-
-  
   const codeInput = document.getElementById("code");
   const getcodeBtn = document.getElementById("getcode");
   
@@ -52,41 +45,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   });
 
+  const updateSubmitState = () => {
+    submitBtn.disabled = !(phoneInput.value.length >= 8 && codeInput.value.length >= 4);
+  };
+
   codeInput.addEventListener("input", (e) => {
     let val = e.target.value.replace(/[^\d]/g, "");
     e.target.value = val;
     updateGetCodeState();
-    
-    if (val.length >= 4 && phoneInput.value.length >= 8) {
-      submitBtn.classList.remove("disabled");
-    } else {
-      submitBtn.classList.add("disabled");
-    }
+    updateSubmitState();
   });
 
-  // Phone input validation (enable button if length >= 8)
   phoneInput.addEventListener("input", (e) => {
-    // allow only numbers
     let val = e.target.value.replace(/[^\d]/g, "");
     e.target.value = val;
     updateGetCodeState();
-    
-    if (val.length > 0) {
-      inputGroup.classList.remove("needs-input");
-    } else {
-      inputGroup.classList.add("needs-input");
-    }
-    
-    if (val.length >= 8 && codeInput.value.length >= 4) {
-      submitBtn.classList.remove("disabled");
-    } else {
-      submitBtn.classList.add("disabled");
-    }
+    updateSubmitState();
   });
 
   // Submit action
   submitBtn.addEventListener("click", () => {
-    if (submitBtn.classList.contains("disabled") || phoneInput.value.length < 8 || codeInput.value.length < 4) return;
+    if (submitBtn.disabled) return;
     
     // Show success modal
     modalOverlay.classList.add("show");
@@ -100,8 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     phoneInput.value = "";
     codeInput.value = "";
     updateGetCodeState();
-    submitBtn.classList.add("disabled");
-    inputGroup.classList.add("needs-input");
+    updateSubmitState();
   });
 
   // Optional: close modal when clicking outside
