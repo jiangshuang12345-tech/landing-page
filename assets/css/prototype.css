@@ -95,7 +95,7 @@ img { -webkit-user-drag: none; }
 .hero { width: 100%; background-repeat: no-repeat; background-position: top center; background-size: 100% auto; }
 
 .body { position: relative; padding: 0 18px 26px; z-index: 1; }
-.body--login { margin-top: -22px; background: linear-gradient(180deg,#efeafb 0%,#e6ecfb 45%,#dbe7fc 100%); border-radius: 26px 26px 0 0; padding-top: 4px; }
+.body--login { margin-top: -30px; background: transparent; padding-top: 0; }
 .body--transparent { background: transparent !important; margin-top: 320px; }
 .body--blue { margin-top: -2px; padding-top: 16px; min-height: 560px; }
 .screen--plans .body--blue { background: linear-gradient(180deg,#6b83ea 0%,#93a8f1 12%,#c4d0f6 34%,#dde7fb 60%,#e9eefc 100%); }
@@ -108,7 +108,7 @@ img { -webkit-user-drag: none; }
 .back:hover { background: rgba(255,255,255,.14); }
 
 /* generic card */
-.mcard { background: #fff; border-radius: 20px; padding: 18px 18px; box-shadow: 0 10px 26px rgba(40,50,120,.12); margin-bottom: 14px; }
+.mcard { background: #fff; border-radius: 24px; padding: 24px 20px; box-shadow: 0 10px 26px rgba(40,50,120,.08); margin-bottom: 14px; }
 .mtitle { font-size: 17px; font-weight: 800; margin-bottom: 12px; color: #232049; }
 
 /* ---- login ---- */
