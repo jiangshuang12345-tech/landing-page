@@ -17,11 +17,12 @@
     </a>
     <div class="country-tabs" id="country-tabs"></div>
     <div class="topbar__actions">
-      <div class="view-tabs" style="display:flex; gap:8px; margin-right: 16px;">
-        <button class="tbtn active" id="tab-proto-btn" style="background: var(--panel-2); color: #fff; border-color: rgba(255,255,255,0.2);">支付落地页</button>
-        <button class="tbtn" id="tab-vn-btn">越南投放页</button>
-        <button class="tbtn" id="tab-plan-btn">迭代计划</button>
-      </div>
+              <div class="view-tabs" style="display:flex; gap:8px; margin-right: 16px;">
+                <button class="tbtn active" id="tab-proto-btn" style="background: var(--panel-2); color: #fff; border-color: rgba(255,255,255,0.2);">支付落地页</button>
+                <button class="tbtn" id="tab-vn-btn">越南投放页</button>
+                <button class="tbtn" id="tab-myid-btn">马印投放页</button>
+                <button class="tbtn" id="tab-plan-btn">迭代计划</button>
+              </div>
       <a id="btn-live" class="tbtn tbtn--live" href="#" target="_blank" style="display:none">🔗 查看线上版</a>
       <a class="tbtn" href="index.html">← 返回 PRD</a>
     </div>
@@ -83,10 +84,15 @@
     </div>
   </div>
 
-  <!-- 越南投放页视图 -->
-  <div id="view-vn" style="display:none; height:calc(100vh - 58px); background:#f5f7ff;">
-    <iframe src="vn-lead.html" style="width:100%; height:100%; border:none;"></iframe>
-  </div>
+          <!-- 越南投放页视图 -->
+          <div id="view-vn" style="display:none; height:calc(100vh - 58px); background:#f5f7ff;">
+            <iframe src="vn-lead.html" style="width:100%; height:100%; border:none;"></iframe>
+          </div>
+
+          <!-- 马来/印尼投放页视图 -->
+          <div id="view-myid" style="display:none; height:calc(100vh - 58px); background:#f5f7ff;">
+            <iframe src="my-id-lead.html" style="width:100%; height:100%; border:none;"></iframe>
+          </div>
 
   <!-- 迭代计划视图 -->
   <div id="view-plan" style="display:none; overflow-y:auto; height:calc(100vh - 58px); padding: 40px 20px;">
@@ -217,46 +223,49 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const btnProto = document.getElementById("tab-proto-btn");
-      const btnVn = document.getElementById("tab-vn-btn");
-      const btnPlan = document.getElementById("tab-plan-btn");
-      
-      const viewProto = document.getElementById("view-proto");
-      const viewVn = document.getElementById("view-vn");
-      const viewPlan = document.getElementById("view-plan");
-      const countryTabs = document.getElementById("country-tabs");
+            document.addEventListener("DOMContentLoaded", () => {
+              const btnProto = document.getElementById("tab-proto-btn");
+              const btnVn = document.getElementById("tab-vn-btn");
+              const btnMyid = document.getElementById("tab-myid-btn");
+              const btnPlan = document.getElementById("tab-plan-btn");
+              
+              const viewProto = document.getElementById("view-proto");
+              const viewVn = document.getElementById("view-vn");
+              const viewMyid = document.getElementById("view-myid");
+              const viewPlan = document.getElementById("view-plan");
+              const countryTabs = document.getElementById("country-tabs");
 
-      function resetTabs() {
-        [btnProto, btnVn, btnPlan].forEach(btn => {
-          if(!btn) return;
-          btn.style.background = "var(--panel)";
-          btn.style.color = "var(--txt-dim)";
-          btn.style.borderColor = "var(--line)";
-        });
-        [viewProto, viewVn, viewPlan].forEach(view => {
-          if(!view) return;
-          view.style.display = "none";
-        });
-      }
+              function resetTabs() {
+                [btnProto, btnVn, btnMyid, btnPlan].forEach(btn => {
+                  if(!btn) return;
+                  btn.style.background = "var(--panel)";
+                  btn.style.color = "var(--txt-dim)";
+                  btn.style.borderColor = "var(--line)";
+                });
+                [viewProto, viewVn, viewMyid, viewPlan].forEach(view => {
+                  if(!view) return;
+                  view.style.display = "none";
+                });
+              }
 
-      function activeTab(btn, view, showCountryTabs = false) {
-        resetTabs();
-        btn.style.background = "var(--panel-2)";
-        btn.style.color = "#fff";
-        btn.style.borderColor = "rgba(255,255,255,0.2)";
-        view.style.display = "block";
-        if (countryTabs) {
-          countryTabs.style.visibility = showCountryTabs ? "visible" : "hidden";
-        }
-      }
+              function activeTab(btn, view, showCountryTabs = false) {
+                resetTabs();
+                btn.style.background = "var(--panel-2)";
+                btn.style.color = "#fff";
+                btn.style.borderColor = "rgba(255,255,255,0.2)";
+                view.style.display = "block";
+                if (countryTabs) {
+                  countryTabs.style.visibility = showCountryTabs ? "visible" : "hidden";
+                }
+              }
 
-      if(btnProto && btnPlan && btnVn) {
-        btnProto.addEventListener("click", () => activeTab(btnProto, viewProto, true));
-        btnVn.addEventListener("click", () => activeTab(btnVn, viewVn, false));
-        btnPlan.addEventListener("click", () => activeTab(btnPlan, viewPlan, false));
-      }
-    });
+              if(btnProto && btnPlan && btnVn && btnMyid) {
+                btnProto.addEventListener("click", () => activeTab(btnProto, viewProto, true));
+                btnVn.addEventListener("click", () => activeTab(btnVn, viewVn, false));
+                btnMyid.addEventListener("click", () => activeTab(btnMyid, viewMyid, false));
+                btnPlan.addEventListener("click", () => activeTab(btnPlan, viewPlan, false));
+              }
+            });
   </script>
 
   <script src="assets/js/prototype.js"></script>
