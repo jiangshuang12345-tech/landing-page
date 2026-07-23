@@ -14,7 +14,7 @@ content = content.replace('<html lang="vi" data-active-lang="vn">', '<html lang=
 navbar_replacement = """  <nav class="navbar">
     <div class="logo">
       <span class="logo-icon">🦖</span>
-      <span class="logo-text">Dino English</span>
+      <span class="logo-text">Dino AI</span>
     </div>
     <div class="lang-switch">
       <button class="lang-btn active" data-lang="my">MY</button>

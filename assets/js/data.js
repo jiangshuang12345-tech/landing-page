@@ -1,11 +1,11 @@
 /* =========================================================================
- * Dino English · Landing Page PRD — Structured Content
+ * Dino AI · Landing Page PRD — Structured Content
  * 所有需求内容集中在此，便于维护与后续多语言扩展。
  * ========================================================================= */
 
 window.PRD = {
   meta: {
-    title: "Dino English · Landing Page",
+    title: "Dino AI · Landing Page",
     subtitle: "海外获客落地页 · 沙特 / 韩国 / 印尼 / 马来 / 越南",
     version: "v1.0",
     status: "开发中",
@@ -39,7 +39,7 @@ window.PRD = {
       img: "assets/images/screen-login-combined.png",
       caption: "增加品牌信息：13年品牌信任背书，地球与全球连线设计，突出No.1 AI英语App定位",
       points: [
-        "App 名称「Dino English」+ 营销文案（需多语言）：“The No.1 AI English App for Kids — 13 Years of Trust, Smart AI Tutors” 以及 “Making English learning part of your child's daily route”",
+        "App 名称「Dino AI」+ 营销文案（需多语言）：“The No.1 AI English App for Kids — 13 Years of Trust, Smart AI Tutors” 以及 “Making English learning part of your child's daily route”",
         "注册方式 1（首位 · 突出）：手机号 —— 支持 5 国手机号（沙特/印尼/马来/韩国/越南），国家码下拉可选",
         "验证码逻辑与 App 内一致：点击「Get code」发送并倒计时 60s，倒计时中退出返回后继续；结束后变「Resend」",
         "验证码满 4 位后 [Login] 按钮由置灰变亮起可点击；提交正确后登录成功",

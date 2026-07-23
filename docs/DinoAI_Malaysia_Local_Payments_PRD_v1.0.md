@@ -36,7 +36,7 @@ FPX • BNPL • DuitNow QR • E\-wallets
 
 |**Item**|**Details**|
 |---|---|
-|Product|DinoAI / Dino English|
+|Product|DinoAI / Dino AI|
 |PRD Title|Enable Malaysia Local Payment Methods on Existing Web Checkout|
 |Version|1\.0|
 |Status|Draft|

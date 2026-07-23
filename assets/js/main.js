@@ -1,5 +1,5 @@
 /* =========================================================================
- * Dino English · Landing Page PRD — Interactions & Rendering
+ * Dino AI · Landing Page PRD — Interactions & Rendering
  * ========================================================================= */
 (function () {
   "use strict";

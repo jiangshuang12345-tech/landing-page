@@ -1,5 +1,5 @@
 /* =========================================================================
- * Dino English · VN Lead Gen Landing Page JS
+ * Dino AI · VN Lead Gen Landing Page JS
  * ========================================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   const phoneInput = document.getElementById("phone");

@@ -1,10 +1,10 @@
-# Dino English · Landing Page 二期 PRD
+# Dino AI · Landing Page 二期 PRD
 
 | 字段 | 内容 |
 |---|---|
 | 文档版本 | v1.0 |
 | 状态 | 评审中 |
-| 关联一期 | [Dino English - Landing page (sa_kr_in_my)](../index.html) |
+| 关联一期 | [Dino AI - Landing page (sa_kr_in_my)](../index.html) |
 | 覆盖国家 | 沙特 (SA) / 韩国 (KR) / 印尼 (IN) / 马来 (MY) |
 | 二期目标 | **渠道级灵活配置化**：同一国家不同渠道可绑定不同 SKU 与优惠力度 |
 
@@ -402,6 +402,6 @@ input code → normalize(upper)
 
 ## 附录 B · 参考来源
 
-- 一期 PRD：`后期规划文档 / Dino English - Landing page (sa_kr_in_my)`
+- 一期 PRD：`后期规划文档 / Dino AI - Landing page (sa_kr_in_my)`
 - 二期配置草稿：`后期规划文档 / Landing Page-二期.md`
 - 一期交互式 PRD：仓库 `index.html`

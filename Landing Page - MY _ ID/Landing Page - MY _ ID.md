@@ -80,7 +80,7 @@ Example
 
 A 13\-year curriculum system used by 1\.8M families worldwide, fully CEFR\-aligned and matched to live\-teacher delivery; market\-validated quality, not experimental — refined over years for global children\.
 
-Dino English 源自 VIPKID，是ETS 和 LEXILE官方合作伙伴。英语课程经过13年打磨、180万家庭验证，通过AI 技术和更适合孩子的互动体验结合起来，帮助更多孩子建立英语学习兴趣与表达自信。
+Dino AI 源自 VIPKID，是ETS 和 LEXILE官方合作伙伴。英语课程经过13年打磨、180万家庭验证，通过AI 技术和更适合孩子的互动体验结合起来，帮助更多孩子建立英语学习兴趣与表达自信。
 
 
 

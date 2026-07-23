@@ -1,5 +1,5 @@
 /* =========================================================================
- * Dino English · Landing Page 二期 PRD — Structured Content
+ * Dino AI · Landing Page 二期 PRD — Structured Content
  * ========================================================================= */
 
 window.PRD2 = {

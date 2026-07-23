@@ -1,5 +1,5 @@
 /* =========================================================================
- * Dino English · Landing Page — Functional Interactive Prototype (一期)
+ * Dino AI · Landing Page — Functional Interactive Prototype (一期)
  * 支持：手机号+验证码(任意4位通过) / 切换套餐 / 输入优惠码 / 切换支付方式
  * 逻辑参考真实一期落地页，支持多国切换（沙特/韩国/印尼/马来/越南）
  * ========================================================================= */
@@ -166,7 +166,7 @@
         ${heroHTML("login")}
         <div class="body body--login ${isKr ? 'body--transparent' : ''}" ${isKr ? 'style="position:absolute; top:298px; left:0; width:100%; margin-top:0; background:transparent; box-shadow:none; z-index:10;"' : ''}>
           <div class="mcard" ${isKr ? 'style="margin-top:0"' : ''}>
-          <h1 class="dino-title">Dino English</h1>
+          <h1 class="dino-title">Dino AI</h1>
           <p class="dino-sub">The No.1 AI English App for Kids – 13 Years of Trust, Smart AI Tutors</p>
 
           <div class="field field--phone">
@@ -196,7 +196,7 @@
         </div>
         `}
       </div>
-      ${isKr ? `<div class="sticky-btn-wrap" id="kr-sticky-btn" hidden><button class="sticky-btn">지금 Dino English 시작하기</button></div>` : ''}
+      ${isKr ? `<div class="sticky-btn-wrap" id="kr-sticky-btn" hidden><button class="sticky-btn">지금 Dino AI 시작하기</button></div>` : ''}
       </div>`;
     },
 
@@ -346,7 +346,7 @@
           <input type="checkbox" id="auto-deduct" checked style="margin-top:2px; accent-color:#3d7bff; width:16px; height:16px; cursor:pointer;" />
           <label for="auto-deduct" style="font-size:12px; color:#232049; line-height:1.4; cursor:pointer;">
             <b>Authorize Automatic Deduction</b><br/>
-            <span style="color:#7a7a8e;">I authorize Dino English to securely save my card and automatically deduct the remaining balance on the due date without further action.</span>
+            <span style="color:#7a7a8e;">I authorize Dino AI to securely save my card and automatically deduct the remaining balance on the due date without further action.</span>
           </label>
         </div>
         ` : ''}

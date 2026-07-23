@@ -1,10 +1,10 @@
-# Dino English · Landing Page 二三期集成 PRD
+# Dino AI · Landing Page 二三期集成 PRD
 
 | 字段 | 内容 |
 |---|---|
 | 文档版本 | v2.0 |
 | 状态 | 方案中 |
-| 关联一期 | [Dino English - Landing page (sa_kr_in_my)](../index.html) |
+| 关联一期 | [Dino AI - Landing page (sa_kr_in_my)](../index.html) |
 | 覆盖国家 | 沙特 (SA) / 韩国 (KR) / 印尼 (IN) / 马来 (MY) / **越南 (VN)** |
 | 二三期目标 | 1. **渠道级灵活配置化**：同一国家不同渠道可绑定不同 SKU 与优惠力度<br>2. **支付方式拓维**：新增越南本地银行转账 (Bank Transfer) 及特殊收款模式 (Deposit/Installment)<br>3. **马来支付拓维**：新增 FPX 网银及本地电子钱包 |
 
@@ -468,7 +468,7 @@ input code → normalize(upper)
 
 ## 附录 B · 核心参考来源与对接文档
 
-- 一期 PRD：`后期规划文档 / Dino English - Landing page (sa_kr_in_my)`
+- 一期 PRD：`后期规划文档 / Dino AI - Landing page (sa_kr_in_my)`
 - 二期配置草稿：`后期规划文档 / Landing Page-二期.md`
 - 越南/马来本地支付需求源：`后期规划文档 / DinoAI_Malaysia_Local_Payments_PRD_v1.0.md`
 - 一期交互式 PRD：仓库 `prototype.html`

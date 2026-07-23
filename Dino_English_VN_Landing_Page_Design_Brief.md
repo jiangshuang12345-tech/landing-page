@@ -20,13 +20,13 @@
 
 **tiêu đề chính**
 
-Dino English （可以只放logo显示，不用文案占用空间）
+Dino AI （可以只放logo显示，不用文案占用空间）
 
 让孩子追着学的英语课
 
 
 
-Dino English \(bạn chỉ có thể hiển thị logo, không có copywriting chiếm dung lượng\)
+Dino AI \(bạn chỉ có thể hiển thị logo, không có copywriting chiếm dung lượng\)
 
 Bài học tiếng Anh cho  em theo dõi
 
@@ -162,9 +162,9 @@ Nhận một lớp học dùng thử miễn phí
 
 
 
-**模块 4｜为什么是 Dino English**
+**模块 4｜为什么是 Dino AI**
 
-**Mô\-đun 4 \| Why Dino English**
+**Mô\-đun 4 \| Why Dino AI**
 
 **标题**
 
@@ -174,7 +174,7 @@ Nhận một lớp học dùng thử miễn phí
 
 **Sản phẩm AI tiếng Anh đầu tiên thực sự giảng dạy, chất lượng giáo viên Bắc Mỹ chỉ với 1/10 giá**
 
-||真人一对一外教<br>Giáo viên bản ngữ 1:1|普通 AI 产品<br>AI thông thường|Dino English|
+||真人一对一外教<br>Giáo viên bản ngữ 1:1|普通 AI 产品<br>AI thông thường|Dino AI|
 |---|---|---|---|
 |效果<br>hiệu ứng|好老师难找，质量不一<br>Khó tìm giáo viên giỏi, chất lượng không đồng đều|内容零散，效果不明<br>Nội dung rời rạc, hiệu quả không rõ|CEFR体系课程，进步可见<br>CEFR, tiến bộ rõ ràng|
 |互动<br>tương tác|预约上课，频次低<br>Cần đặt lịch, tần suất thấp|简单问答<br>Hỏi đáp đơn giản|随时互动，即时反馈<br>Tương tác mọi lúc, phản hồi tức thì|
@@ -189,21 +189,21 @@ Nhận một lớp học dùng thử miễn phí
 
 **tiêu đề**
 
-**Dino English，来自 VIPKID 的儿童英语学习产品**
+**Dino AI，来自 VIPKID 的儿童英语学习产品**
 
-**Dino English, sản phẩm học tiếng Anh cho  em từ VIPKID**
+**Dino AI, sản phẩm học tiếng Anh cho  em từ VIPKID**
 
 **正文**
 
 **văn bản**
 
-Dino English 是 VIPKID 旗下儿童AI英语学习产品。基于VIPKID 成熟的英语教学课程、AI 技术和更适合孩子的互动体验结合起来，帮助更多孩子建立英语学习兴趣与表达自信。
+Dino AI 是 VIPKID 旗下儿童AI英语学习产品。基于VIPKID 成熟的英语教学课程、AI 技术和更适合孩子的互动体验结合起来，帮助更多孩子建立英语学习兴趣与表达自信。
 
 VIPKID 是全球领先的在线少儿英语品牌，13年耕耘，汇聚全球 20 万北美教师，获得超过 180 万家庭的选择
 
 
 
-Dino English là sản phẩm học tiếng Anh bằng AI của VIPKID, kết hợp chương trình chuẩn Bắc Mỹ, AI và trải nghiệm tương tác phù hợp với trẻ, giúp bé hứng thú học và tự tin giao tiếp\.  
+Dino AI là sản phẩm học tiếng Anh bằng AI của VIPKID, kết hợp chương trình chuẩn Bắc Mỹ, AI và trải nghiệm tương tác phù hợp với trẻ, giúp bé hứng thú học và tự tin giao tiếp\.  
 
 VIPKID có 13 năm kinh nghiệm, mạng lưới 200\.000 giáo viên Bắc Mỹ và được hơn 1,8 triệu gia đình lựa chọn\.
 

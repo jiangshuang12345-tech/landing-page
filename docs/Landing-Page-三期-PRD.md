@@ -1,4 +1,4 @@
-# Dino English · Landing Page 三期 PRD
+# Dino AI · Landing Page 三期 PRD
 
 | 字段 | 内容 |
 |---|---|
