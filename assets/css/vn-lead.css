@@ -182,7 +182,6 @@ body {
   opacity: 0.5;
   box-shadow: none;
   cursor: not-allowed;
-  animation: none !important;
 }
 .btn-submit:active:not(.disabled) {
   transform: scale(0.96);
@@ -190,11 +189,12 @@ body {
 
 /* Breathing Animation for CTA (referenced from 51talk) */
 @keyframes breathe {
-  0%, 50%, 100% { transform: scale(1); box-shadow: 0 10px 20px rgba(255,138,30,0.3); }
-  25% { transform: scale(1.04); box-shadow: 0 15px 25px rgba(255,138,30,0.5); }
-  75% { transform: scale(0.96); box-shadow: 0 5px 15px rgba(255,138,30,0.2); }
+  0%, 50%, 100% { -webkit-transform: scale(1); transform: scale(1); box-shadow: 0 10px 20px rgba(255,138,30,0.3); }
+  25% { -webkit-transform: scale(1.04); transform: scale(1.04); box-shadow: 0 15px 25px rgba(255,138,30,0.5); }
+  75% { -webkit-transform: scale(0.96); transform: scale(0.96); box-shadow: 0 5px 15px rgba(255,138,30,0.2); }
 }
-.shaking:not(.disabled) {
+.shaking {
+  -webkit-animation: breathe 2.5s infinite linear;
   animation: breathe 2.5s infinite linear;
 }
 
