@@ -95,7 +95,7 @@ img { -webkit-user-drag: none; }
 .hero { width: 100%; background-repeat: no-repeat; background-position: top center; background-size: 100% auto; }
 
 .body { position: relative; padding: 0 18px 26px; z-index: 1; }
-.body--login { margin-top: -30px; background: transparent; padding-top: 0; }
+.body--login { margin-top: -22px; background: linear-gradient(180deg,#efeafb 0%,#e6ecfb 45%,#dbe7fc 100%); border-radius: 26px 26px 0 0; padding-top: 4px; }
 .body--transparent { background: transparent !important; margin-top: 320px; }
 .body--blue { margin-top: -2px; padding-top: 16px; min-height: 560px; }
 .screen--plans .body--blue { background: linear-gradient(180deg,#6b83ea 0%,#93a8f1 12%,#c4d0f6 34%,#dde7fb 60%,#e9eefc 100%); }
@@ -108,14 +108,13 @@ img { -webkit-user-drag: none; }
 .back:hover { background: rgba(255,255,255,.14); }
 
 /* generic card */
-.mcard { background: #fff; border-radius: 24px; padding: 24px 20px; box-shadow: 0 10px 26px rgba(40,50,120,.08); margin-bottom: 14px; }
+.mcard { background: #fff; border-radius: 20px; padding: 18px 18px; box-shadow: 0 10px 26px rgba(40,50,120,.12); margin-bottom: 14px; }
 .mtitle { font-size: 17px; font-weight: 800; margin-bottom: 12px; color: #232049; }
 
 /* ---- login ---- */
-.dino-title { text-align: center; font-size: 28px; font-weight: 900; color: #7b3ff2; letter-spacing: .5px; }
-.dino-sub { text-align: center; font-size: 12px; color: #4a4a5e; margin: 6px 0 20px; line-height: 1.45; font-weight: 500; }
-.field { display: flex; align-items: center; background: #fff; border: 1.5px solid #f0f0f5; border-radius: 30px; padding: 4px 6px 4px 6px; margin-bottom: 12px; position: relative; transition: border-color 0.2s; }
-.field:focus-within { border-color: #3d7bff; }
+.dino-title { text-align: center; font-size: 30px; font-weight: 900; color: #7b3ff2; letter-spacing: .5px; }
+.dino-sub { text-align: center; font-size: 13px; color: #4a4a5e; margin: 6px 0 16px; line-height: 1.45; }
+.field { display: flex; align-items: center; background: #fff; border: 1px solid #eceaf5; border-radius: 30px; padding: 4px 6px 4px 6px; margin-bottom: 12px; box-shadow: 0 6px 16px rgba(40,50,120,.06); position: relative; }
 .field--phone { padding-left: 4px; }
 .cc { display: flex; align-items: center; gap: 4px; border: 0; background: transparent; font-size: 15px; font-weight: 600; color: #232049; padding: 10px 10px; cursor: pointer; border-right: 1px solid #eee; }
 .cc .caret { font-size: 10px; color: #9a9ab0; }

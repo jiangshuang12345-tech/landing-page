@@ -86,7 +86,7 @@
 
   // 每屏顶部插画（用截图顶部，CSS 裁剪），及裁剪高度(px@350宽)
   const HERO = {
-    login: { img: "assets/ui/login_new_cropped.png", crop: 420 },
+    login: { img: "assets/ui/login.png", crop: 320 },
     login_kr: { img: "assets/ui/kr_long_bg.png", crop: 450, isLong: true },
     plans: { img: "assets/ui/plans.png", crop: 212 },
     coupon: { img: "assets/ui/coupon.png", crop: 178 },
@@ -154,7 +154,7 @@
     if (h.isLong) {
       return `<img src="${h.img}" style="width: 100%; display: block;" />`;
     }
-    return `<div class="hero" style="height:${h.crop}px;background-image:url('${h.img}');background-size:100% auto;background-position:top center;"></div>`;
+    return `<div class="hero" style="height:${h.crop}px;background-image:url('${h.img}')"></div>`;
   }
 
   const SCREENS = {
@@ -178,8 +178,8 @@
           </div>
 
           <div class="field field--code">
-            <span class="code-label">SMS code:</span>
-            <input id="code" class="inp inp--code" inputmode="numeric" maxlength="4" placeholder="0000" value="${state.code}" />
+            <span class="code-label">SMS code：</span>
+            <input id="code" class="inp inp--code" inputmode="numeric" maxlength="6" placeholder="0000" value="${state.code}" />
             <button class="getcode" id="getcode" ${state.countdown > 0 ? "disabled" : ""}>${state.countdown > 0 ? state.countdown + "s" : (state.codeSent ? "Resend" : "Get code")}</button>
           </div>
 
