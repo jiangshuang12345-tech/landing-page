@@ -86,7 +86,7 @@
 
   // 每屏顶部插画（用截图顶部，CSS 裁剪），及裁剪高度(px@350宽)
   const HERO = {
-    login: { img: "assets/ui/login_new.png", crop: 420 },
+    login: { img: "assets/ui/login_new_cropped.png", crop: 420 },
     login_kr: { img: "assets/ui/kr_long_bg.png", crop: 450, isLong: true },
     plans: { img: "assets/ui/plans.png", crop: 212 },
     coupon: { img: "assets/ui/coupon.png", crop: 178 },
