@@ -111,9 +111,9 @@ body {
 }
 .form-card {
   background: #fff;
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 24px 20px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 10px 26px rgba(40,50,120,.08);
   border: 1px solid rgba(0,0,0,0.04);
 }
 .form-card h3 {
@@ -132,12 +132,12 @@ body {
 .field { display: flex; align-items: center; background: #fff; border: 1.5px solid #f0f0f5; border-radius: 30px; padding: 4px 6px 4px 6px; margin-bottom: 12px; position: relative; transition: border-color 0.2s; }
 .field:focus-within { border-color: #3d7bff; }
 .field--phone { padding-left: 4px; }
-.cc { display: flex; align-items: center; gap: 4px; border: 0; background: transparent; font-size: 15px; font-weight: 600; color: #232049; padding: 10px 10px; cursor: default; border-right: 1px solid #eee; }
-.inp { flex: 1; border: 0; outline: none; background: transparent; font-size: 16px; color: #232049; padding: 10px 12px; width: 100%; font-family: inherit; }
+.cc { display: flex; align-items: center; gap: 4px; border: 0; background: transparent; font-size: 14px; font-weight: 600; color: #232049; padding: 10px 10px; cursor: default; border-right: 1px solid #eee; }
+.inp { flex: 1; border: 0; outline: none; background: transparent; font-size: 15px; color: #232049; padding: 10px 12px; width: 100%; font-family: inherit; }
 .inp::placeholder { color: #b7b7c6; }
-.field--code .code-label { font-size: 15px; color: #6a6a7e; padding-left: 12px; white-space: nowrap; }
+.field--code .code-label { font-size: 14px; color: #6a6a7e; padding-left: 12px; white-space: nowrap; }
 .inp--code { padding-left: 4px; letter-spacing: 2px; }
-.getcode { border: 0; background: #f0f0f5; color: #b7b7c6; font-weight: 700; font-size: 14px; padding: 10px 16px; border-radius: 24px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+.getcode { border: 0; background: #f0f0f5; color: #b7b7c6; font-weight: 700; font-size: 13px; padding: 10px 16px; border-radius: 24px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
 .getcode.active { background: linear-gradient(180deg,#ffd79a,#ffb765); color: #fff; }
 .getcode:disabled { opacity: .7; cursor: default; background: #f0f0f5; color: #b7b7c6; }
 
