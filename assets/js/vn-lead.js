@@ -26,15 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     if (val.length >= 8) {
-      submitBtn.disabled = false;
+      submitBtn.classList.remove("disabled");
     } else {
-      submitBtn.disabled = true;
+      submitBtn.classList.add("disabled");
     }
   });
 
   // Submit action
   submitBtn.addEventListener("click", () => {
-    if (phoneInput.value.length < 8) return;
+    if (submitBtn.classList.contains("disabled")) return;
     
     // Show success modal
     modalOverlay.classList.add("show");
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // window.location.href = "https://app.dinoenglish.ai/download";
     modalOverlay.classList.remove("show");
     phoneInput.value = "";
-    submitBtn.disabled = true;
+    submitBtn.classList.add("disabled");
     inputGroup.classList.add("needs-input");
   });
 
