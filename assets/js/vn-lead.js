@@ -6,18 +6,70 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.getElementById("submit-btn");
   const modalOverlay = document.getElementById("success-modal");
   const btnDownload = document.getElementById("btn-download");
-  const inputGroup = document.querySelector(".input-group");
+  const inputGroup = document.querySelector(".field--phone");
 
   // Initial state: needs input
   if (phoneInput.value.length === 0) {
     inputGroup.classList.add("needs-input");
   }
 
+  
+  const codeInput = document.getElementById("code");
+  const getcodeBtn = document.getElementById("getcode");
+  
+  let countdown = 0;
+  let codeSent = false;
+  let timer = null;
+
+  const updateGetCodeState = () => {
+    if (countdown > 0) return;
+    if (phoneInput.value.length > 0) {
+      getcodeBtn.classList.add("active");
+    } else {
+      getcodeBtn.classList.remove("active");
+    }
+  };
+
+  getcodeBtn.addEventListener("click", () => {
+    if (countdown > 0 || phoneInput.value.length === 0) return;
+    
+    codeSent = true;
+    countdown = 60;
+    getcodeBtn.disabled = true;
+    getcodeBtn.classList.remove("active");
+    getcodeBtn.innerText = countdown + "s";
+    
+    timer = setInterval(() => {
+      countdown--;
+      if (countdown <= 0) {
+        clearInterval(timer);
+        getcodeBtn.disabled = false;
+        getcodeBtn.innerText = "Resend";
+        updateGetCodeState();
+      } else {
+        getcodeBtn.innerText = countdown + "s";
+      }
+    }, 1000);
+  });
+
+  codeInput.addEventListener("input", (e) => {
+    let val = e.target.value.replace(/[^\d]/g, "");
+    e.target.value = val;
+    updateGetCodeState();
+    
+    if (val.length >= 4 && phoneInput.value.length >= 8) {
+      submitBtn.classList.remove("disabled");
+    } else {
+      submitBtn.classList.add("disabled");
+    }
+  });
+
   // Phone input validation (enable button if length >= 8)
   phoneInput.addEventListener("input", (e) => {
     // allow only numbers
     let val = e.target.value.replace(/[^\d]/g, "");
     e.target.value = val;
+    updateGetCodeState();
     
     if (val.length > 0) {
       inputGroup.classList.remove("needs-input");
@@ -25,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       inputGroup.classList.add("needs-input");
     }
     
-    if (val.length >= 8) {
+    if (val.length >= 8 && codeInput.value.length >= 4) {
       submitBtn.classList.remove("disabled");
     } else {
       submitBtn.classList.add("disabled");
@@ -46,6 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // window.location.href = "https://app.dinoenglish.ai/download";
     modalOverlay.classList.remove("show");
     phoneInput.value = "";
+    codeInput.value = "";
+    updateGetCodeState();
     submitBtn.classList.add("disabled");
     inputGroup.classList.add("needs-input");
   });

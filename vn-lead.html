@@ -53,12 +53,18 @@
       <div class="form-card">
         <h3 class="lang-vn">Nhận một lớp học dùng thử miễn phí</h3>
         <h3 class="lang-cn">领取免费体验课</h3>
-        <div class="input-group">
-          <div class="prefix">
-            <span class="flag">🇻🇳</span> +84
-          </div>
-          <input type="tel" id="phone" placeholder="Nhập số điện thoại của bạn" maxlength="12" inputmode="numeric">
+        
+        <div class="field field--phone">
+          <button class="cc" id="cc-btn"><span class="flag">🇻🇳</span> <b>+84</b></button>
+          <input id="phone" class="inp" type="tel" inputmode="numeric" placeholder="Nhập số điện thoại của bạn" maxlength="12" />
         </div>
+
+        <div class="field field--code">
+          <span class="code-label">SMS code:</span>
+          <input id="code" class="inp inp--code" inputmode="numeric" maxlength="6" placeholder="0000" />
+          <button class="getcode" id="getcode">Get code</button>
+        </div>
+
         <button class="btn-submit shaking disabled" id="submit-btn">
           <span class="lang-vn">Nhận ngay (Lấy mã)</span>
           <span class="lang-cn">立即领取</span>

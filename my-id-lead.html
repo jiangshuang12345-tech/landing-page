@@ -52,12 +52,17 @@
         <h3 class="lang-id">Dapatkan Tes AI Bahasa Inggris GRATIS dalam 30 Detik</h3>
         <h3 class="lang-en">Get Your FREE AI English Assessment in 30 Seconds</h3>
         
-        <div class="input-group">
-          <div class="prefix">
-            <span class="flag lang-my">🇲🇾</span><span class="flag lang-id" style="display:none;">🇮🇩</span><span class="flag lang-en" style="display:none;">🇲🇾</span> <span id="phone-code">+60</span>
-          </div>
-          <input type="tel" id="phone" placeholder="Nhập số điện thoại của bạn" maxlength="12" inputmode="numeric">
+        <div class="field field--phone">
+          <button class="cc" id="cc-btn"><span class="flag lang-my">🇲🇾</span><span class="flag lang-id" style="display:none;">🇮🇩</span><span class="flag lang-en" style="display:none;">🇲🇾</span> <b id="phone-code">+60</b></button>
+          <input id="phone" class="inp" type="tel" inputmode="numeric" placeholder="Nhập số điện thoại của bạn" maxlength="12" />
         </div>
+
+        <div class="field field--code">
+          <span class="code-label">SMS code:</span>
+          <input id="code" class="inp inp--code" inputmode="numeric" maxlength="6" placeholder="0000" />
+          <button class="getcode" id="getcode">Get code</button>
+        </div>
+
         <button class="btn-submit shaking disabled" id="submit-btn">
           <span class="lang-my">Dapatkan Penilaian PERCUMA Saya →</span>
           <span class="lang-id">Dapatkan Tes GRATIS Saya →</span>
