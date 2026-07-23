@@ -110,7 +110,7 @@ Coupon 1 ─── N PromoCode         （对外发放的码）
 | name | string | 套餐名称 | 周包 / 月包 / 年包 |
 | origin_price | decimal | 原价（展示划线价） | `51.99` |
 | currency | string | 币种 | `SAR` / `KRW` / `RM` / `IDR` |
-| duration_days | int | VIP 天数 | 7 / 30 / 365 |
+| duration_days | int / null | VIP 天数；填写 7/30/365 等。**若为空 (null) 或 0 则视为永久有效 (Lifetime)** | 7 / 30 / 365 / null |
 | valid_from / valid_to | datetime | SKU 可售时间窗 | `2026-07-15 00:00` — `2026-07-30 23:59` |
 | best_value | bool | 是否 Best Value（同 LP 货盘内至多 1 个为 true） | `true` |
 | status | enum | on / off | `on` |
@@ -243,7 +243,7 @@ Coupon 1 ─── N PromoCode         （对外发放的码）
 | 价格计算 | 原价 − 优惠 | 按券的 percent / fixed 计算；如果是定金(Deposit)模式，前端重新计算今日应付金额。 |
 | 支付方式选择 | 仅支持国际信用卡 | 根据国家下发支持的支付方式。**越南新增**：`Bank Transfer` / `Installment` / `Deposit` / `Visa` / `Mastercard`。 |
 | 支付动作 | 调起卡支付网关 | **【新增】Bank Transfer / Installment / Deposit 逻辑**：不调起卡网关，而是跳转至「转账指引页」，展示收款虚拟账号与 Reference Code。 |
-| 支付 / 成功 | 收到 Webhook 发放 VIP | 新增**异步 Webhook 监听机制**（针对银行转账）。收到 `succeeded` 通知后系统才发放 VIP；遇到金额多转/少转触发异常流处理。 |
+| 支付 / 成功 | 收到 Webhook 发放 VIP | 1. 新增**异步 Webhook 监听机制**（针对银行转账）。收到 `succeeded` 通知后系统才发放 VIP；遇到金额多转/少转触发异常流处理。<br>2. **永久有效 UI 适配**：若购买的 SKU `duration_days` 为空 (Lifetime)，支付成功页的有效期文案需从具体的 `Expired Date: YYYY.MM.DD` 改为 `Lifetime Access` (或无固定到期日的提示文案)。 |
 
 #### 优惠码校验伪逻辑
 

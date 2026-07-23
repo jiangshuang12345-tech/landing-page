@@ -55,7 +55,8 @@
       link: "https://ma.dinoenglish.ai/website/landingpage/login/",
       plans: [
         { key: "1y", name: "1 Year", label: "1 year plan", price: 649.90, per: "≈RM 1.78/Day", was: "RM 1,181.64", best: true, tag: "Best Value · 45% Off" },
-        { key: "1m", name: "1 Month", label: "1 month plan", price: 99.90, per: "≈RM 3.33/Day", was: "RM 166.50", best: false }
+        { key: "1m", name: "1 Month", label: "1 month plan", price: 99.90, per: "≈RM 3.33/Day", was: "RM 166.50", best: false },
+        { key: "life", name: "Lifetime", label: "Lifetime access", price: 1299.90, per: "Pay Once", was: "RM 2,000.00", best: false, lifetime: true }
       ],
       methods: [
         { key: "fpx", name: "Online Banking (FPX)", ico: "F", bg: "#00529C" },
@@ -406,6 +407,11 @@
     success() {
       const p = currentPlan();
       const expiry = { "1y": "2027.05.18", "1m": "2026.08.15", "1w": "2026.07.22" }[state.plan] || "2027.01.01";
+      const isLifetime = !p.duration_days && p.duration_days !== 0 && state.plan.includes('life') || p.lifetime;
+      const expiryHTML = (isLifetime || p.key === 'life') 
+        ? `<div class="srow"><span>Validity</span><b style="color:#03C75A;">Lifetime Access</b></div>` 
+        : `<div class="srow"><span>Expired Date</span><b>${expiry}</b></div>`;
+
       return `
       <div class="body body--success">
         <div class="succ-illus"></div>
@@ -415,7 +421,7 @@
           <div class="succ-line"></div>
           <div class="srow"><span>${p.name}</span><b>${money(p.price - (state.couponApplied ? state.discount : 0))}</b></div>
           <div class="srow total" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.05);"><span>Total Paid</span><b>${money(total())}</b></div>
-          <div class="srow"><span>Expired Date</span><b>${expiry}</b></div>
+          ${expiryHTML}
         </div>
         <div class="mcard">
           <div class="ben"><span>📘</span><p>Full Access to 864 CEFR Standard Lessons</p></div>
